@@ -184,8 +184,7 @@
                         $("#respuesta").html(data);
                         //   $("#contenido").css("display", "none");
                         //location.reload();
-
-                       window.location.href = "<?php echo base_url('index.php/acercamientopersuasivo/abogado') ?>";
+                                              window.location.href = "<?php echo base_url('index.php/acercamientopersuasivo/abogado') ?>";
 
 
                     }

@@ -66,6 +66,7 @@ if (isset($message)){
     <input type="hidden" id="vista_flag" name="vista_flag" value="1" >
     <input type="hidden" id="id_cartera_form" name="id_cartera_form" value="<?=$id_cartera ?>">
     <input type="hidden" id="tipo_cartera" name="tipo_cartera" value="<?=$tipo_cartera?>" >
+    <input type="hidden" id="agregar" name="agregar" value="<?=$agregar?>" >
     <input type="hidden" id="documentos" name="documentos">
 </form>
 

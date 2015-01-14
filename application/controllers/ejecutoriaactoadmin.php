@@ -564,7 +564,7 @@ class Ejecutoriaactoadmin extends MY_Controller {
         $reemplazo['ciudad'] = $info['CIUDAD'];
         $reemplazo['FECHA'] = date('d/m/Y');
         $mes=array('','ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
-        $reemplazo['mes'] = $mes[date('m')];
+        $reemplazo['mes'] =date('m');
         $reemplazo['ano'] = date('Y');
         $reemplazo['dias'] = date('d');
         $reemplazo['COORDINADOR_REGIONAL'] = $info['COORDINADOR_REGIONAL'];

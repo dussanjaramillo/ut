@@ -16,6 +16,9 @@
     <th>Interes Mora</th>
     <th>Cesantia</th>
     <th>Pago</th>
+    <th>Distribución Capital</th>
+    <th>Distribución Interés C.</th>
+    <th>Pago Cesantias</th>
     </tr>
   </thead>
  <tbody>
@@ -32,7 +35,9 @@
 <td><?=number_format($data['INTERES_MORA_GEN'], 0, ',', '.')  ?></td>
 <td><?=number_format($data['CESANTIAS'], 0, ',', '.')  ?></td>
 <td><?=number_format($data['VALOR_PAGADOS'], 0, ',', '.')  ?></td>
-
+<td><?=number_format($data['AMORTIZACION']-$data['SALDO_AMORTIZACION'], 0, ',', '.')  ?></td>
+<td><?=number_format($data['VALOR_INTERES_C']-$data['SALDO_INTERES_C'], 0, ',', '.')  ?></td>
+<td><?=number_format($data['CESANTIAS_APLICADA'], 0, ',', '.')  ?></td>
 </tr>
 
 <?php } ?>
@@ -45,7 +50,7 @@
 
  $('#consulta_pagos').dialog({
                 autoOpen: true,
-                width: 1100,
+                width: 1500,
                 height: 470,
                 modal:true,
                 title:'Pagos',
@@ -94,6 +99,9 @@
                       { "sClass": "center" },      
                       { "sClass": "center" }, 
                       { "sClass": "center" }, 
+                      { "sClass": "center" },      
+                      { "sClass": "center" }, 
+                      { "sClass": "center" },
                       { "sClass": "center" },      
                       { "sClass": "center" }, 
                       { "sClass": "center" },

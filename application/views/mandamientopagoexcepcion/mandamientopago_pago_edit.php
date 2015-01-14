@@ -79,6 +79,23 @@ if( ! defined('BASEPATH') ) exit('No direct script access allowed'); ?>
             </td>
         </tr>
         <tr>
+            <td align="left">
+                <p>
+                    <?php
+                    echo form_label('Tipo de Excepción Presentada', 'presenta');
+                    $selecteexe[''] = "-- Seleccione --";
+                    $selecteexe['1'] = "Pago de la obligación.";
+                    $selecteexe['2'] = "Existencia del acuerdo de pago";
+                    $selecteexe['3'] = "Falta de ejecutoria del título";
+                    $selecteexe['4'] = "Pérdida de ejecutoria del título por revocación";
+                    $selecteexe['5'] = "Prescripción de la acción de cobro";
+                    $selecteexe['6'] = "Ausencia de título ejecutivo o incompetencia del funcionario que lo profirió.";
+                    $selecteexe['7'] = "La calidad de deudor solidario";
+                    $selecteexe['8'] = "La indebida tasación del monto de la deuda.";
+                    echo "<br>" . form_dropdown('presenta', $selecteexe, '', 'id="presentaexe" class="chosen" data-placeholder="seleccione..." ');
+                    ?>
+                </p>    
+            </td>
             <td>
             <p>
             <?php

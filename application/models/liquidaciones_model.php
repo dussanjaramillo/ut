@@ -216,6 +216,46 @@ class Liquidaciones_model extends CI_Model
         endif;
     }
 
+    //CONSULTA DE CABECERAS PARA LIQUIDACIONES
+    function consultarCabeceraLiquidacionFicBloqueada($codigoFiscalizacion, $idusuario, $liquidacion)
+        /**
+         * Función que devuelve la información asociada al codigo de fiscalización, necesaria para el proceso de liquidación y que se muestra en las cabeceras de las liquidaciones. Se asocia el id de usuario que lanza la consulta para comproborar su permiso de acceso al proceso.
+         * Solo funcional si se lanza la consulta a través de un codigo de fiscalización existente
+         *
+         * @param integer $codigoFiscalizacion
+         * @param integer $idusuario
+         * @return array $fiscalizacion
+         * @return boolean false - error
+         */
+    {
+        $this -> db -> select('F.COD_FISCALIZACION, F.COD_ASIGNACION_FISC, F.COD_CONCEPTO, LIQ.NUM_LIQUIDACION AS NRO_EXPEDIENTE, CF.NOMBRE_CONCEPTO, TG.TIPOGESTION, AF.ASIGNADO_POR, AF.ASIGNADO_A, AF.NIT_EMPRESA, EMP.RAZON_SOCIAL, REG.NOMBRE_REGIONAL, EMP.CIIU, CIIU.DESCRIPCION, EMP.DIRECCION, EMP.TELEFONO_FIJO, EMP.FAX, EMP.EMAILAUTORIZADO, EMP.EMPRESA_NUEVA, EMP.REPRESENTANTE_LEGAL, EMP.COD_REPRESENTANTELEGAL, MUN.NOMBREMUNICIPIO, EMP.NOM_CAJACOMPENSACION, EMP.RESOLUCION,EMP.NUM_EMPLEADOS,EMP.NRO_ESCRITURAPUBLICA, EMP.NOTARIA');
+        $this -> db -> select('to_char("F"."PERIODO_INICIAL",'."'DD/MM/YYYY') AS PERIODO_INICIAL", FALSE);
+        $this -> db -> select('to_char("F"."PERIODO_FINAL",'."'DD/MM/YYYY') AS PERIODO_FINAL", FALSE);
+        $this -> db -> from('FISCALIZACION "F"');
+        $this -> db -> from('TIPOGESTION "TG"');
+        $this -> db -> from('CONCEPTOSFISCALIZACION "CF"');
+        $this -> db -> from('ASIGNACIONFISCALIZACION "AF"');
+        $this -> db -> from('EMPRESA "EMP"');
+        $this -> db -> from('CIIU');
+        $this -> db -> from('REGIONAL "REG"');
+        $this -> db -> from('DEPARTAMENTO "DEP"');
+        $this -> db -> from('MUNICIPIO "MUN"');
+        $this -> db -> from('LIQUIDACION "LIQ"');
+        $condicion = "(F.COD_TIPOGESTION not in (309, 440) AND F.CODIGO_PJ is NULL 	AND F.COD_FISCALIZACION ='" . $codigoFiscalizacion . "' AND LIQ.NUM_LIQUIDACION ='" . $liquidacion . "'  AND (AF.ASIGNADO_POR = " . $idusuario . " OR AF.ASIGNADO_A = " . $idusuario . ")) AND (F.COD_TIPOGESTION = TG.COD_GESTION 	AND F.COD_CONCEPTO = CF.COD_CPTO_FISCALIZACION 	AND F.COD_ASIGNACION_FISC = AF.COD_ASIGNACIONFISCALIZACION AND AF.NIT_EMPRESA = EMP.CODEMPRESA AND EMP.CIIU = CIIU.CLASE AND EMP.COD_REGIONAL = REG.COD_REGIONAL AND EMP.COD_DEPARTAMENTO = DEP.COD_DEPARTAMENTO AND EMP.COD_MUNICIPIO = MUN.CODMUNICIPIO AND DEP.COD_DEPARTAMENTO = MUN.COD_DEPARTAMENTO)";
+        $this -> db -> where($condicion);
+        $resultado = $this -> db ->get();
+        //#####BUGGER PARA LA CONSULTA ######
+        //$resultado = $this -> db -> last_query();
+        //echo $resultado; die();
+        //#####BUGGER PARA LA CONSULTA ######
+        if ($resultado -> num_rows() > 0):
+            $fiscalizacion = $resultado -> row_array();
+            return $fiscalizacion;
+        else:
+            return FALSE;
+        endif;
+    }
+
     //CONSULTA PARA DETERMINAR SI LA FISCALIZACIÓN YA TIENE LIQUIDACION APORTES
     function consultarLiquidacionAportes($codigoLiquidacion)
     /**
@@ -728,7 +768,7 @@ class Liquidaciones_model extends CI_Model
         endif;
      }
 
-    function cargarLiquidacionMes($liquidacion, $liquidacion_previa, $periodo, $valor)
+    function cargarLiquidacionMes($liquidacion, $liquidacion_previa, $periodo, $valor, $base)
         /**
          * Función que inserta los valores mensuales sobre la tabla de detalle para liquidaciones parafiscales.
          * Responde si la transacción fue exitosa, de no serlo realiza un rollback sobre la tabla.
@@ -737,6 +777,7 @@ class Liquidaciones_model extends CI_Model
          * @param int $liquidacion_previa,
          * @param string $periodo
          * @param int $valor
+         * @param int $base
          * @return boolean true - exito
          * @return string last_query - error
          */
@@ -744,6 +785,7 @@ class Liquidaciones_model extends CI_Model
         $this -> db -> trans_begin();
         $this -> db -> trans_strict(TRUE);
         $this -> db -> set ('VALOR', $valor, FALSE);
+        $this -> db -> set ('BASE', $base, FALSE);
         if($liquidacion_previa == 0):
 
             $this -> db -> set ('NUM_LIQUIDACION', $liquidacion);
@@ -1942,5 +1984,85 @@ class Liquidaciones_model extends CI_Model
 
     }
 
+    public function consultarTransaccion($transaccion)
+        /**
+         * Función que devuelve la información de los pagos por el concepto de aportes FIC
+         * El número de transacción esta asociado al número de documento o al ticket ID
+         *
+         * @param string $transaccion
+         * @return array $datos;
+         * @return boolean FALSE;
+         */
+    {
+        $this->db->trans_begin();
+        $this->db->trans_strict(TRUE);
+        $this -> db -> select('NITEMPRESA, COD_CONCEPTO, COD_SUBCONCEPTO, PERIODO_PAGADO, NUM_DOCUMENTO, TICKETID, NRO_LICENCIA_CONTRATO, FECHA_INICIO_OBRA, FECHA_FIN_OBRA, VALOR_PAGADO');
+        $this -> db -> from('PAGOSRECIBIDOS');
+        $condicion = "(COD_CONCEPTO = 2 AND COD_SUBCONCEPTO = 17 OR COD_SUBCONCEPTO = 62) AND (NUM_DOCUMENTO = '" . $transaccion . "' OR TICKETID = '" . $transaccion . "')";
+        $this -> db -> where($condicion);
+        $datos = $this -> db -> get();
+        //#####BUGGER PARA LA CONSULTA ######
+        // $datos = $this -> db -> last_query();
+        // echo $datos; die();
+        //#####BUGGER PARA LA CONSULTA ######
+
+        if ($this -> db -> trans_status() === FALSE) :
+
+            $this -> db -> trans_rollback();
+            return $datos = FALSE;
+
+        else:
+
+            $this -> db -> trans_commit();
+            $datos = $datos -> row_array();
+            if(empty($datos['NITEMPRESA'])):
+
+                return $datos = FALSE;
+
+            else:
+
+                return $datos;
+
+            endif;
+
+        endif;
+
+
+    }
+
+    public function consultarTransaccionesAsociadas($liquidacion)
+        /**
+         * Función que devuelve la información de las transacciones asociadas a una liquidación FIC
+         * Solo retorna datos si la liquidación tiene transacciones asociadas
+         *
+         * @param string $transaccion
+         * @return array $datos;
+         * @return boolean FALSE;
+         */
+    {
+        $this -> db -> trans_begin();
+        $this -> db -> trans_strict(true);
+        $condicion = "COD_LIQUIDACION_FIC = '" . $liquidacion . "'";
+        $datos = $this -> db -> get_where('TRANSACCIONES_FIC', $condicion);
+        //#####BUGGER PARA LA CONSULTA ######
+        // $datos = $this -> db -> last_query();
+        // echo $datos; die();
+        //#####BUGGER PARA LA CONSULTA ######
+        if ($this -> db -> trans_status() === false):
+            $this -> db -> trans_rollback();
+            return $this -> db -> last_query();
+        else:
+            $this -> db -> trans_commit();
+            if ($datos):
+                $tmp = null;
+                foreach($datos -> result_array() as $transaccion):
+                    $tmp[] = $transaccion;
+                endforeach;
+                $datos = $tmp;
+            else:
+                $datos = false;
+            endif;
+        endif;
+    }
 }
 /* End of file liquidaciones_model.php */

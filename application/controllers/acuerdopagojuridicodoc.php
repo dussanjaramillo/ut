@@ -554,7 +554,7 @@ class Acuerdopagojuridicodoc extends MY_Controller {
                 /*
                  * CARGAR TABLA DE EXPEDIENTES
                  */
-                $this->template->set('title', 'Expediente -> Acuerdo de Pago');
+                $this->template->set('title', 'Expediente -> Facilidad de Pago');
                 $verificar[0] = $cod_coactivo;
                 $verificar[1] = $cod_respuesta;
                 $this->data['cod_coactivo'] = $cod_coactivo;

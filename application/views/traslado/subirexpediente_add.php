@@ -67,7 +67,7 @@
     <br>
 </div>
 <div id="resultado"></div>
-<input type="hidden" name="documento" id="documento" value="<?php print_r($documento); ?>"/>
+<input type="hidden" value='<?= $documento; ?>' name="documento" id="documento">
 <br>
 <center>
     <?php

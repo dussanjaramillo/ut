@@ -478,39 +478,14 @@ $this->db->where("CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL", $id_cartera);
 		    $this->db->query(" DELETE FROM CNM_CUOTAS 
 			WHERE CNM_CUOTAS.CONCEPTO='12' AND VALOR_CUOTA=SALDO_CUOTA AND ID_DEUDA_E='".$estructura[0]."'");
 			
-			$dbuser = $this->db->username;
-			$dbpassword = $this->db->password;
-			$dbConnString = $this->db->hostname;
-			
-			$v_oDataConn = oci_connect($dbuser, $dbpassword, $dbConnString);
-					if (!$v_oDataConn) {
-							$v_oErroCntr = oci_error();
-							trigger_error(htmlentities($v_oErroCntr['message'], ENT_QUOTES), E_USER_ERROR);
-					}
-					
-			//Seguro de incendio
-			$query = "BEGIN PKG_CARTERA_NO_MISIONAL.Crea_Cobro_Incendio(".$estructura[0].", null, null, :pio_Mensaje); END;";
-			
-			$pio_Mensaje = "";
-			$v_oStnd_Out = oci_parse($v_oDataConn, $query) or die('Can not parse query');
-			//echo "id_deuda ".$this->DatosBase['COD_CARTERA_NOMISIONAL']." porcentaje ".$porcentaje." avaluo ".$avaluo." query ".$query;
-			//die();
-			oci_bind_by_name($v_oStnd_Out, ":pio_Mensaje", $pio_Mensaje, 32000) or die('Can not bind variable');
-			oci_execute($v_oStnd_Out);
-			if(!empty($pio_Mensaje))
-			{
-			oci_close($v_oDataConn);	
-			echo $pio_Mensaje;
-			die();
-			}
-			oci_close($v_oDataConn);		
+		
 			
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return false;
         } else{
             $this->db->trans_commit();
-            return true;
+            return $estructura[0];
         }
     }
 	

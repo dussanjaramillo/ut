@@ -46,17 +46,21 @@ class Bandejaunificada_model Extends MY_Controller {
         return $resultado;
     }
 
-    function titulos_coactivo($cod_coactivo) {
-        $this->db->select('NO_EXPEDIENTE');
+ function titulos_coactivo($cod_coactivo) {
+        $this->db->select('VW.NUM_LIQUIDACION');
         $this->db->from('VW_PROCESOS_COACTIVOS VW');
         $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_RESPUESTA=VW.COD_RESPUESTA');
         $this->db->where('VW.COD_PROCESO_COACTIVO', $cod_coactivo);
-        $this->db->group_by('NO_EXPEDIENTE');
+        $this->db->join('RECEPCIONTITULOS RT', 'RT.COD_RECEPCIONTITULO=VW.NO_EXPEDIENTE');
+        $this->db->where('RT.CERRADO', 0);
+        $where = 'VW.SALDO_DEUDA >0';
+        $this->db->where($where);
+        $this->db->group_by('VW.NO_EXPEDIENTE, VW.NUM_LIQUIDACION');
         $resultado = $this->db->get();
-        //  echo $d = $this->db->last_query();
         $resultado = $resultado->result_array();
         return $resultado;
     }
+
 
     function consulta_responsable($respuesta) {
         $this->db->select('URLGESTION, IDCARGO');
@@ -123,7 +127,6 @@ class Bandejaunificada_model Extends MY_Controller {
          * @param integer $cod_coactivo
          * @param integer $titulo
          * @return array $resultado
-         * @return boolean false - error
          */
 
         $cod_respuesta = '( 170 )';
@@ -255,14 +258,98 @@ class Bandejaunificada_model Extends MY_Controller {
         $subQuery4 = $this->db->last_query();
         $query4 = $query4->result_array();
 
+        //Mandamiento
 
+        $this->db->select('MP.COD_MANDAMIENTOPAGO AS PROCESO,TO_CHAR(MP.ESTADO) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
+                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
+                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
+                . ' VW.COD_REGIONAL AS COD_REGIONAL, VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
+                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
+        $this->db->from('MANDAMIENTOPAGO MP');
+        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=MP.COD_PROCESO_COACTIVO');
+        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
+        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
+        $where = 'VW.COD_RESPUESTA = MP.ESTADO';
+        $this->db->where($where);
+        $query5 = $this->db->get('');
+        $query5 = $query5->result_array();
+        $subQuery5 = $this->db->last_query();
+        $subQuery5;    
+        
+         /* Terminación de proceso */
+        $this->db->select('AJ.NUM_AUTOGENERADO AS PROCESO, TO_CHAR(GC.COD_TIPO_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
+                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
+                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
+                . ' VW.COD_REGIONAL AS COD_REGIONAL, VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,'
+                . 'VW.SALDO_DEUDA,VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION'); /* AJ.AUTOSJURIDICOS AS PROCESO,GC.COD_TIPO_RESPUES */
+        $this->db->from('AUTOSJURIDICOS AJ');
+        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=AJ.COD_PROCESO_COACTIVO');
+        $this->db->join('TRAZAPROCJUDICIAL GC', 'GC.COD_TRAZAPROCJUDICIAL=AJ.COD_GESTIONCOBRO');
+        $this->db->join('RESPUESTAGESTION RES', 'RES.COD_RESPUESTA=GC.COD_TIPO_RESPUESTA');
+        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
+        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
+        $where = 'VW.COD_RESPUESTA = GC.COD_TIPO_RESPUESTA';
+        $this->db->where('AJ.COD_TIPO_AUTO', 1);
+        $this->db->where('AJ.COD_TIPO_PROCESO', 1);
+        $this->db->where($where);
+        $query6 = $this->db->get('');
+        $subQuery6 = $this->db->last_query();
+        //   echo $subQuery6;
+        $query6 = $query6->result_array();
+        
+         /* procesos coactivos */
+        $this->db->select('PC.COD_PROCESO_COACTIVO AS PROCESO,TO_CHAR(PC.COD_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
+                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
+                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
+                . ' VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
+                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
+        $this->db->from('PROCESOS_COACTIVOS PC');
+        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
+        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
+        $where = 'VW.COD_RESPUESTA = PC.COD_RESPUESTA';
+        $this->db->where($where);
+        $query7 = $this->db->get('');
+        $query7 = $query7->result_array();
+        $subQuery7 = $this->db->last_query();
+        
+        //TRASLADO DE PROCESO JUDICIAL
 
+        $this->db->select('TJ.COD_TRASLADO AS PROCESO,TO_CHAR(TJ.COD_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
+                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
+                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
+                . ' VW.COD_REGIONAL AS COD_REGIONAL, VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
+                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
+        $this->db->from('TRASLADO_JUDICIAL TJ');
+        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=TJ.COD_PROCESO_COACTIVO');
+        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
+        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
+        $where = 'VW.COD_RESPUESTA = TJ.COD_RESPUESTA';
+        $this->db->where($where);
+        $query8 = $this->db->get('');
+        $query8 = $query8->result_array();
+        $subQuery8 = $this->db->last_query();
+        $subQuery8;
 
+        //RESOLUCION_PRESCRIPCION
+        $this->db->select('RP.COD_PRESCRIPCION AS PROCESO,TO_CHAR(RP.COD_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
+                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
+                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
+                . ' VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
+                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
+        $this->db->from('RESOLUCION_PRESCRIPCION RP');
+        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=RP.COD_PROCESO_COACTIVO', 'inner');
+        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=RP.COD_PROCESO_COACTIVO', 'inner');
+        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO', 'inner');
+        $where = 'VW.COD_RESPUESTA = RP.COD_RESPUESTA' ;
+        $this->db->where($where);
+        $query9 = $this->db->get('');
+        $query9 = $query9->result_array();
+        $subQuery9 = $this->db->last_query();
         //   $querys= "($subQuery2)";
 //        $querys = "($subQuery2   UNION $subQuery3  UNION $subQuery4 UNION $subQuery5 UNION $subQuery6 UNION $subQuery7 UNION $subQuery8  UNION $subQuery9 UNION  $subQuery10 UNION $subQuery12 UNION $subQuery11  UNION $subQuery13 UNION $subQuery14)";
-        $querys = "($subQuery2   UNION $subQuery3   UNION $subQuery4 )";
+        $querys = "($subQuery2   UNION $subQuery3   UNION $subQuery4  )";
 
-   echo  $querys;die();
+//echo $querys; die();
 
 $where_proceso='';
 
@@ -877,9 +964,14 @@ $where_proceso='';
             $this->db->update('PROCESOS_COACTIVOS');
 
             /* Actualizo cada liquidación  para cada titulo del proceso coactivo */
-            foreach ($titulos_facilidad as $titulo):
+          foreach($titulos_facilidad as $liquidacion):
 
-            endforeach;
+                    $this->db->set('COD_PROCESO_COACTIVO',$datos['cod_proceso'], FALSE);
+                    $this->db->set('COD_TIPOPROCESO',18);
+                    $this->db->where('NUM_LIQUIDACION',$liquidacion);
+                    $this->db->update('LIQUIDACION');
+              
+                endforeach; 
             return TRUE;
         else:
             return FALSE;
@@ -914,6 +1006,8 @@ $where_proceso='';
             return FALSE;
         endif;
     }
+    
+    
 
 }
 

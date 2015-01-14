@@ -2316,9 +2316,9 @@ function cargar_plantilla() {
 
 function guardar_archivo() {
         $post = $this->input->post();
-        print_r($post);
+		print_r($post);
         $this->data['post'] = $post;
-        $ar = fopen("uploads/plantillas2/cu004_2.txt", "w+") or die();
+        $ar = fopen("uploads/plantillas/cert_nm_4.txt", "w+") or die();
         fputs($ar, $post['informacion']);
         fclose($ar);
     }

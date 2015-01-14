@@ -6,7 +6,7 @@
 * @subpackage Controllers
 * @author jdussan
 * @location./application/controllers/liquidaciones.php
-* @last-modified 27/11/2014
+* @last-modified 16/12/2014
 */
 
 class Liquidaciones extends MY_Controller
@@ -828,7 +828,7 @@ class Liquidaciones extends MY_Controller
                     $publica = $this -> security -> xss_clean((string)$this -> input -> post('entidadesPublicas'));
                     $debuger = $this -> security -> xss_clean((string)$this -> input -> post('debuger'));
                     $fiscalizacion = unserialize($this -> security -> xss_clean($this -> input -> post('fiscalizacion')));
-                                    $liquidacion_bloqueada = $this -> security -> xss_clean((string)$this -> input -> post('liquidacion_bloqueada'));
+                    $liquidacion_bloqueada = $this -> security -> xss_clean((string)$this -> input -> post('liquidacion_bloqueada'));
 
                     if($liquidacion_bloqueada > 0):
 
@@ -1041,7 +1041,13 @@ class Liquidaciones extends MY_Controller
                                     $aporteMensual = $this -> liquidaciones_model -> getAporte_mes($maestro['nit'], 1, 21, $periodo);
                                     $pagoOportuno = 0;
                                     $capital = $tasaMensual - $aporteMensual['VALOR_PAGADO'];
-                                    $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$capital);
+
+                                    if($capital > 0):
+
+                                        $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$capital, (int)$tasaMensual);
+
+                                    endif;
+
                                     if($detalleMensual === TRUE):
 
                                     else:
@@ -1087,7 +1093,12 @@ class Liquidaciones extends MY_Controller
                                     $aporteMensual = $this -> liquidaciones_model -> getAporte_mes($maestro['nit'], 1, 21, $periodo);
                                     $pagoOportuno = 0;
                                     $deuda = $tasaMensual - $aporteMensual['VALOR_PAGADO'];
-                                    $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$deuda);
+
+                                    if($deuda > 0):
+
+                                        $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$deuda, (int)$tasaMensual);
+                                    endif;
+
                                     if($detalleMensual === TRUE):
 
                                     else:
@@ -1122,6 +1133,7 @@ class Liquidaciones extends MY_Controller
                             $acumuladorInteres += $intereses;
 
                         elseif ($fila == $anno_fecha_inicial):
+
                             $base += (int)str_replace(".","",$this -> input -> post('sueldos_'.$fila));
                             $base += (int)str_replace(".","",$this -> input -> post('sobresueldos_'.$fila));
                             $base += (int)str_replace(".","",$this -> input -> post('salarioIntegral_'.$fila));
@@ -1217,7 +1229,11 @@ class Liquidaciones extends MY_Controller
                                     $aporteMensual = $this -> liquidaciones_model -> getAporte_mes($maestro['nit'], 1, 21, $periodo);
                                     $pagoOportuno = 0;
                                     $capital = $tasaMensual - $aporteMensual['VALOR_PAGADO'];
-                                    $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$capital);
+
+                                    if($capital > 0):
+
+                                    $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$capital, (int)$tasaMensual);
+                                    endif;
 
                                     if($detalleMensual === TRUE):
 
@@ -1264,7 +1280,12 @@ class Liquidaciones extends MY_Controller
                                     $aporteMensual = $this -> liquidaciones_model -> getAporte_mes($maestro['nit'], 1, 21, $periodo);
                                     $pagoOportuno = 0;
                                     $deuda = $tasaMensual - $aporteMensual['VALOR_PAGADO'];
-                                    $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$deuda);
+
+                                    if($deuda > 0):
+
+                                        $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$deuda, (int)$tasaMensual);
+
+                                    endif;
 
                                     if($detalleMensual === TRUE):
 
@@ -1300,6 +1321,7 @@ class Liquidaciones extends MY_Controller
                             $acumuladorInteres += $intereses;
 
                         else:
+
                             $base += (int)str_replace(".","",$this -> input -> post('sueldos_'.$fila));
                             $base += (int)str_replace(".","",$this -> input -> post('sobresueldos_'.$fila));
                             $base += (int)str_replace(".","",$this -> input -> post('salarioIntegral_'.$fila));
@@ -1395,7 +1417,12 @@ class Liquidaciones extends MY_Controller
                                     $aporteMensual = $this -> liquidaciones_model -> getAporte_mes($maestro['nit'], 1, 21, $periodo);
                                     $pagoOportuno = 0;
                                     $capital = $tasaMensual - $aporteMensual['VALOR_PAGADO'];
-                                    $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$capital);
+
+                                    if($capital > 0):
+
+                                        $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$capital, (int)$tasaMensual);
+
+                                    endif;
 
                                     if($detalleMensual === TRUE):
 
@@ -1442,7 +1469,12 @@ class Liquidaciones extends MY_Controller
                                     $aporteMensual = $this -> liquidaciones_model -> getAporte_mes($maestro['nit'], 1, 21, $periodo);
                                     $pagoOportuno = 0;
                                     $deuda = $tasaMensual - $aporteMensual['VALOR_PAGADO'];
-                                    $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$deuda);
+
+                                    if($deuda > 0):
+
+                                        $detalleMensual = $this -> liquidaciones_model -> cargarLiquidacionMes($fiscalizacion['NRO_EXPEDIENTE'], $liquidacion_previa, $periodo, (int)$deuda, (int)$tasaMensual);
+
+                                    endif;
 
                                     if($detalleMensual === TRUE):
 
@@ -1617,41 +1649,55 @@ class Liquidaciones extends MY_Controller
             {
                 if ($this -> ion_auth -> logged_in()): //verificación de acceso autorizado
                     if ($this -> ion_auth -> is_admin() || $this -> ion_auth -> in_menu('liquidaciones/getFormFic')): //verificación de perfil
-
+                        //VERIFICACIÓN PARA DETERMINAR SI HAY UN PROCESO DE RELIQUIDACIÓN
+                        $conteoBloqueada = $this -> liquidaciones_model -> consultarLiquidacionBloqueadaFisc($codigoGestion['COD_FISCALIZACION']);
+                        if($conteoBloqueada < 2):
+                            $liquidacion_previa = $this -> liquidaciones_model -> consultarLiquidacionFic($codigoGestion['NRO_EXPEDIENTE']);
+                            if($liquidacion_previa):
+                                $codigoGestion['LIQUIDACION_PREVIA'] = 1;
+                                $codigoGestion['LIQUIDACION_BLOQUEADA'] = 0;
+                            else:
+                                $codigoGestion['LIQUIDACION_PREVIA'] = 0;
+                                $codigoGestion['LIQUIDACION_BLOQUEADA'] = 0;
+                            endif;
+                        else:
+                            $bloqueada = $this -> liquidaciones_model -> consultarLiquidacionBloqueada($codigoGestion['COD_FISCALIZACION']);
+                            $codigoGestion['NRO_EXPEDIENTE'] = (string)$bloqueada['NUM_LIQUIDACION'];
+                            $codigoGestion['NUM_LIQUIDACION'] = (string)$bloqueada['NUM_LIQUIDACION'];
+                            $liquidacion_previa = $this -> liquidaciones_model -> consultarLiquidacionFic($codigoGestion['NRO_EXPEDIENTE']);
+                            $codigoGestion['LIQUIDACION_PREVIA'] = 1;
+                            $codigoGestion['LIQUIDACION_BLOQUEADA'] = 1;
+                        endif;
+                        //CONSULTAR TRANSACCIONES ASOCIADAS
+                        $transacciones = $this -> liquidaciones_model -> consultarTransaccionesAsociadas($codigoGestion['NRO_EXPEDIENTE']);
+                        if ($transacciones === false):
+                            throw new Exception('<strong>No ha sido posible consultar transacciones asociadas. Error: '. $transacciones);
+                        else:
+                            $this -> data['transacciones'] = $transacciones;
+                        endif;
                         $this -> data['codigoGestion'] = $codigoGestion;
                         $this -> data['fecha'] = getFechaActual();
-
+                        //CONSULTAR SMLV DE LOS PERIODOS FISCALIZADOS
                         $fechaInicial = explode('/',$codigoGestion['PERIODO_INICIAL']);
                         $this -> data['annoInicial'] = (integer)$fechaInicial[2];
                         $fechaFinal = explode('/',$codigoGestion['PERIODO_FINAL']);
                         $this -> data['annoFinal'] = (integer)$fechaFinal[2];
-
                         $smlv = array();
                         for ($indicador = (integer)$fechaFinal[2]; $indicador >= (integer)$fechaInicial[2]; $indicador--):
                                 $salario = $this -> liquidaciones_model -> getSalarioMinimoVigente($indicador);
                                 $smlv['smlv_'.$indicador] = $salario['SALARIO_MINIMO'];
                         endfor;
-
                         $this -> data['smlv'] = $smlv;
-
                         $this -> template -> set('title', 'Liquidaciones FIC');
                         $this -> template->load($this->template_file, 'liquidaciones/fic_view',$this-> data);
-
                     else:
-
                         $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área.</div>');
                         redirect(site_url().'/inicio');
-
                     endif;
-
                 else:
-
                     redirect(site_url().'/auth/login');
-
                 endif;
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 $this -> data['titulo'] = 'Liquidación Fondo de Industria y Comercio (FIC)';
                 $this -> data['message'] = '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Ha ocurrido un problema de ejecución : ' . $e->getMessage() .'</div>';
                 $this -> template -> set('title', 'Errores en liquidación');
@@ -1917,7 +1963,8 @@ class Liquidaciones extends MY_Controller
                             'tipoLiquidacion'=>1,
                             'fechaLiquidacion'=>$liquidacion['fechaLiquidacion'],
                             'valorInversion'=>(int)str_replace(".","",$liquidacion['valorInversion']),'gastosFinanciacion'=>(int)str_replace(".","",$liquidacion['gastosFinanciacion']),'valorLote'=>(int)str_replace(".","",$liquidacion['valorLote']), 'indenmizacion'=>(int)str_replace(".","",$liquidacion['indenmizacion']), 'observaciones' => $liquidacion['observaciones'], 'documentacion' => $liquidacion['documentacion'], 'periodoInicial'=>$maestro ['PERIODO_INICIAL'], 'periodoFinal'=>$maestro ['PERIODO_FINAL'], 'valorFic'=>$TotalFic,'interesesFic'=>$InteresesFic, 'valorTotalFic'=>$ValorTotalFic,'codFuncionario'=>$idusuario,'fiscalizacion'=>$maestro['COD_FISCALIZACION'], 'detalle_presuntiva'=> $resultado,'detalle_normativa'=>$FicNormativo,'maestro'=>$maestro,'id'=>$maestro['NRO_EXPEDIENTE']);
-                        $liquidacion_previa=$this->liquidaciones_model->consultarLiquidacionFic($maestro['NRO_EXPEDIENTE']);
+                        //$liquidacion_previa=$this->liquidaciones_model->consultarLiquidacionFic($maestro['NRO_EXPEDIENTE']);
+                        $liquidacion_previa = $maestro['LIQUIDACION_PREVIA'];
                         $datestring = "%d/%m/%Y";
                         $fecha_actual = mdate($datestring);
                         $this -> data['fecha'] = $fecha_actual;
@@ -1943,8 +1990,16 @@ class Liquidaciones extends MY_Controller
                         ,'tipoProceso'=>5,'codigoFiscalizacion'=>$maestro['COD_FISCALIZACION'],'numeroLiquidacion'=>$maestro['NRO_EXPEDIENTE']);
                         $cargarLiquidacion=$this->liquidaciones_model->cargarLiquidacion($datos_liquidacion,  $liquidacion_previa);
 
+                        if($maestro['LIQUIDACION_BLOQUEADA'] == 1):
 
-                        $datos_cabecera = $this -> liquidaciones_model -> consultarCabeceraLiquidacion($maestro['COD_FISCALIZACION'], $idusuario);
+                            $datos_cabecera = $this -> liquidaciones_model -> consultarCabeceraLiquidacionFicBloqueada($maestro['COD_FISCALIZACION'], $idusuario, $maestro['NUM_LIQUIDACION']);
+
+                        else:
+
+                            $datos_cabecera = $this -> liquidaciones_model -> consultarCabeceraLiquidacion($maestro['COD_FISCALIZACION'], $idusuario);
+
+                        endif;
+
                         $this -> data['datos_cabecera']=$datos_cabecera;
                         $this -> data['calculos'] = $calculos;
 
@@ -2721,22 +2776,63 @@ class Liquidaciones extends MY_Controller
     {
 
         $transaccion = $this -> input -> post('transaccion');
-        //$info = '<tr><td>NIT</td><td>Nro Licencia Contrato</td><td>Inicio</td><td>Fin</td><td>Valor</td><td>Acción</td><tr>';
+        $nit = $this -> input -> post('nit');
         $data = $this -> liquidaciones_model -> consultarTransaccion($transaccion);
-        if($data == FALSE):
 
-            $info= '<tr><td colspan = "6">Sin información disponible para la transacción N°' . $transaccion . '</td></tr>';
+
+        if($data === FALSE):
+
+            $info = '<tr class = "warning"><td colspan = "7">Sin información disponible para la transacción N° ' . $transaccion . '</td></tr>';
 
         else:
 
-            $info= '<tr>
-                <td>' . $data['NITEMPRESA'] . '</td>
-                <td>' . $data['NRO_LICENCIA_CONTRATO'] . '</td>
-                <td>' . $data['FECHA_INICIO_OBRA'] . '</td>
-                <td>' . $data['FECHA_FIN_OBRA'] . '</td>
-                <td>' . $data['VALOR_PAGADO'] . '</td>
-                <td><a id = "agregar" class="btn btn-info" href="#transacciones"><i class="fa fa-check"></i>  Agregar</a></td>
-            </tr>';
+            if($data['NITEMPRESA'] == $nit):
+
+                $info = '<tr class = "warning"><td colspan = "7">No se pueden asociar pagos de la empresa fiscalizada</td></tr>';
+
+            else:
+
+                $info = '<tr class = "info" id = "' . $transaccion . '">
+                    <td><input name="nitEmpresa_' . $transaccion . '" id="nitEmpresa_' . $transaccion . '" class="input-small uneditable-input" type="text" readonly = "readonly" value = "' . $data['NITEMPRESA'] . '""></td>';
+
+                if ($data['PERIODO_PAGADO'] != '' && $data['COD_SUBCONCEPTO'] == 17):
+                    $info .= '<td><input name="periodoTransaccion_' . $transaccion . '" id="periodoTransaccion_' . $transaccion . '" class="input-small uneditable-input" type="text" readonly = "readonly" value = "' . $data['PERIODO_PAGADO'] . '"></td>';
+                elseif ($data['PERIODO_PAGADO'] == '' && $data['COD_SUBCONCEPTO'] == 17):
+                    $info .= '<td><input name="periodoTransaccion_' . $transaccion . '" value="" id="periodoTransaccion_' . $transaccion . '" class="input-small" maxlength="7" placeholder="AAAA-MM" type="text"></td>';
+                else:
+                    $info .= '<td></td>';
+                endif;
+
+                if ($data['NRO_LICENCIA_CONTRATO'] != '' && $data['COD_SUBCONCEPTO'] == 62):
+                    $info .= '<td><input name="licenciaContrato_' . $transaccion . '" id="licenciaContrato_' . $transaccion . '" class="input-large uneditable-input" type="text" readonly = "readonly" value = "' . $data['NRO_LICENCIA_CONTRATO'] . '"></td>';
+                elseif ($data['NRO_LICENCIA_CONTRATO'] == '' && $data['COD_SUBCONCEPTO'] == 62):
+                    $info .= '<td><input name="licenciaContrato_' . $transaccion . '" value="" id="licenciaContrato_' . $transaccion . '" class="input-large" maxlength="50" placeholder="Licencia Contrato" type="text"></td>';
+                else:
+                    $info .= '<td></td>';
+                endif;
+
+                if ($data['FECHA_INICIO_OBRA'] != '' && $data['COD_SUBCONCEPTO'] == 62):
+                    $info .= '<td><input name="fechaInicio_' . $transaccion . '" id="fechaInicio_' . $transaccion . '" class="input-small uneditable-input" type="text" readonly = "readonly" value = "' . $data['FECHA_INICIO_OBRA'] . '"></td>';
+                elseif ($data['FECHA_INICIO_OBRA'] == '' && $data['COD_SUBCONCEPTO'] == 62):
+                    $info .= '<td><input name="fechasInicio_' . $transaccion . '" value="" id="fechasInicio_' . $transaccion . '" class="input-small" maxlength="7" placeholder="DD/MM/AAAA" type="text"></td>';
+                else:
+                    $info .= '<td></td>';
+                endif;
+
+                if ($data['FECHA_FIN_OBRA'] != '' && $data['COD_SUBCONCEPTO'] == 62):
+                    $info .= '<td><input name="fechaFin_' . $transaccion . '" id="fechaFin_' . $transaccion . '" class="input-small uneditable-input" type="text" readonly = "readonly" value = "' . $data['FECHA_FIN_OBRA'] . '"></td>';
+                elseif ($data['FECHA_FIN_OBRA'] == '' && $data['COD_SUBCONCEPTO'] == 62):
+                    $info .= '<td><input name="fechaFin_' . $transaccion . '" value="" id="fechaFin_' . $transaccion . '" class="input-small" maxlength="7" placeholder="DD/MM/AAAA" type="text"></td>';
+                else:
+                    $info .= '<td></td>';
+                endif;
+
+                $info .=
+                    '<td>$<input name="valor_' . $transaccion . '" id="valor_' . $transaccion . '" class="input-small uneditable-input" type="text" readonly = "readonly" value = "' . number_format($data['VALOR_PAGADO'], 0, '.', '.') . '"></td>
+                    <td><a id = "agregar" class="btn btn-info" href="#transacciones" onclick = "javascript:agregarTransaccion(' . $transaccion . ')"><i class="fa fa-check"></i>  Agregar</a></td>
+                </tr>';
+
+            endif;
 
         endif;
 

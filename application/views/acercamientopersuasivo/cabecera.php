@@ -1,6 +1,15 @@
 <!--Registran los datos básicos del ejecutado-->
 <table id="tabla" style="width:auto">
+        <tr>
+        <td><span  style="color:red; "> CÓDIGO DE PROCESO</span></td>
+        <td><span> <input type="text" readonly="readonly"  title="" value="<?php echo $cabecera['COD_PROCESOPJ']?>"></span></td>
+        <td>
+            <span style="color:red;  margin-left: 10px; " > FECHA AVOCA</span>  </td>
+        <td>
+            <span  ><input  readonly="readonly" type="text" title=""  value=" <?php echo $cabecera['FECHA_AVOCA']; ?>"></span>
+        </td>
 
+    </tr>
     <tr>
         <td><span  style="color:red; "> INSTANCIA</span></td>
         <td><span> <input type="text" readonly="readonly"  title="" value="<?php echo $cabecera['PROCESO']?>"></span></td>

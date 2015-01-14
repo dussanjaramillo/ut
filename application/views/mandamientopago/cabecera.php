@@ -1,9 +1,89 @@
-<?php echo "dddds";
-echo $resolucion;
 
-?>
 
 <table align='center'>
+     <tr>
+        <td>
+            <p>
+                <?php
+                echo form_label('Código Proceso', 'codigo');
+                echo "</td><td>";
+                $datacodigo = array(
+                    'name' => 'codigo',
+                    'id' => '´codigo',
+                    'value' => $resolucion_man[0]['COD_PROCESOPJ'],
+                    'maxlength' => '30',
+                    'readonly' => 'readonly'
+
+                );
+                echo form_input($datacodigo);
+                echo form_error('estado', '<div><b><font color="red">', '</font></b></div>');
+                ?>
+            </p>
+        </td>
+        <td>
+            <p>
+                <?php
+                echo form_label('Fecha Avoca', 'fechaavoca');
+                echo "</td><td>";
+                $dataavoca = array(
+                    'name' => 'fechaavoca',
+                    'id' => 'fechaavoca',
+                    'value' => $resolucion_man[0]['FECHA_AVOCA'],
+                    'maxlength' => '30',
+                    'readonly' => 'readonly'
+                );
+                echo form_input($dataavoca);
+                echo form_error('telefono', '<div>', '</div>');
+                ?>
+            </p>
+        </td>
+    </tr>
+<?php if (!empty($resolucion_man[0]['NUM_RESOLUCION'])):?>
+    <tr>
+    <td> <?php 
+            echo form_label('Resolución Mandamiento', 'res_mandamiento');
+            ?></td>
+     <td>                
+            <p>
+                <?php
+                $datares = array(
+                    'name' => 'res_mandamiento',
+                    'id' => 'res_mandamiento',
+                    'value' => $resolucion_man[0]['NUM_RESOLUCION'],
+                    'maxlength' => '30',
+                    'readonly' => 'readonly'
+
+                );
+                echo form_input($datares);
+                echo form_error('res_mandamiento', '<div>', '</div>');
+                ?>
+            </p>
+        </td>
+        <td>
+            <p>
+                <?php
+                echo form_label('Fecha Resolución', 'fec_resolucion');
+                echo "</td><td>";
+                $datarazon = array(
+                    'name' => 'fec_res',
+                    'id' => 'fec_res',
+                    'value' => $resolucion_man[0]['FECHA_RESOLUCION'],
+                    'maxlength' => '30',
+                    'size' => '120',
+
+                    'readonly' => 'readonly'
+
+                );
+                echo form_input($datarazon);
+                echo form_error('razon', '<div>', '</div>');
+                ?>
+            </p>
+        </td>
+    </tr>
+    
+    <?php
+endif;
+?>
     <tr>
         <td>
             <?php 
@@ -57,7 +137,7 @@ echo $resolucion;
                 $dataconcepto = array(
                     'name' => 'concepto',
                     'id' => 'concepto',
-                    'value' => 'Multas del Ministerio',
+                    'value' =>  $resolucion_man[0]['CONCEPTO'],
                     'maxlength' => '30',
                     'size' => '120',
 

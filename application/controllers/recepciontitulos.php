@@ -315,7 +315,7 @@ class Recepciontitulos extends MY_Controller {
                     $this->data['proceso'] = $this->input->post('cod_coactivo');
                     $respuesta = $this->input->post('cod_respuesta');
                 endif;
-                $cod_respuesta = 172;
+                $cod_respuesta = 173;
                 $this->data['consulta'] = $this->consultartitulos_model->recepcion_titulos($this->input->post('iDisplayStart'), $this->input->post('sSearch'), COD_REGIONAL, ID_USER, $this->data['proceso'], $cod_respuesta);
                 $this->template->load($this->template_file, 'recepciontitulos/titulos_ejecutivos', $this->data);
             } else {
@@ -332,7 +332,7 @@ class Recepciontitulos extends MY_Controller {
             $this->datos = $this->input->post();
             $this->data['ruta_titulos'] = base_url() . 'index.php/recepciontitulos/titulos_ejecutivos';
             if ($this->datos['id_recepcion']) {
-                $cod_respuesta = 172;
+                $cod_respuesta = 173;
                 if ($this->input->post())://Cuando proviene de la bandeja unificada
                     $this->data['proceso'] = $this->input->post('id_recepcion');
                 endif;

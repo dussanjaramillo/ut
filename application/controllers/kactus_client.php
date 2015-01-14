@@ -35,8 +35,7 @@ class Kactus_client extends MY_Controller {
 	$fechapas=date("Ym");
 	//$fechapas='201408';
 	$novedades=$this->carteranomisional_model->getNovedadesCNM($periodo);	
-	var_dump($novedades);
-	die();
+
 	$res=0;
 	foreach ($novedades->result_array as $data) {
 	$parts = array(		'IDDEUDA' => $data['IDDEUDA'], 
@@ -137,8 +136,8 @@ $this->_manage_response($result, $this->soapclient->fault, $this->soapclient->ge
 		// Gestionamos la respuesta
   }
   
-      function actualizar_descuentos() {
-    ob_clean();
+      function actualizar_descuentos(){
+      ob_clean();
 	  
 	  $proxyhost = 'proxy2.sena.edu.co';
 	  $proxyport = '80';
@@ -155,7 +154,6 @@ $this->_manage_response($result, $this->soapclient->fault, $this->soapclient->ge
 
 $fechapas=date("Ym");
 	$parts = array(	
-		
 	'Fec_Mes' => $fechapas,
 	'CodAc' => '5i5t3m4_c4KT0c'
 					   );	

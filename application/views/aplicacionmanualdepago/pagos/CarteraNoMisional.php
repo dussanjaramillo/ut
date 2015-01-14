@@ -39,7 +39,7 @@
 							$interes_mora = $this->aplicacionautomaticadepago_model
 																	 ->calcular_mora_nomisional($obligacion['CALCULO_MORA'], $obligacion['COD_CARTERA_NOMISIONAL'], 
 																														  $obligacion['VALOR_T_MORA'], $obligacion['FECHA_LIM_PAGO'], $fecha_pago, 
-																														  $obligacion['SALDO_CUOTA']);
+																														  $obligacion['SALDO_AMORTIZACION'], $dato['DIAS_MORA']);
 						else :
 							$interes_mora = 0;
 						endif;

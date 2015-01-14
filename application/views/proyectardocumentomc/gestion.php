@@ -17,24 +17,21 @@
                     <?php echo $consulta[0]['NOMBRE_EMPRESA'] ?>
                 </td>
 
-<!--                <td colspan="1">
-                    <label for="representante">Representante Legal:</label> 
-                </td>-->
-<!--                <td colspan="1" class="color">
-                <?php echo $consulta[0]['REPRESENTANTE_LEGAL'] ?>
-                </td>-->
+                
             </tr>
             <tr  >
-<!--                <td>
+                <td>
                     <label for="concepto">Concepto:</label> 
                 </td>
                 <td class="color">
                 <?php echo $consulta[0]['NOMBRE_CONCEPTO'] ?>
-                </td>-->
-<!--                <td>
-                    <label for="revisa">Revisa:</label> 
-                </td>-->
-                <!--<td>-->
+                </td>
+                <td colspan="1">
+                    <label for="representante">Representante Legal:</label> 
+                </td>
+                <td colspan="1" class="color"><!--
+                <?php echo $consulta[0]['REPRESENTANTE_LEGAL'] ?>
+-->                </td>
             <div style="display: none">
                 <select id="secretario" name="secretario" style="display: none">
                     <?php
@@ -85,10 +82,10 @@
         </table>
     </div>
 </div>
-<div id="texto" style="display: ">
+<div id="texto" >
     <table width="100%">
         <tr>
-        <tr><td> 
+        <tr><td> <div id="div_encabezado" style="display:none ">
                 <table width="100%" border="0" align="center">
                     <tr>
                         <td width="23%" rowspan="2"><img src="<?php echo base_url('img/Logotipo_SENA.png') ?>" width="200" height="200" /></td>
@@ -100,6 +97,7 @@
                             </div></td>
                     </tr>
                 </table> 
+                </div>
             </td></tr>
 
         <td>
@@ -139,23 +137,24 @@
 
 <form id="imprimir_pdf" target = "_blank" action="<?php echo base_url('index.php/mcinvestigacion/imprimir_pdf') ?>" method="post" >
     <textarea id="infor_pdf" name="infor_pdf" style="display: none"></textarea>
-    <input type="hidden" name="tipo_documento" id="tipo_documento" value="1" >
+    <input type="hidden" name="tipo_documento" id="tipo_documento" value="3" >
     <input type="hidden" name="titulo_doc" id="titulo_doc" >
 
 </form>
 
 <script>
 
-
+$(document).ready(function() {
+     var cod_respuesta = '<?php echo $post['cod_siguiente'] ?>';
+       if (cod_respuesta == '204' || cod_respuesta == '277') {
+            $("#tipo_documento").val('1');
+        }
+});
 
     $('.pdf').click(function() {
         var titulo = $("#Titulo_Encabezado").val();
         $("#titulo_doc").val(titulo);
         var informacion = tinymce.get('informacion').getContent();
-        var cod_respuesta = <?php echo $post['cod_siguiente'] ?>;
-        if (cod_respuesta == 279 || cod_respuesta == 204 || cod_respuesta==277) {
-            $("#tipo_documento").val('1');
-        }
         $('#infor_pdf').val(informacion);
         $('#imprimir_pdf').submit();
     });

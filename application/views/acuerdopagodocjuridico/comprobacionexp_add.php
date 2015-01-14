@@ -16,7 +16,7 @@ echo form_hidden('cod_coactivo', $cod_coactivo);
 echo form_hidden('cod_respuesta', $cod_respuesta);
 ?>  
 <center>
-    <h2>Acuerdo de Pago</h2>
+    <h2>Facilidad de Pago</h2>
     <h3>Verificación de Archivos Subidos</h3>
 </center>
 <br>

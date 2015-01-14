@@ -61,7 +61,7 @@ if( ! defined('BASEPATH') ) exit('No direct script access allowed'); ?>
             <td>
             <div id="presentaExc" style="display: none">
             <?php
-                echo form_label('Presenta excepciones', 'excepcion')."<br>";
+                echo form_label('¿Deudor presenta excepciones en Termino?', 'excepcion')."<br>";
                 $dataexcepcion = array(
                     'name'        => 'excepcion',
                     'id'          => 'excepcion',

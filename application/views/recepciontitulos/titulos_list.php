@@ -18,7 +18,7 @@ $data_observaciones = array('name' => 'observaciones', 'id' => 'observaciones', 
 
 <div style="text-align: center">
     <h3>Consulta de la existencia de títulos recibidos</h3>
-    <h4>(RESOLUCION 1235 DE 2014)</h4>
+    <h4>(RESOLUCIÓN 1235 DE 2014)</h4>
 </div>
 
 <div id="documentos" style="padding-top: 20px;">
@@ -34,13 +34,13 @@ echo form_open(current_url(), $attributes);
 <input type="hidden" name="nit" id="nit" value="<?= $nit ?>" />
 <input type="hidden" name="expediente" id="expediente" value="<?php echo $expediente ?>" />
 <div style="width: 90%">
-    <table width="100%" align="center" border="0" cellpadding="8">
+    <table width="100%" align="justify" border="0" cellpadding="8">
         <?php 
         foreach ($controles as $value) {
             echo "
             <tr>
                 <td align='right' width='20%'> <input id='list_docs' type='checkbox' name='docs' value='" . $value['value'] . "'  /> </td>
-                <td> " . form_label($value['label']) . form_error($value['id']). " </td>
+                <td align='justify'> " . form_label($value['label']) . form_error($value['id']). " </td>
             </tr>
             ";
         }

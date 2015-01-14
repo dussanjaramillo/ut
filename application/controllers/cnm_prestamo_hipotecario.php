@@ -1084,8 +1084,36 @@ if(!empty($flag)){
             if ($f == FALSE) {
                 array_push($this->data['errores'], 'error en la carga de linea ' . $this->data['numlineas']);
             }
+			if ($f!=FALSE){
             $this->data['numlineas'] ++;
-									
+			$dbuser = $this->db->username;
+			$dbpassword = $this->db->password;
+			$dbConnString = $this->db->hostname;
+			
+			$v_oDataConn = oci_connect($dbuser, $dbpassword, $dbConnString);
+					if (!$v_oDataConn) {
+							$v_oErroCntr = oci_error();
+							trigger_error(htmlentities($v_oErroCntr['message'], ENT_QUOTES), E_USER_ERROR);
+					}
+					
+			//Seguro de incendio
+			$query = "BEGIN PKG_CARTERA_NO_MISIONAL.Crea_Cobro_Incendio(".$f.", null, null, :pio_Mensaje); END;";
+			
+			$pio_Mensaje = "";
+			$v_oStnd_Out = oci_parse($v_oDataConn, $query) or die('Can not parse query');
+			//echo "id_deuda ".$this->DatosBase['COD_CARTERA_NOMISIONAL']." porcentaje ".$porcentaje." avaluo ".$avaluo." query ".$query;
+			//die();
+			oci_bind_by_name($v_oStnd_Out, ":pio_Mensaje", $pio_Mensaje, 32000) or die('Can not bind variable');
+			oci_execute($v_oStnd_Out);
+			if(!empty($pio_Mensaje))
+			{
+			oci_close($v_oDataConn);	
+			echo $pio_Mensaje;
+			die();
+			}
+			oci_close($v_oDataConn);
+			
+			}					
         }
         fclose($leer);
 

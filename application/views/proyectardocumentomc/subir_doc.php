@@ -83,11 +83,12 @@ echo form_open_multipart($post['ruta'], $attributes);
     <?php echo form_close(); ?>
 
 <script>
+$(document).ready(function() {
+   jQuery(".preload, .load").hide();
 
-
-    var cod_respuesta = <?php echo $post['cod_siguiente'] ?>;
+    var cod_respuesta = '<?php echo $post['cod_siguiente'] ?>';
     switch (cod_respuesta) {
-        case 279:
+        case '279':
             $("#campos_resolucion").show();
             $("#datos_resolucion").show();
             $("#campos_radicados").hide();
@@ -101,12 +102,14 @@ echo form_open_multipart($post['ruta'], $attributes);
             break;
 
     }
-
+});
 
     $('#radicado').validCampoFranz('0123456789');
-    $('#uploadFile').submit(function(e) {
+    $('#uploadFile').submit(function(e) { 
+        var cod_respuesta = '<?php echo $post['cod_siguiente'] ?>';
+        
         switch (cod_respuesta) {
-            case 279:
+            case '279':
                 if ($('#fecha_resolucion').val() == "") {
                     alert('Campo Fecha es Obligatorio');
                     return false;

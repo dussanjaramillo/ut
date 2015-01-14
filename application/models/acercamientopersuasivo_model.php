@@ -24,81 +24,37 @@ class Acercamientopersuasivo_model extends CI_Model {
          * @return array $cod_proceso, corresponde al codigo del proceso coactivo
          * @return array 
          */
-//        $query = "
-//            SELECT  DISTINCT PC.COD_PROCESO_COACTIVO AS COD_PROCESO,CP.RUTA_DOC_ACERCAMIENTO AS RUTA, CP.COD_COBRO_PERSUASIVO AS COD_COBRO ,
-//            CP.COD_TIPO_RESPUESTA, CP.RUTA_DOC_ACERCAMIENTO,PC.IDENTIFICACION AS IDENTIFICACION, PC.ABOGADO,PC.COD_PROCESOPJ,
-//            EM.NOMBRE_EMPRESA AS NOMBRE, RG.NOMBRE_REGIONAL, RES.NOMBRE_GESTION AS ESTADO,CF.NOMBRE_CONCEPTO AS CONCEPTO,
-//            TO_CHAR(CP.FECHA_ENVIO_DOCUMENTO, 'DD-MM-YYYY') AS FECHA_ENVIO 
-//            FROM COBROPERSUASIVO CP 
-//            INNER JOIN PROCESOS_COACTIVOS PC ON PC.COD_PROCESO_COACTIVO=CP.COD_PROCESO_COACTIVO
-//            INNER JOIN EMPRESA EM ON PC.IDENTIFICACION=EM.CODEMPRESA
-//            INNER JOIN REGIONAL RG ON EM.COD_REGIONAL=RG.COD_REGIONAL
-//            INNER JOIN RESPUESTAGESTION RES ON RES.COD_RESPUESTA=CP.COD_TIPO_RESPUESTA
-//            INNER JOIN ACUMULACION_COACTIVA AC ON AC.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO
-//            INNER JOIN RECEPCIONTITULOS RT ON RT.COD_RECEPCIONTITULO=AC.COD_RECEPCIONTITULO
-//            INNER JOIN FISCALIZACION FISC ON FISC.COD_FISCALIZACION=RT.COD_FISCALIZACION_EMPRESA
-//            INNER JOIN CONCEPTOSFISCALIZACION CF ON CF.COD_CPTO_FISCALIZACION=FISC.COD_CONCEPTO";
-//        if (!empty($cod_proceso)):
-//            $query = $query . " WHERE PC.COD_PROCESO_COACTIVO=" . $cod_proceso;
-//        endif;
-//
-//        $query = $query .
-//                " UNION (
-//            SELECT  DISTINCT PC.COD_PROCESO_COACTIVO AS COD_PROCESO,CP.RUTA_DOC_ACERCAMIENTO AS RUTA,CP.COD_COBRO_PERSUASIVO AS COD_COBRO, 
-//            CP.COD_TIPO_RESPUESTA, CP.RUTA_DOC_ACERCAMIENTO,PC.IDENTIFICACION AS IDENTIFICACION, PC.ABOGADO,PC.COD_PROCESOPJ,
-//            CNM.NOMBRES, RG.NOMBRE_REGIONAL, RES.NOMBRE_GESTION AS ESTADO, TC.NOMBRE_CARTERA AS CONCEPTO,
-//            TO_CHAR(CP.FECHA_ENVIO_DOCUMENTO, 'DD-MM-YYYY') AS FECHA_ENVIO 
-//            FROM COBROPERSUASIVO CP 
-//            INNER JOIN PROCESOS_COACTIVOS PC ON PC.COD_PROCESO_COACTIVO=CP.COD_PROCESO_COACTIVO
-//            INNER JOIN CNM_EMPLEADO CNM ON PC.IDENTIFICACION=CNM.IDENTIFICACION
-//            INNER JOIN REGIONAL RG ON CNM.COD_REGIONAL=RG.COD_REGIONAL
-//            INNER JOIN RESPUESTAGESTION RES ON RES.COD_RESPUESTA=CP.COD_TIPO_RESPUESTA
-//            INNER JOIN ACUMULACION_COACTIVA AC ON AC.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO
-//            INNER JOIN RECEPCIONTITULOS RT ON RT.COD_RECEPCIONTITULO=AC.COD_RECEPCIONTITULO
-//            INNER JOIN CNM_CARTERANOMISIONAL CNM_C ON CNM_C.COD_CARTERA_NOMISIONAL=RT.COD_CARTERA_NOMISIONAL
-//            INNER JOIN TIPOCARTERA TC ON TC.COD_TIPOCARTERA=CNM_C.COD_TIPOCARTERA ";
-//        if (!empty($cod_proceso)):
-//            $query = $query . " WHERE PC.COD_PROCESO_COACTIVO=" . $cod_proceso . " AND COD_REGIONAL=$regional";
-//        else:
-//            $query = $query . "WHERE  COD_REGIONAL = $regional";
-//        endif;
-//
-//        $query = $query . ")"
-//        ;
-          $this->db->select("CP.COD_COBRO_PERSUASIVO AS COD_COBRO,CP.RUTA_DOC_ACERCAMIENTO AS RUTA,TO_CHAR(CP.COD_TIPO_RESPUESTA) ,
+        $query = "SELECT CP.COD_COBRO_PERSUASIVO AS COD_COBRO,CP.RUTA_DOC_ACERCAMIENTO AS RUTA,CP.COD_TIPO_RESPUESTA,
                 VW.RESPUESTA AS ESTADO,
                 PC.COD_PROCESO_COACTIVO AS COD_PROCESO,
                 PC.ABOGADO AS ABOGADO, 
                 PC.COD_PROCESOPJ ,
                 VW.EJECUTADO AS NOMBRE,
                 PC.IDENTIFICACION AS IDENTIFICACION, 
-                US.NOMBRES, US.APELLIDOS,  TO_CHAR(CP.FECHA_ENVIO_DOCUMENTO) AS FECHA_ENVIO,  
+                US.NOMBRES, US.APELLIDOS,  TO_CHAR(CP.FECHA_ENVIO_DOCUMENTO,'DD-MM-YYYY') AS FECHA_ENVIO,  
                 VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL, 
                 VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,
                 VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,
-                VW.COD_EXPEDIENTE_JURIDICA, VW.ULTIMA_ACTUACION");
-
-        $this->db->from('COBROPERSUASIVO CP');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=CP.COD_PROCESO_COACTIVO');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = CP.COD_TIPO_RESPUESTA ';
-        $this->db->where($where);
+                VW.COD_EXPEDIENTE_JURIDICA, VW.ULTIMA_ACTUACION 
+                FROM  COBROPERSUASIVO CP 
+                INNER JOIN PROCESOS_COACTIVOS PC ON PC.COD_PROCESO_COACTIVO=CP.COD_PROCESO_COACTIVO
+                INNER JOIN VW_PROCESOS_COACTIVOS VW ON VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO
+                INNER JOIN USUARIOS US ON US.IDUSUARIO=PC.ABOGADO
+                WHERE VW.COD_RESPUESTA = CP.COD_TIPO_RESPUESTA AND  VW.COD_REGIONAL= " . $regional;
         if (!empty($cod_proceso)):
-            $this->db->where('PC.COD_PROCESO_COACTIVO',$cod_proceso);
+            $query = $query . " AND PC.COD_PROCESO_COACTIVO = " . $cod_proceso;
         endif;
-        $this->db->where('VW.COD_REGIONAL',$regional);
-
-        $resultado = $this->db->get('');
-       
+        $resultado = $this->db->query($query);
+        //echo $this->db->last_query();
         $resultado = $resultado->result_array();
         return $resultado;
     }
 
     function cabecera($respuesta, $proceso) {
 
-        $this->db->select('');
+        $this->db->select('PC.COD_PROCESOPJ ,VW.CONCEPTO,VW.COD_REGIONAL,VW.COD_CPTO_FISCALIZACION, PC.FECHA_AVOCA,VW.PROCESO, VW.RESPUESTA,VW.IDENTIFICACION, VW.EJECUTADO,VW.DIRECCION,VW.TELEFONO');
         $this->db->from('VW_PROCESOS_COACTIVOS VW');
+        $this->db->join('PROCESOS_COACTIVOS PC','PC.COD_PROCESO_COACTIVO=VW.COD_PROCESO_COACTIVO');
         $this->db->where('VW.COD_RESPUESTA', $respuesta);
         $this->db->where('VW.COD_PROCESO_COACTIVO', $proceso);
         $resultado = $this->db->get();
@@ -303,10 +259,9 @@ class Acercamientopersuasivo_model extends CI_Model {
         endif;
     }
 
-    function aceptar_obligaciones($datos) {
+    function aceptar_obligaciones($datos,$titulos_facilidad=FALSE) {
 
         $fecha_actual = 'SYSDATE';
-        //$this->db->set('COD_GESTION_COBRO', $datos['idgestion'], FALSE);
         $this->db->set('COD_TIPO_RESPUESTA', $datos['tipo_respuesta'], FALSE);
         $this->db->set('OBLIGACION_ACEPTADA', $datos['obligacion_aceptada']);
         if (!empty($datos['tipopago']))
@@ -322,10 +277,10 @@ class Acercamientopersuasivo_model extends CI_Model {
             $info = $this->insert_mc($datos);
         }
         if ($datos['obligacion_aceptada'] == 'S') {
-            //$this->obligacionescobro($datos);
+      
         }
         if ($datos['tipo_gestion'] == 106) {//INGRESA ACUERDO DE PAGO
-            //  $acuerdo = $this->acuerdoPago($datos);
+           
             $this->db->select("NRO_ACUERDOPAGO");
             $this->db->from("ACUERDOPAGO");
             $this->db->where("ACUERDOPAGO.COD_PROCESO_COACTIVO=", $datos['cod_proceso'], FALSE);
@@ -342,6 +297,18 @@ class Acercamientopersuasivo_model extends CI_Model {
                 $this->db->set("JURIDICO", 1);
                 $this->db->set("COD_PROCESO_COACTIVO", $datos['cod_proceso'], FALSE);
                 $this->db->insert("ACUERDOPAGO");
+                 
+                foreach($titulos_facilidad as $liquidacion):
+
+                    $this->db->set('COD_PROCESO_COACTIVO',$datos['cod_proceso'], FALSE);
+                    $this->db->set('COD_TIPOPROCESO',18);
+                    $this->db->where('NUM_LIQUIDACION',$liquidacion);
+                    $this->db->update('LIQUIDACION');
+              
+                endforeach; 
+                    
+                
+                
             endif;
         }
         return true;
@@ -488,15 +455,16 @@ class Acercamientopersuasivo_model extends CI_Model {
     }
 
     function titulos_coactivo($cod_coactivo) {
-        $this->db->select('NO_EXPEDIENTE, NUM_LIQUIDACION');
+        $this->db->select('VW.NUM_LIQUIDACION');
         $this->db->from('VW_PROCESOS_COACTIVOS VW');
         $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_RESPUESTA=VW.COD_RESPUESTA');
+        $this->db->join('RECEPCIONTITULOS RT', 'RT.COD_RECEPCIONTITULO=VW.NO_EXPEDIENTE');
         $this->db->where('VW.COD_PROCESO_COACTIVO', $cod_coactivo);
-        $where='VW.SALDO_DEUDA >0';
+        $this->db->where('RT.CERRADO', 0);
+        $where = 'VW.SALDO_DEUDA >0';
         $this->db->where($where);
-        $this->db->group_by('NO_EXPEDIENTE');
+        $this->db->group_by('VW.NO_EXPEDIENTE, VW.NUM_LIQUIDACION');
         $resultado = $this->db->get();
-         echo $d = $this->db->last_query();
         $resultado = $resultado->result_array();
         return $resultado;
     }

@@ -8,10 +8,10 @@
     <input type="hidden" name="vista" id="vista" value="<?php echo $vista; ?>">
     <table width="80%" border="0">
         <tr>
-            <?php if ($titulo == 'REPORTE KACTUS' 
-                    || $vista == 'r_cartera_no_misional'
+            <?php if ($vista == 'r_cartera_no_misional'
                     || $vista == 'r_cartera_no_mis_moroso'
-                    || $vista == 'r_cartera_no_misional_r'
+                    || $vista == 'r_cartera_no_misional_gen'
+                    || $vista == 'r_cartera_no_mis_mensual'
                     ) { ?>
                 <td>
                     Tercero
@@ -56,7 +56,73 @@
                     </select>
                 </td>
 
-            <?php } else { ?>
+            <?php } 
+            
+				elseif ( $vista == 'r_cartera_no_misional_r') { ?>
+
+                <td> 
+                    Concepto
+                </td>
+                <td >
+                    <?php $datos = Reporteador::tipocartera2() ?>
+                    <select id="conceptonm" name="conceptonm">
+                        <option value="-1">Todos...</option>
+                        <?php
+                        foreach ($datos as $concepto) {
+                            ?>
+                            <option value="<?php echo $concepto['COD_CPTO_FISCALIZACION'] ?>"><?php echo $concepto["NOMBRE_CONCEPTO"] ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </td>
+             <?php } 
+				elseif ( $vista == 'r_cartera_no_mis_cesantias') { ?>
+
+                                <td>
+                    Tercero
+                </td>
+                <td >
+                    <input type="text" id="empleado" name="empleado" value="<?php echo isset($_POST['empleado']) ? $_POST['empleado'] : '' ?>">
+                    <img id="preloadmini9" src="<?php echo base_url('img/319.gif') ?>" width="28" height="28" />
+                </td>
+             <?php } 
+            elseif ( $titulo == 'REPORTE KACTUS' ) { ?>
+
+                <td>
+                    Empleado
+                </td>
+                <td >
+                    <input type="text" id="empleado" name="empleado" value="<?php echo isset($_POST['empleado']) ? $_POST['empleado'] : '' ?>">
+                    <img id="preloadmini9" src="<?php echo base_url('img/319.gif') ?>" width="28" height="28" />
+                </td>
+
+                <td> 
+                    Concepto
+                </td>
+                <td >
+                    <?php $datos = Reporteador::tipocartera() ?>
+                    <select id="concepto2" name="concepto2">
+                        <option value="-1">Todos...</option>
+                        <?php
+                        foreach ($datos as $concepto) {
+                            ?>
+                            <option value="<?php echo $concepto['COD_CPTO_FISCALIZACION'] ?>"><?php echo $concepto["NOMBRE_CONCEPTO"] ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="vista">Periodo</div><input type="checkbox" id="check_fecha" name="check_fecha" style="display: none">
+                </td>
+                <td>
+                    <div class="vista"><input type="text" class="periodo" readonly id="periodo" name="periodo" value=""></div>
+                </td>
+             <?php }
+            else { ?>
                 <td>
                     Nit/Empresa
                 </td>
@@ -116,6 +182,9 @@
                     || $vista == 'r_cartera_no_misional'
                     || $vista == 'r_cartera_no_mis_moroso'
                     || $vista == 'r_cartera_no_misional_r'
+                    || $vista == 'r_cartera_no_misional_gen'
+                    || $vista == 'r_cartera_no_mis_mensual'
+                    || $vista == 'r_cartera_no_mis_cesantias'
                     ) { ?>
             <tr>
 
@@ -178,6 +247,9 @@
                     || $vista == 'r_cartera_no_misional'
                     || $vista == 'r_cartera_no_mis_moroso'
                     || $vista == 'r_cartera_no_misional_r'
+                    || $vista == 'r_cartera_no_misional_gen'
+                    || $vista == 'r_cartera_no_mis_mensual'
+                    || $vista == 'r_cartera_no_mis_cesantias'
                     ) { ?>
             </tr>
             <tr>
@@ -199,6 +271,7 @@
             <?php
             if ($titulo != "Visitas General" && $titulo != 'Contratos FIC' && $titulo != 'Procesos Sancionatorios' && $titulo != 'Reporte Comparativo por Periodos' && $titulo != 'Reporte Estado de Fiscalización' && $titulo != 'Reporte Abogado' && $titulo != 'Recuperación Cartera' && $titulo != 'Reportes por Gestión' && $titulo != 'Reporte Gestión por Empresa') {
                 ?>
+                <?php if ( $vista != 'r_cartera_no_misional_r') { ?>
                 <td>
                     <div class="generarles">
                         Numero de Obligaci&oacute;n
@@ -208,9 +281,11 @@
                     </div>
                 </td>
                 <td>
+                	
                     <div style="">
                         <input id="num_obligacion" type="text" name="num_obligacion" value="<?php echo isset($_POST['num_obligacion']) ? $_POST['num_obligacion'] : '' ?>">
                     </div>
+                    <?php } ?>
                 </td>
             <?php } ?>
             <td>
@@ -383,7 +458,17 @@
         buttonImageOnly: true,
                 numberOfMonths: 1,
     });
-
+    $(".periodo").datepicker({
+        buttonText: 'Fecha',
+        buttonImageOnly: true,
+        numberOfMonths: 1,
+        dateFormat: 'mm/yy',
+        showOn: 'button',
+        buttonText: 'Seleccione una fecha',
+                buttonImage: '<?php echo base_url() . "img/calendario.png" ?>',
+        buttonImageOnly: true,
+                numberOfMonths: 1,
+    });
     $('.primer').click(function() {
         if ($('#reporte').val() == '-1') {
             alert('Seleccione un Reporte');

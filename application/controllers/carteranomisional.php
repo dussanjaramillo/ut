@@ -115,10 +115,9 @@ class Carteranomisional extends MY_Controller {
 										if(!empty($flag)){
 											
 											$this->data['message']="";
-
 											$adjuntos= $this->input->post('documentos');
 											$id_cartera= $this->input->post('id_cartera_form');
-										
+											
 											switch ($this->input->post('tipo_cartera')) {
 												case '1':
 	
@@ -366,7 +365,13 @@ class Carteranomisional extends MY_Controller {
 
 				$this->data['id_cartera'] = $datos["id_cartera"];	
 				$this->data['tipo_cartera'] = $datos["tipo_cartera"];	
-									
+				if(isset($datos["agregar"])){
+					$this->data['agregar'] = $datos["agregar"];	
+				}
+				else{
+					$this->data['agregar'] = '0';	
+				}
+				
 										$this->template->set('title', 'Archivos Cartera No Misional');
 
 
@@ -1615,8 +1620,17 @@ $id_deuda = $this->input->post('id_deuda');
 												//if($this->input->post('cod_tipo_cartera')==8){
 																						if($this->input->post('cod_tipo_cartera')==8){
 
+											
+												$data = array(
+																'MOD_TASA_CORRIENTE' => $mod_tasa_corr,
+																'MOD_TASA_MORA' => $mod_tasa_mora,
+																'VALOR_CUOTA_APROBADA' => str_replace(".", "", $this->input->post('nueva_cuota')),
+																'FECHA_RETIRO' =>  $this->input->post('nueva_f_r'),
+																);
 													$tabla_cart='CNM_CARTERA_PRESTAMO_HIPOTEC';
-																															if ($this->carteranomisional_model->updateCartera('CNM_CARTERANOMISIONAL',$datacnm,$datecnm,$id_deuda,"COD_CARTERA_NOMISIONAL") == TRUE)			
+													$this->carteranomisional_model->updateCartera($tabla_cart,$data,'',$id_deuda,"COD_CARTERA"); 	
+									
+												if ($this->carteranomisional_model->updateCartera('CNM_CARTERANOMISIONAL',$datacnm,$datecnm,$id_deuda,"COD_CARTERA_NOMISIONAL") == TRUE)			
 									{
 
 
@@ -3110,6 +3124,39 @@ function cobro_judicial(){
 				$this->template->load($this->template_file, 'carteranomisional/carteranomisional_list', $this->data);
 				
 				}else {
+                $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área.</div>');
+                      redirect(base_url().'index.php/inicio');
+               } 
+
+            }else
+            {
+              redirect(base_url().'index.php/auth/login');
+            }
+          
+		}	
+
+function documentos(){
+		if ($this->ion_auth->logged_in())
+           {
+                if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('carteranomisional/consulta'))
+               {
+                //template data
+                $this->template->set('title', 'Cartera No Misional');
+                $this->data['style_sheets']= array(
+                            'css/jquery.dataTables_themeroller.css' => 'screen'
+                        );
+				
+				
+				
+				$id_cartera=$this->input->post('id_deuda_docs');
+				$tipo_cartera=$this->input->post('tipo_cartera_docs');
+
+				$this->session->set_flashdata('message', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Agregar Documentos Cartera.</div>');
+                $datos = array('id_cartera'=>$id_cartera, 'tipo_cartera'=>$tipo_cartera, 'agregar'=>'1');
+
+ 				$this->session->set_userdata('lolwut',$datos);			
+				redirect(base_url().'index.php/carteranomisional/carga_archivo_cart/');
+			}else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área.</div>');
                       redirect(base_url().'index.php/inicio');
                } 

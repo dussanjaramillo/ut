@@ -141,6 +141,15 @@ if (count($informacion) != 0 && $informacion[0] != "0") {
                         $value == "SALDO_DEUDA_DE_CAPITAL" ||
                         $value == "INTERESES_ACOMULADOS_NO_PAGO" ||
                         $value == "VALOR_TOTAL_DEUDA" ||
+                        $value == "TOTAL_SALDOS" ||
+                        $value == "VALOR_ANT_CAPITAL" ||
+                        $value == "CUOTA_PACTADA" ||
+                        $value == "CUOTA_CANCELADA" ||
+                        $value == "CESANTIAS_APLICADAS" ||
+                        $value == "INTERES_CORRIENTE_CANCELADO" ||
+                        $value == "AMORTIZACION_A_CAPITAL" ||
+                        $value == "NUEVO_SALDO_CAPITAL" ||
+                        $value == "SALDO_INTERESES_NO_PAGOS_ACUM" ||
                         $value == "CUOTAS_MES_MORA" ||
                         $value == "TOTAL_ADEUDADO_POR_MOROSOS" ||
                         $value == "VALOR_CUOTA_INICIAL" || $value == "VALOR_CUOTA")

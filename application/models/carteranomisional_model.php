@@ -30,9 +30,23 @@ class Carteranomisional_model extends CI_Model {
     }
 	
 		 		    function updateadjuntos($table,$data){
-
-	$query = $this->db->query(" UPDATE ".$table." SET ADJUNTOS='".$data['ADJUNTOS']."' WHERE ".$data['CODIGO_CARTERA']."='".$data['COD_CARTERA']."'");
-
+$post = $this->input->post();
+if($post['agregar']==1){
+		$querydoc = $this->db->query("SELECT ADJUNTOS FROM ".$table." WHERE ".$data['CODIGO_CARTERA']."='".$data['COD_CARTERA']."'");
+        $row = $querydoc->row_array();
+        $docactual = $row['ADJUNTOS'];
+		if(empty($docactual)){
+		$query = $this->db->query(" UPDATE ".$table." SET ADJUNTOS='".$data['ADJUNTOS']."' WHERE ".$data['CODIGO_CARTERA']."='".$data['COD_CARTERA']."'");
+		}
+		elseif(!empty($data['ADJUNTOS']))
+		{
+		$query = $this->db->query(" UPDATE ".$table." SET ADJUNTOS=ADJUNTOS || '::' || '".$data['ADJUNTOS']."' WHERE ".$data['CODIGO_CARTERA']."='".$data['COD_CARTERA']."'");
+		}
+			
+}
+else{
+$query = $this->db->query(" UPDATE ".$table." SET ADJUNTOS='".$data['ADJUNTOS']."' WHERE ".$data['CODIGO_CARTERA']."='".$data['COD_CARTERA']."'");
+}
 	if ($this->db->affected_rows() >= 0)
 		{
 			return TRUE;
@@ -115,7 +129,7 @@ $this->db->select('CNM_CUOTAS.NO_CUOTA, CNM_CUOTAS.CAPITAL, CNM_CUOTAS.MES_PROYE
 $this->db->select('CNM_CUOTAS.VALOR_CUOTA - "CNM_CUOTAS"."SALDO_CUOTA" + "CNM_CUOTAS"."INTERES_MORA_GEN" AS VALOR_PAGADOS');
 $this->db->select('CNM_CUOTAS.CAPITAL AS SALDO, CNM_CUOTAS.VALOR_CUOTA, CNM_CUOTAS.AMORTIZACION, CNM_CUOTAS.VALOR_INTERES_C, CNM_CUOTAS.INTERES_MORA_GEN');
 $this->db->select("to_char(CNM_CUOTAS.FECHA_LIM_PAGO,'dd/mm/yyyy') AS FECHA_PAGO",FALSE);	
-	
+$this->db->select("CNM_CUOTAS.SALDO_INTERES_C, CNM_CUOTAS.SALDO_AMORTIZACION");	
 		$this->db->where('CNM_CUOTAS.ID_DEUDA_E',$id_deuda);
 		$dato = $this->db->get("CNM_CUOTAS");
 		//echo $this->db->last_query();
@@ -141,6 +155,8 @@ $this->db->select('CNM_CUOTAS.VALOR_CUOTA - "CNM_CUOTAS"."SALDO_CUOTA" + "CNM_CU
 $this->db->select('CNM_CUOTAS.CAPITAL AS SALDO, CNM_CUOTAS.VALOR_CUOTA, CNM_CUOTAS.AMORTIZACION, CNM_CUOTAS.VALOR_INTERES_C, CNM_CUOTAS.INTERES_MORA_GEN');
 $this->db->select('CNM_CUOTAS.SALDO_INTERES_NO_PAGOS, CNM_CUOTAS.CESANTIAS');
 $this->db->select("to_char(CNM_CUOTAS.FECHA_LIM_PAGO,'dd/mm/yyyy') AS FECHA_PAGO",FALSE);	
+$this->db->select("CNM_CUOTAS.SALDO_INTERES_C, CNM_CUOTAS.SALDO_AMORTIZACION");
+$this->db->select("DECODE(CNM_CUOTAS.CESANTIAS_APLICADAS, 0, 0, CNM_CUOTAS.CESANTIAS ) CESANTIAS_APLICADA",FALSE);
 	
 		$this->db->where('CNM_CUOTAS.ID_DEUDA_E',$id_deuda);
 		$this->db->where('CNM_CUOTAS.CONCEPTO','8');
@@ -163,15 +179,18 @@ $this->db->select("to_char(CNM_CUOTAS_ECOLLECT.FECHA_PAGO,'dd/mm/yyyy') AS FECHA
 	}
 	
 				function getNovedadesCNM($periodo){
-		$this->db->select('CNM_CUOTAS.ID_DEUDA_E AS IDDEUDA, CNM_CUOTAS.NO_CUOTA AS NRO_CTA, CNM_CUOTAS.SALDO_CUOTA AS VLR_CTA, B.CONCEPTO_HOMOLOGADO, CNM_CUOTAS.CEDULA');
+		$this->db->select('CNM_CUOTAS.ID_DEUDA_E AS IDDEUDA, CNM_CUOTAS.NO_CUOTA AS NRO_CTA, CNM_CUOTAS.SALDO_CUOTA AS VLR_CTA, 
+		B.CONCEPTO_HOMOLOGADO, CNM_CARTERANOMISIONAL.COD_EMPLEADO');
 		$this->db->join('CONCEPTO_HOMOLOGACION A', "A.CONCEPTO_HOMOLOGADO=CNM_CUOTAS.CONCEPTO AND A.TIPO_FUENTE='3'");
 		$this->db->join('CONCEPTO_HOMOLOGACION B', "B.COD_CONCEPTO_RECAUDO=A.COD_CONCEPTO_RECAUDO AND B.TIPO_FUENTE='2'");
+		$this->db->join("CNM_CARTERANOMISIONAL", "CNM_CUOTAS.ID_DEUDA_E=CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL", 'LEFT');
+		$this->db->join("CNM_EMPLEADO", "CNM_EMPLEADO.IDENTIFICACION=CNM_CARTERANOMISIONAL.COD_EMPLEADO", 'LEFT');
 		$this->db->where('CNM_CUOTAS.MES_PROYECTADO',$periodo);
 		$this->db->where('CNM_CUOTAS.MEDIO_INI_PAGO',1);
+		$this->db->where('CNM_CARTERANOMISIONAL.COD_ESTADO',2);
 		$this->db->where('CNM_CUOTAS.SALDO_CUOTA >',0);
+		$this->db->where('CNM_EMPLEADO.COD_ESTADO_E','A');
 		$dato = $this->db->get("CNM_CUOTAS");
-		//echo $this->db->last_query();
-		//die();
 		return $dato;
 	}
 	

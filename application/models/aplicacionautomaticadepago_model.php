@@ -151,12 +151,6 @@ class Aplicacionautomaticadepago_model extends CI_Model {
     endif;
 		return NULL;
   }
-	
-	public function ObtenerValoresPeriodosMensuales($liquidacion = NULL) {
-		if(!is_null($liquidacion)) :
-			
-		endif;
-	}
 
   private function get_obligacion_paga() {
     if (!empty($this->nit)) :

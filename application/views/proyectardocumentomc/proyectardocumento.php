@@ -40,7 +40,7 @@ if (isset($message)) {
                 <td align="center">
                     <?php 
 //                    echo $data['COD_MEDIDACAUTELAR'];
-                    echo $data['COD_RESPUESTAGESTION'];
+             // echo $data['COD_RESPUESTAGESTION'];
                     switch ($data['COD_RESPUESTAGESTION']) {
                         // AUTO
                         case INICIO_PROCESO:
@@ -208,7 +208,7 @@ if (isset($message)) {
                             <?php
                             break;
                     }
-                    ?>¿  
+                    ?> 
                 </td>
                 <td><?php echo $data['TIPOGESTION2'] ?></td>
                 <td align="center">
@@ -341,6 +341,8 @@ if (isset($message)) {
 
 
 <script type = "text/javascript" language = "javascript" charset = "utf-8">
+    function  ajaxValidationCallback(){}
+
     $('.traza').click(function(){
         var FISCALIZACION=$(this).attr('fisca');
         $('#FISCALIZACION').val(FISCALIZACION);

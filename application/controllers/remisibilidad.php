@@ -87,7 +87,7 @@ class Remisibilidad extends MY_Controller {
     }
 
     function index() {
-        $this->Menu_RemisibilidadOficio();
+        redirect(base_url() . 'index.php');
     }
 
     /*
@@ -730,7 +730,7 @@ class Remisibilidad extends MY_Controller {
                 for ($i = 1; $i < sizeof($expediente); $i++) {
                     $contador = 0;
                     for ($j = 1; $j < sizeof($expediente); $j++) {
-                       
+
                         if ("'.$expediente[$i].'" == "'.$expediente[$j].'") {
                             $contador++;
                         }

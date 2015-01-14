@@ -143,6 +143,7 @@ class Bandejaunificada Extends MY_Controller {
                                         echo $html_0;
                                         break;
                                     case 173:
+                                    case 886:
                                         $html_1 = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">

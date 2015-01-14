@@ -661,7 +661,8 @@ class Cnm_liquidacioncuotas extends MY_Controller {
 					$cuotas[$x]["SALDO_CUOTA"]						= round($tmpcuotas[$x]["cuota"], 0);
 					$cuotas[$x]["VALOR_CUOTA"]						= round($tmpcuotas[$x]["cuota"], 0);
 					$cuotas[$x]["VALOR_INTERES_C"]				= round($tmpcuotas[$x]["intereses"], 0);
-					$cuotas[$x]["SALDO_INTERES_C"]				= round($tmpcuotas[$x]["intereses"], 0);
+					$cuotas[$x]["SALDO_INTERES_C"]				= ($cuotas[$x]["SALDO_CUOTA"] < round($tmpcuotas[$x]["intereses"], 0)) ?
+																									$cuotas[$x]["SALDO_CUOTA"]:round($tmpcuotas[$x]["intereses"], 0);
 					$cuotas[$x]["VALOR_INTERES_NO_PAGOS"]	= ($tmpcuotas[$x]["saldo_intereses_no_pagado"] <= 0) ?
 																									abs(round($tmpcuotas[$x]["saldo_intereses_no_pagado"], 0))+$int_no_pagos_mes:0;
 					if($x == $this->DatosBase['PLAZO_CUOTAS'] || $tmpcuotas[$x]['capital_saldo'] == 0) :

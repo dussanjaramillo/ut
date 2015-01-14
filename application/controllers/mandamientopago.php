@@ -81,6 +81,7 @@ class Mandamientopago extends MY_Controller {
         $ID = $this->input->post('clave');
         $this->data['gestion'] = $gestion = $this->input->post('gestion');
         $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+        $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
         $this->data['titulo'] = "<h2>Acta de Notificación personal Mandamiento de Pago</h2>";
         $this->data['tipo'] = "acta";
         $this->data['instancia'] = "Acta Notificación Personal";
@@ -192,6 +193,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -292,6 +294,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -392,6 +395,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -484,6 +488,7 @@ class Mandamientopago extends MY_Controller {
         $this->data['idmandamiento'] = $idmandamiento;
         $this->data['gestion'] = $gestion;
         $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+        $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
         //Numero de Proceso
     
         $this->data['cod_coactivo'] = $this->input->post('cod_coactivo');
@@ -606,6 +611,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('comentarios', 'Comentarios', 'required|trim|xss_clean|max_length[200]');
@@ -700,6 +706,8 @@ class Mandamientopago extends MY_Controller {
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('comentarios', 'Comentarios', 'required|trim|xss_clean|max_length[200]');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($this->form_validation->run() == false) {
                     $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' . validation_errors() . '</div>' : false);
                 } else {
@@ -791,6 +799,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -882,6 +891,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('comentarios', 'Comentarios', 'required|trim|xss_clean|max_length[200]');
@@ -971,6 +981,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->data['gestion'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
@@ -1072,6 +1083,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestion'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -1161,6 +1173,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -1265,6 +1278,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -1355,6 +1369,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -1448,6 +1463,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -1540,6 +1556,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -1639,6 +1656,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
@@ -1978,6 +1996,7 @@ class Mandamientopago extends MY_Controller {
                 } else {
                     $this->data['result'] = $this->mandamientopago_model->getMandamiento($ID);
                     $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                    $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                     $this->load->library('form_validation');
                     $this->data['custom_error'] = '';
                     if (!isset($_POST['codigo'])) {
@@ -2119,6 +2138,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -2294,6 +2314,7 @@ class Mandamientopago extends MY_Controller {
     }
 
     function editCit() {
+      
         $this->data['post'] = $this->input->post();
         $gestion = $this->input->post('gestion');
         $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
@@ -2311,6 +2332,9 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
+
+             
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -2516,6 +2540,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -2713,6 +2738,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'bandejaunificada/index');
@@ -2915,6 +2941,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -3114,6 +3141,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -3308,6 +3336,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave')); 
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -3487,6 +3516,7 @@ class Mandamientopago extends MY_Controller {
                 } else {
                     $this->data['result'] = $this->mandamientopago_model->getRecursoExcep($ID);
                     $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                    $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                     $this->load->library('form_validation');
                     $this->data['custom_error'] = '';
                     if (!isset($_POST['codigo'])) {
@@ -3632,6 +3662,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $nit = $this->input->post('nit');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $ID = $this->input->post('clave');
                 $this->data['result'] = $this->mandamientopago_model->getNotificaCautelares($ID, $this->TIPONOTIFICACIONMEDIDA);
                 $this->data['resultMedida'] = $this->mandamientopago_model->getMedidaCautelar($this->data['fiscalizacion'], '0');
@@ -3810,6 +3841,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -3998,6 +4030,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestion'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));   
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -4092,6 +4125,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -4271,6 +4305,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));  
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/mandamientopago/nits');
@@ -4425,6 +4460,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));  
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/mandamientopago/nits');
@@ -4638,6 +4674,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));  
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -4837,6 +4874,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));  
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -5041,6 +5079,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+               $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));   
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -5235,6 +5274,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));      
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
                     redirect(base_url() . 'index.php/bandejaunificada/index');
@@ -5394,6 +5434,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->data['gestion'] = $this->mandamientopago_model->getRespuesta($gestion);
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
@@ -5554,6 +5595,7 @@ class Mandamientopago extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));     
                 $ID = $this->input->post('clave');
                 if ($ID == "") {
                     $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No hay un ID para editar.</div>');
@@ -5706,6 +5748,7 @@ class Mandamientopago extends MY_Controller {
                 } else {
                     $this->data['result'] = $this->mandamientopago_model->getRecurso($ID);
                     $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                    $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));   
                     $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                     $this->load->library('form_validation');
                     $this->data['custom_error'] = '';
@@ -5889,6 +5932,7 @@ class Mandamientopago extends MY_Controller {
         $this->data['url2'] = $this->input->post('url2');
         $nit = $this->input->post('nit');
         $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+        $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));  
 
         if ($this->ion_auth->logged_in()) {
             $this->load->view('mandamientopago/mandamientopago_gestion', $this->data);
@@ -5951,6 +5995,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $nit = $this->input->post('nit');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -6081,6 +6126,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $nit = $this->input->post('nit');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));   
                 $this->data['gestiones'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['cod_coactivo'] = $this->input->post('cod_coactivo');
                 $this->data['codrespuesta'] = $this->input->post('cod_respuesta');
@@ -6210,6 +6256,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestion'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -6310,6 +6357,7 @@ class Mandamientopago extends MY_Controller {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('mandamientopago/nits')) {
                 $this->data['gestion'] = $this->mandamientopago_model->getRespuesta($gestion);
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));  
                 $this->load->library('form_validation');
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
@@ -6415,6 +6463,7 @@ class Mandamientopago extends MY_Controller {
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if (!isset($_POST['idmandamiento'])) {
                     $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' . validation_errors() . '</div>' : false);
                 } else {
@@ -6496,7 +6545,7 @@ class Mandamientopago extends MY_Controller {
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('notificacion', 'Notificacion', 'required|trim|xss_clean');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
-
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if (!isset($_POST['idmandamiento'])) {
                     $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' . validation_errors() . '</div>' : false);
                 } else {
@@ -6674,6 +6723,7 @@ class Mandamientopago extends MY_Controller {
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('recurso', 'Presenta recurso', 'required');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));
                 if (!isset($_POST['idmandamiento'])) {
                     $this->session->set_flashdata('message', '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' . validation_errors() . '</div>');
                 } else {
@@ -6738,6 +6788,7 @@ class Mandamientopago extends MY_Controller {
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('presenta', 'Tipo recurso', 'required');
                 $this->data['informacion'] = $this->mandamientopago_model->getEmpresa($nit);
+                $this->data['resolucion_man']=$this->mandamientopago_model->Resolución($this->input->post('clave'));  
                 if ($this->form_validation->run() == false) {
                     $this->session->set_flashdata('message', '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' . validation_errors() . '</div>');
                 } else {

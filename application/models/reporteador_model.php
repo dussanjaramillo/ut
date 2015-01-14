@@ -124,6 +124,15 @@ class Reporteador_model extends CI_Model {
         return $datos = $dato->result_array;
     }
 	
+	    function tipocartera2() {
+        $this->db->select("COD_TIPOCARTERA AS COD_CPTO_FISCALIZACION,NOMBRE_CARTERA AS NOMBRE_CONCEPTO");
+        $this->db->where("COD_TIPOCARTERA  not in ('12','13') and 1=", 1, false);
+        $this->db->where("COD_TIPOCARTERA <", '14', false);
+        $this->db->order_by('NOMBRE_CARTERA', "asc");
+        $dato = $this->db->get("TIPOCARTERA");
+        return $datos = $dato->result_array;
+    }
+	
 	    function estadoempleado() {
         $this->db->select("COD_ESTADO_E,NOMBRE_ESTADO_E");
         $dato = $this->db->get("CNM_ESTADO_EMP");
@@ -3864,39 +3873,38 @@ SUM(CNM_CUOTAS.SALDO_AMORTIZACION) SALDO_PENDIENTE_CAPITAL,
     function r_cartera_no_mis_moroso() {
         $post = $this->input->post();
 		
-        $array_select = array('0', 'COD DEUDOR', 'NOMBRE DEUDOR', 'CONCEPTO', 'FECHA ULTIMO PAGO', 'ULTIMA CUOTA CANCELADA', 'SALDO DEUDA DE CAPITAL',
+        $array_select = array('0', 'COD DEUDOR', 'NOMBRE DEUDOR', 'COD DEUDA', 'CONCEPTO', 'FECHA ULTIMO PAGO', 'ULTIMA CUOTA CANCELADA', 'SALDO DEUDA DE CAPITAL',
             'INTERESES ACOMULADOS NO PAGO', 'VALOR TOTAL DEUDA', 'CUOTAS MES MORA', 'ESTADO ACTUAL DEL COBRO', 'ESTADO FUNCIONARIO');
 
-		/*	$periodo = date("Y/m/d  H:i");
-            $periodo = explode("/", $periodo);
-            $this->db->where("CNM_CUOTAS.MES_PROYECTADO", $periodo[0] . "-" . $periodo[1]);*/
         if (!empty($post['empleado'])) {
             $cedula = explode(' - ', $post['empleado']);
             $this->db->where('NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)', $cedula[0], FALSE);
         }
         if ($post['conceptonm'] != "-1") {
-		//echo($post['conceptonm']);
-		//die();
+
             $this->db->where('CNM_CUOTAS.CONCEPTO', $post['conceptonm']);
         }
         if (!empty($post['num_obligacion'])) {
             $this->db->where('CNM_CUOTAS.ID_DEUDA_E', $post["num_obligacion"]);
         }
-			        if ($post['regional'][0] != "-1") {
+
+		if(!empty($regional)&&isset($post['regional'][0])){
+		if ($post['regional'][0] != "-1") {
             $regional = $post['regional'][0];
 			$this->db->where('CNM_CARTERANOMISIONAL.COD_REGIONAL', $regional, FALSE);
         }
-		
-				/*	if ($post['estado_e'][0] != "-1") {
+		}
+		if ($post['estado_e'] != "-1") {
             $estado_e = $post['estado_e'][0];
-			echo $estado_e;
-			$this->db->where('CNM_EMPLEADO.COD_ESTADO_E', $estado_e, FALSE);
-        }*/
+			$this->db->where('CNM_EMPLEADO.COD_ESTADO_E', $estado_e);
+        }
 			
 		 $this->db->where("CNM_CUOTAS.CONCEPTO  not in ('12','13','2','9') and 1=", 1, false);
 
+
         $this->db->select("NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO) COD_DEUDOR, 
 fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO)) AS NOMBRE_DEUDOR, 
+CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL COD_DEUDA, 
 TIPOCARTERA.NOMBRE_CARTERA CONCEPTO, 
 MAX(DECODE(CNM_CUOTAS.SALDO_CUOTA, 0,CNM_CUOTAS.FECHA_LIM_PAGO,NULL))	FECHA_ULTIMO_PAGO,
 MAX(DECODE(CNM_CUOTAS.SALDO_CUOTA, 0,CNM_CUOTAS.MES_PROYECTADO,NULL))	ULTIMA_CUOTA_CANCELADA,
@@ -3905,20 +3913,22 @@ SUM(CNM_CUOTAS.SALDO_INTERES_C) INTERESES_ACOMULADOS_NO_PAGO,
 
 SUM(CNM_CUOTAS.SALDO_AMORTIZACION + CNM_CUOTAS.SALDO_INTERES_C) VALOR_TOTAL_DEUDA,
 SUM(DECODE(CNM_CUOTAS.SALDO_CUOTA,0,0,1)) CUOTAS_MES_MORA,
-'' ESTADO_ACTUAL_DEL_COBRO,
-'' OBSERVACIONES", false);
+ESTADOCARTERA.DESC_EST_CARTERA ESTADO_ACTUAL_DEL_COBRO,
+CNM_ESTADO_EMP.NOMBRE_ESTADO_E ESTADO_FUNCIONARIO", false);
         $this->db->join("CNM_CUOTAS", "CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E");
         $this->db->join("REGIONAL", "REGIONAL.COD_REGIONAL=CNM_CARTERANOMISIONAL.COD_REGIONAL");
         $this->db->join("TIPOCARTERA", "TIPOCARTERA.COD_TIPOCARTERA=CNM_CARTERANOMISIONAL.COD_TIPOCARTERA");
         $this->db->join("CNM_EMPRESA", "CNM_EMPRESA.COD_ENTIDAD=CNM_CARTERANOMISIONAL.COD_EMPRESA", 'LEFT');
         $this->db->join("CNM_EMPLEADO", "CNM_EMPLEADO.IDENTIFICACION=CNM_CARTERANOMISIONAL.COD_EMPLEADO", 'LEFT');
-
+		$this->db->join("CNM_ESTADO_EMP", "CNM_ESTADO_EMP.COD_ESTADO_E=CNM_EMPLEADO.COD_ESTADO_E", 'LEFT');
+		$this->db->join("ESTADOCARTERA", "ESTADOCARTERA.COD_EST_CARTERA=CNM_CARTERANOMISIONAL.COD_ESTADO", 'LEFT');
         $this->db->join("MUNICIPIO", "MUNICIPIO.CODMUNICIPIO=REGIONAL.COD_CIUDAD AND MUNICIPIO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO");
         $this->db->join("DEPARTAMENTO", "DEPARTAMENTO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO");
 
 
-        $this->db->where("SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO > 0 HAVING SUM(DECODE(CNM_CUOTAS.SALDO_CUOTA, 0, 0, 1))>0 group by 
-		CNM_CUOTAS.ID_DEUDA_E,
+        $this->db->where("SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO > 0 AND CNM_CARTERANOMISIONAL.COD_ESTADO  not in ('1','3','4') 
+		HAVING SUM(DECODE(CNM_CUOTAS.SALDO_CUOTA, 0, 0, 1))>0 group by 
+		CNM_CUOTAS.ID_DEUDA_E, NOMBRE_ESTADO_E, CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL, DESC_EST_CARTERA,
 		NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO),
 fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)),TIPOCARTERA.NOMBRE_CARTERA", false, false);
 
@@ -3931,14 +3941,74 @@ fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_
         }
         return $datos;
     }
+	
+	
 
+	    function r_cartera_no_mis_cesantias() {
+        $post = $this->input->post();
+		$mes="#02";
+		$periodo=date('Y').$mes;
+		$periodo=str_replace('#', '-', $periodo);
+		$array_select = array('0', 'COD DEUDOR', 'NOMBRE DEUDOR', 'CODIGO DEUDA', 'SALDO DEUDA', 'FECHA SALDO DEUDA');
+
+        if (!empty($post['empleado'])) {
+            $cedula = explode(' - ', $post['empleado']);
+            $this->db->where('NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)', $cedula[0], FALSE);
+        }
+        
+        if (!empty($post['num_obligacion'])) {
+            $this->db->where('CNM_CUOTAS.ID_DEUDA_E', $post["num_obligacion"]);
+        }
+
+		if(!empty($regional)&&isset($post['regional'][0])){
+		if ($post['regional'][0] != "-1") {
+            $regional = $post['regional'][0];
+			$this->db->where('CNM_CARTERANOMISIONAL.COD_REGIONAL', $regional, FALSE);
+        }
+		}
+		
+			
+		 $this->db->where("CNM_CUOTAS.CONCEPTO  in ('8') and 1=", 1, false);
+
+
+        $this->db->select("NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO) COD_DEUDOR, 
+fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO)) AS NOMBRE_DEUDOR, 
+CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL AS CODIGO_DEUDA, 
+SUM(CNM_CUOTAS.SALDO_AMORTIZACION) SALDO_DEUDA_DE_CAPITAL", false);
+$this->db->select("'".$periodo."' FECHA_SALDO_DEUDA",false);
+        $this->db->join("CNM_CUOTAS", "CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E");
+        $this->db->join("REGIONAL", "REGIONAL.COD_REGIONAL=CNM_CARTERANOMISIONAL.COD_REGIONAL");
+        $this->db->join("CNM_EMPRESA", "CNM_EMPRESA.COD_ENTIDAD=CNM_CARTERANOMISIONAL.COD_EMPRESA", 'LEFT');
+        $this->db->join("CNM_EMPLEADO", "CNM_EMPLEADO.IDENTIFICACION=CNM_CARTERANOMISIONAL.COD_EMPLEADO", 'LEFT');
+        $this->db->join("MUNICIPIO", "MUNICIPIO.CODMUNICIPIO=REGIONAL.COD_CIUDAD AND MUNICIPIO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO");
+        $this->db->join("DEPARTAMENTO", "DEPARTAMENTO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO");
+
+
+        $this->db->where("
+		CNM_CUOTAS.MES_PROYECTADO>'".$periodo."' AND
+		CNM_CARTERANOMISIONAL.COD_ESTADO in ('2') 
+		HAVING SUM(DECODE(CNM_CUOTAS.SALDO_CUOTA, 0, 0, 1))>0 group by 
+		NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO),
+fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)),
+CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL", false, false);
+
+        $consulta = $this->db->get("CNM_CARTERANOMISIONAL");
+		//echo $this->db->last_query();
+		//die();
+        $datos = $consulta->result_array;
+        if (count($datos) == 0) {
+            $datos = $array_select;
+        }
+        return $datos;
+    }
+	
     function r_cartera_no_misional_r() {
         $post = $this->input->post();
 
-        $array_select = array('0', 'COD REGIONAL', 'NOMBRE REGIONAL', 'TIPO DE CARTERA', 'CANTIDAD', 'SALDO PENDIENTE CAPITAL', 'CUOTAS MES MORA',
+        $array_select = array('0', 'NOMBRE REGIONAL', 'TIPO DE CARTERA', 'CANTIDAD', 'SALDO PENDIENTE CAPITAL', 'CUOTAS MES MORA',
             'TOTAL ADEUDADO POR MOROSOS');
 
-        $periodo = $post['periodo'];
+        /*$periodo = $post['periodo'];
         if (!empty($periodo)) {
             $periodo = explode("/", $periodo);
             $this->db->where("CNM_CUOTAS.MES_PROYECTADO", $periodo[1] . "-" . $periodo[0]);
@@ -3946,26 +4016,30 @@ fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_
         if (!empty($post['empleado'])) {
             $cedula = explode(' - ', $post['empleado']);
             $this->db->where('NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)', $cedula[0], FALSE);
+        }*/
+        if ($post['conceptonm'] != "-1") {
+            $this->db->where('CNM_CUOTAS.CONCEPTO', $post['conceptonm']);
         }
-        if ($post['concepto2'] != "-1") {
-            $this->db->where('CNM_CUOTAS.CONCEPTO', $post['concepto2']);
-        }
+		/*
         if (!empty($post['num_obligacion'])) {
             $this->db->where('CNM_CUOTAS.ID_DEUDA_E', $post["num_obligacion"]);
+        }*/
+		
+				if(!empty($regional)&&isset($post['regional'][0])){
+		if ($post['regional'][0] != "-1") {
+            $regional = $post['regional'][0];
+			$this->db->where('CNM_CARTERANOMISIONAL.COD_REGIONAL', $regional, FALSE);
         }
-        $this->db->select(" REGIONAL.COD_REGIONAL, REGIONAL.NOMBRE_REGIONAL, TIPOCARTERA.NOMBRE_CARTERA TIPO_DE_CARTERA,
-COUNT(*) CANTIDAD, 
-SUM(CNM_CUOTAS.SALDO_AMORTIZACION) SALDO_PENDIENTE_CAPITAL,
-SUM(
-CASE
-WHEN (SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)>1 THEN 1
-END)  CUOTAS_MES_MORA,
-SUM(
-CASE
-WHEN (SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)>1 THEN 
-CNM_CUOTAS.SALDO_AMORTIZACION
-END)  TOTAL_ADEUDADO_POR_MOROSOS
+		}
+        $this->db->select(" REGIONAL.NOMBRE_REGIONAL, TIPOCARTERA.NOMBRE_CARTERA TIPO_DE_CARTERA,
+COUNT(DISTINCT CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL) CANTIDAD,
+SUM(CNM_CUOTAS.SALDO_AMORTIZACION) TOTAL_SALDOS,
+SUM(DECODE(CNM_CARTERANOMISIONAL.SALDO_INTERES_MORATORIO,0,0,1)) CANTIDAD_MOROSOS
 ", false);
+		 $this->db->where("CNM_CUOTAS.CONCEPTO  not in ('12','13') AND 
+		 CNM_CARTERANOMISIONAL.COD_ESTADO  not in ('1','3','4') and 1=", 1, false);
+ 
+
         $this->db->join("CNM_CUOTAS", "CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E");
         $this->db->join("REGIONAL", "REGIONAL.COD_REGIONAL=CNM_CARTERANOMISIONAL.COD_REGIONAL");
         $this->db->join("TIPOCARTERA", "TIPOCARTERA.COD_TIPOCARTERA=CNM_CARTERANOMISIONAL.COD_TIPOCARTERA");
@@ -3975,9 +4049,11 @@ END)  TOTAL_ADEUDADO_POR_MOROSOS
         $this->db->join("DEPARTAMENTO", "DEPARTAMENTO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO");
 
 
-        $this->db->group_by(array("REGIONAL.COD_REGIONAL", "REGIONAL.NOMBRE_REGIONAL", "TIPOCARTERA.NOMBRE_CARTERA"));
+        $this->db->group_by(array("REGIONAL.NOMBRE_REGIONAL", "TIPOCARTERA.NOMBRE_CARTERA"));
 
         $consulta = $this->db->get("CNM_CARTERANOMISIONAL");
+		//echo $this->db->last_query();
+		//die();
         $datos = $consulta->result_array;
         if (count($datos) == 0) {
             $datos = $array_select;
@@ -3990,7 +4066,7 @@ END)  TOTAL_ADEUDADO_POR_MOROSOS
 
         $array_select = array('0', 'TIPO DE CARTERA', 'CANTIDAD', 'SALDO PENDIENTE CAPITAL', 'CUOTAS MES MORA',
             'TOTAL ADEUDADO POR MOROSOS');
-
+/*
         $periodo = $post['periodo'];
         if (!empty($periodo)) {
             $periodo = explode("/", $periodo);
@@ -3999,26 +4075,26 @@ END)  TOTAL_ADEUDADO_POR_MOROSOS
         if (!empty($post['empleado'])) {
             $cedula = explode(' - ', $post['empleado']);
             $this->db->where('NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)', $cedula[0], FALSE);
-        }
+        }*/
         if ($post['concepto2'] != "-1") {
             $this->db->where('CNM_CUOTAS.CONCEPTO', $post['concepto2']);
-        }
+        }/*
         if (!empty($post['num_obligacion'])) {
             $this->db->where('CNM_CUOTAS.ID_DEUDA_E', $post["num_obligacion"]);
+        }*/
+		if(!empty($regional)&&isset($post['regional'][0])){
+		if ($post['regional'][0] != "-1") {
+            $regional = $post['regional'][0];
+			$this->db->where('CNM_CARTERANOMISIONAL.COD_REGIONAL', $regional, FALSE);
         }
+		}
         $this->db->select(" REGIONAL.COD_REGIONAL, REGIONAL.NOMBRE_REGIONAL,
-COUNT(*) CANTIDAD, 
+COUNT(DISTINCT CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL) CANTIDAD, 
 SUM(CNM_CUOTAS.SALDO_AMORTIZACION) SALDO_PENDIENTE_CAPITAL,
-SUM(
-CASE
-WHEN (SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)>1 THEN 1
-END)  CUOTAS_MES_MORA,
-SUM(
-CASE
-WHEN (SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)>1 THEN 
-CNM_CUOTAS.SALDO_AMORTIZACION
-END)  TOTAL_ADEUDADO_POR_MOROSOS
+SUM(DECODE(CNM_CARTERANOMISIONAL.SALDO_INTERES_MORATORIO,0,0,1)) CANTIDAD_MOROSOS
 ", false);
+$this->db->where("CNM_CUOTAS.CONCEPTO  not in ('12','13') AND 
+		 CNM_CARTERANOMISIONAL.COD_ESTADO  not in ('1','3','4') and 1=", 1, false);
         $this->db->join("CNM_CUOTAS", "CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E");
         $this->db->join("REGIONAL", "REGIONAL.COD_REGIONAL=CNM_CARTERANOMISIONAL.COD_REGIONAL");
         $this->db->join("TIPOCARTERA", "TIPOCARTERA.COD_TIPOCARTERA=CNM_CARTERANOMISIONAL.COD_TIPOCARTERA");
@@ -4644,7 +4720,8 @@ where (CNM_CARTERANOMISIONAL.COD_EMPRESA='" . $post[0] . "' or CNM_CARTERANOMISI
         $SQL = "SELECT TIPOCARTERA.COD_TIPOCARTERA,TIPOCARTERA.NOMBRE_CARTERA TIPO_CARTERA
 from CNM_CARTERANOMISIONAL
 JOIN TIPOCARTERA ON TIPOCARTERA.COD_TIPOCARTERA=CNM_CARTERANOMISIONAL.COD_TIPOCARTERA
-where (CNM_CARTERANOMISIONAL.COD_EMPRESA='" . $post['idusuario'][0] . "' or CNM_CARTERANOMISIONAL.COD_EMPLEADO='" . $post['idusuario'][0] . "')"
+where (CNM_CARTERANOMISIONAL.COD_EMPRESA='" . $post['idusuario'][0] . "' or CNM_CARTERANOMISIONAL.COD_EMPLEADO='" . $post['idusuario'][0] . "') 
+		AND CNM_CARTERANOMISIONAL.COD_ESTADO  not in ('1','3','4')"
                 . "GROUP BY TIPOCARTERA.COD_TIPOCARTERA,TIPOCARTERA.NOMBRE_CARTERA 
                     ORDER BY TIPOCARTERA.NOMBRE_CARTERA ";
         $consulta = $this->db->query($SQL);
@@ -4675,6 +4752,37 @@ where (CNM_CARTERANOMISIONAL.COD_EMPRESA='" . $post['idusuario'][0] . "' or CNM_
         }
         return $html;
     }
+	
+	    function buscar_tipo_cert_nm() {
+        $post = $this->input->post();
+//        idusuario
+
+        $SQL = "SELECT COD_ESTADO
+FROM CNM_CARTERANOMISIONAL
+where CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL='" . $post['id_deuda'] . "'";
+        $consulta = $this->db->query($SQL);
+        $datos = $consulta->result_array;
+		$html = "<option value=''></option>";
+		if($post['concepto2']==8){
+		if($datos[0]['COD_ESTADO']==4){
+		$html.="<option value='1'>Certificación Estado de Cuenta a la fecha</option>";
+		$html.="<option value='2'>Certificación Estado de Cuenta Anual</option>";
+		$html.="<option value='3'>Certificación Deuda Saldada</option>";
+		$html.="<option value='4'>Certificación Deuda Saldada para liberación</option>";
+		}
+		else{
+		$html.="<option value='1'>Certificación Estado de Cuenta a la fecha</option>";
+		$html.="<option value='2'>Certificación Estado de Cuenta Anual</option>";
+		}
+		
+		}
+		else{
+		$html.="<option value='1'>Certificación Estado de Cuenta a la fecha</option>";
+		$html.="<option value='2'>Certificación Estado de Cuenta Anual</option>";
+		}
+
+        return $html;
+    }
 
     function burcar_no_misional_deuda2($concepto2, $idusuario) {
         $post = $this->input->post();
@@ -4691,34 +4799,85 @@ where (CNM_CARTERANOMISIONAL.COD_EMPRESA='" . $idusuario[0] . "' or CNM_CARTERAN
         return $datos = $consulta->result_array;
     }
 
+	    function r_cartera_no_mis_mensual() {
+        $post = $this->input->post();
+
+        if (!empty($post['empleado'])) {
+            $cedula = explode(' - ', $post['empleado']);
+            $this->db->where('NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)', $cedula[0], FALSE);
+        }
+        if ($post['conceptonm'] != "-1") {
+
+            $this->db->where('CNM_CUOTAS.CONCEPTO', $post['conceptonm']);
+        }
+        if (!empty($post['num_obligacion'])) {
+            $this->db->where('CNM_CUOTAS.ID_DEUDA_E', $post["num_obligacion"]);
+        }
+
+		if(!empty($regional)&&isset($post['regional'][0])){
+		if ($post['regional'][0] != "-1") {
+            $regional = $post['regional'][0];
+			$this->db->where('CNM_CARTERANOMISIONAL.COD_REGIONAL', $regional, FALSE);
+        }
+		}
+		if ($post['estado_e'] != "-1") {
+            $estado_e = $post['estado_e'][0];
+			$this->db->where('CNM_EMPLEADO.COD_ESTADO_E', $estado_e);
+        }
+
+        $this->db->select(' 
+NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO) COD_DEUDOR,
+
+TIPOCARTERA.NOMBRE_CARTERA CONCEPTO,
+CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL IDENTIFICACION_DE_LA_DEUDA, 
+CNM_CUOTAS.NO_CUOTA NUM_CUOTA,
+CNM_CUOTAS.MES_PROYECTADO PERIODO,
+CNM_CUOTAS.CAPITAL VALOR_ANT_CAPITAL,
+CNM_CUOTAS.VALOR_CUOTA CUOTA_PACTADA,
+CNM_CUOTAS.VALOR_CUOTA-CNM_CUOTAS.SALDO_CUOTA CUOTA_CANCELADA,
+DECODE(CNM_CUOTAS.CESANTIAS_APLICADAS, 1,CNM_CUOTAS.CESANTIAS,0) CESANTIAS_APLICADAS,
+CNM_CUOTAS.VALOR_INTERES_C-CNM_CUOTAS.SALDO_INTERES_C INTERES_CORRIENTE_CANCELADO,
+CNM_CUOTAS.AMORTIZACION-CNM_CUOTAS.SALDO_AMORTIZACION AMORTIZACION_A_CAPITAL,
+CNM_CUOTAS.SALDO_FINAL_CAP NUEVO_SALDO_CAPITAL,
+CNM_CUOTAS.VALOR_INTERES_NO_PAGOS SALDO_INTERESES_NO_PAGOS_ACUM', false);
+$this->db->join('TIPO_TASA_HISTORICA', 'TIPO_TASA_HISTORICA.COD_TIPO_TASA_HIST=CNM_CARTERANOMISIONAL.TIPO_T_V_CORRIENTE', 'left');
+$this->db->join('TIPOTASAINTERES', 'TIPOTASAINTERES.COD_TIPO_TASAINTERES=CNM_CARTERANOMISIONAL.TIPO_T_F_CORRIENTE', 'left');
+$this->db->join('CNM_CUOTAS', 'CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E');
+$this->db->join('REGIONAL', 'REGIONAL.COD_REGIONAL=CNM_CARTERANOMISIONAL.COD_REGIONAL');
+$this->db->join('TIPOCARTERA', 'TIPOCARTERA.COD_TIPOCARTERA=CNM_CARTERANOMISIONAL.COD_TIPOCARTERA');
+$this->db->join('CNM_EMPRESA', 'CNM_EMPRESA.COD_ENTIDAD=CNM_CARTERANOMISIONAL.COD_EMPRESA', 'left');
+$this->db->join('CNM_EMPLEADO', 'CNM_EMPLEADO.IDENTIFICACION=CNM_CARTERANOMISIONAL.COD_EMPLEADO', 'left');
+$this->db->join("CNM_ESTADO_EMP", "CNM_ESTADO_EMP.COD_ESTADO_E=CNM_EMPLEADO.COD_ESTADO_E", 'LEFT');
+$this->db->join('MUNICIPIO', 'MUNICIPIO.CODMUNICIPIO=REGIONAL.COD_CIUDAD AND MUNICIPIO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO');
+$this->db->join('DEPARTAMENTO', 'DEPARTAMENTO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO');
+$this->db->where("CNM_CUOTAS.CONCEPTO  not in ('12','13') AND (CNM_CUOTAS.VALOR_CUOTA<>CNM_CUOTAS.SALDO_CUOTA OR CNM_CUOTAS.CESANTIAS_APLICADAS=1) 
+AND 1=", 1, false);
+		
+$this->db->order_by("CNM_CUOTAS.MES_PROYECTADO", false);
+
+$consulta = $this->db->get("CNM_CARTERANOMISIONAL");
+
+        return $datos = $consulta->result_array;
+    }
+	
     function r_cartera_no_mis_liquidacion() {
         $post = $this->input->post();
-        $SQL = "SELECT 
-NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO) COD_DEUDOR, 
-fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO)) AS NOMBRE_DEUDOR, 
-TIPOCARTERA.NOMBRE_CARTERA TIPO_CARTERA,
+
+        $SQL="SELECT 
+NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO) COD_DEUDOR,
+
+TIPOCARTERA.NOMBRE_CARTERA CONCEPTO,
 CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL IDENTIFICACION_DE_LA_DEUDA, 
-CNM_CARTERANOMISIONAL.VALOR_DEUDA VALOR_PRESTAMO,
-CNM_CARTERANOMISIONAL.FECHA_ACTIVACION FECHA_DESEMBOLSO,
-CNM_CARTERANOMISIONAL.VALOR_T_CORRIENTE,
-CASE
-WHEN (CALCULO_CORRIENTE=1)THEN
-TIPOTASAINTERES.NOMBRE_TASAINTERES
-WHEN (CALCULO_CORRIENTE=2)THEN
-TIPO_TASA_HISTORICA.NOMBRE_TIPOTASA
-END TIPO_TASA_INTERES_CORRIENTE,
-CNM_CUOTAS.MES_PROYECTADO PERIODO_EN_MORA,
-CNM_CARTERANOMISIONAL.SALDO_DEUDA SALDO,
-CNM_CUOTAS.SALDO_CUOTA CUOTA_PACTADA,
-CNM_CUOTAS.VALOR_INTERES_C INTERESES_CORRIENTES,
-CNM_CUOTAS.AMORTIZACION AMORTIZACION_CAPITAL,
-'' INTERESES_MORA,
-CNM_CARTERANOMISIONAL.SALDO_DEUDA SALDO,
-CNM_CUOTAS.SALDO_INTERES_NO_PAGOS,
-CASE
-WHEN (SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)>0 THEN
-CEIL(SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)
-END DIAS_MORA
+CNM_CUOTAS.NO_CUOTA NUM_CUOTA,
+CNM_CUOTAS.MES_PROYECTADO PERIODO,
+CNM_CUOTAS.CAPITAL VALOR_ANT_CAPITAL,
+CNM_CUOTAS.VALOR_CUOTA CUOTA_PACTADA,
+CNM_CUOTAS.VALOR_CUOTA-CNM_CUOTAS.SALDO_CUOTA CUOTA_CANCELADA,
+DECODE(CNM_CUOTAS.CESANTIAS_APLICADAS, 1,CNM_CUOTAS.CESANTIAS,0) CESANTIAS_APLICADAS,
+CNM_CUOTAS.VALOR_INTERES_C-CNM_CUOTAS.SALDO_INTERES_C INTERES_CORRIENTE_CANCELADO,
+CNM_CUOTAS.AMORTIZACION-CNM_CUOTAS.SALDO_AMORTIZACION AMORTIZACION_A_CAPITAL,
+CNM_CUOTAS.SALDO_FINAL_CAP NUEVO_SALDO_CAPITAL,
+CNM_CUOTAS.VALOR_INTERES_NO_PAGOS SALDO_INTERESES_NO_PAGOS_ACUM
 FROM CNM_CARTERANOMISIONAL
 LEFT JOIN TIPO_TASA_HISTORICA ON  TIPO_TASA_HISTORICA.COD_TIPO_TASA_HIST=CNM_CARTERANOMISIONAL.TIPO_T_V_CORRIENTE
 LEFT JOIN TIPOTASAINTERES ON TIPOTASAINTERES.COD_TIPO_TASAINTERES=CNM_CARTERANOMISIONAL.TIPO_T_F_CORRIENTE
@@ -4729,9 +4888,78 @@ LEFT JOIN CNM_EMPRESA ON CNM_EMPRESA.COD_ENTIDAD=CNM_CARTERANOMISIONAL.COD_EMPRE
 LEFT JOIN CNM_EMPLEADO ON CNM_EMPLEADO.IDENTIFICACION=CNM_CARTERANOMISIONAL.COD_EMPLEADO 
 JOIN MUNICIPIO ON MUNICIPIO.CODMUNICIPIO=REGIONAL.COD_CIUDAD AND MUNICIPIO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO 
 JOIN DEPARTAMENTO ON DEPARTAMENTO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO 
-where COD_CARTERA_NOMISIONAL='" . $post['id_deuda'] . "' ";
+where COD_CARTERA_NOMISIONAL='" . $post['id_deuda'] . "' AND CNM_CUOTAS.CONCEPTO  not in ('12','13') 
+AND (CNM_CUOTAS.VALOR_CUOTA<>CNM_CUOTAS.SALDO_CUOTA OR CNM_CUOTAS.CESANTIAS_APLICADAS=1)
+ORDER BY CNM_CUOTAS.MES_PROYECTADO ";
         $consulta = $this->db->query($SQL);
         return $datos = $consulta->result_array;
+    }
+	
+	    function r_cartera_no_misional_gen() {
+		$array_select = array('0', 'COD DEUDOR', 'CONCEPTO', 'FECHA TRANSACCIÓN', 'IDENTIFICACION DE LA DEUDA', 'NUM CUOTA',
+            'PERIODO', 'VALOR CANCELADO', 'NUMERO DE TRANSACCIÓN', 'PROCEDENCIA', 'REGIONAL', 'ESTADO FUNCIONARIO');
+		
+        $post = $this->input->post();
+				        if (!empty($post['empleado'])) {
+            $cedula = explode(' - ', $post['empleado']);
+            $this->db->where('NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA,CNM_CARTERANOMISIONAL.COD_EMPLEADO)', $cedula[0], FALSE);
+        }
+		
+        if ($post['conceptonm'] != "-1") {
+
+            $this->db->where('CNM_CUOTAS.CONCEPTO', $post['conceptonm']);
+        }
+        if (!empty($post['num_obligacion'])) {
+            $this->db->where('CNM_CUOTAS.ID_DEUDA_E', $post["num_obligacion"]);
+        }
+
+		
+		if ($post['estado_e'] != "-1") {
+            $estado_e = $post['estado_e'][0];
+			$this->db->where('CNM_EMPLEADO.COD_ESTADO_E', $estado_e);
+        }
+		
+		if(!empty($regional)&&isset($post['regional'][0])){
+		if ($post['regional'][0] != "-1") {
+            $regional = $post['regional'][0];
+			$this->db->where('CNM_CARTERANOMISIONAL.COD_REGIONAL', $regional, FALSE);
+        }
+		}
+        $this->db->select(' 
+NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO ) COD_DEUDOR,
+fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO)) AS NOMBRE_DEUDOR, 
+TIPOCARTERA.NOMBRE_CARTERA CONCEPTO,
+to_char(PAGOSRECIBIDOS.FECHA_TRANSACCION) AS FECHA_TRANSACCION,
+CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL IDENTIFICACION_DE_LA_DEUDA, 
+CNM_CUOTAS.NO_CUOTA NUM_CUOTA,
+CNM_CUOTAS.MES_PROYECTADO PERIODO,
+PAGOSRECIBIDOS.VALOR_PAGADO VALOR_CANCELADO,
+PAGOSRECIBIDOS.COD_PAGO NUMERO_TRANSACCION,
+PAGOSRECIBIDOS.PROCEDENCIA PROCEDENCIA,
+REGIONAL.NOMBRE_REGIONAL REGIONAL,
+CNM_ESTADO_EMP.NOMBRE_ESTADO_E ESTADO_FUNCIONARIO', false);
+
+$this->db->join("CNM_CUOTAS", "CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E"); 
+$this->db->join("PAGOSRECIBIDOS", "CNM_CUOTAS.ID_DEUDA_E=PAGOSRECIBIDOS.NRO_REFERENCIA AND PAGOSRECIBIDOS.NRO_CUOTA=CNM_CUOTAS.NO_CUOTA");
+$this->db->join("REGIONAL", "REGIONAL.COD_REGIONAL=PAGOSRECIBIDOS.COD_REGIONAL"); 
+$this->db->join("TIPOCARTERA", "TIPOCARTERA.COD_TIPOCARTERA=CNM_CARTERANOMISIONAL.COD_TIPOCARTERA");
+$this->db->join("CNM_EMPRESA", "CNM_EMPRESA.COD_ENTIDAD=CNM_CARTERANOMISIONAL.COD_EMPRESA", "left"); 
+$this->db->join("CNM_EMPLEADO", "CNM_EMPLEADO.IDENTIFICACION=CNM_CARTERANOMISIONAL.COD_EMPLEADO", "left"); 
+$this->db->join("MUNICIPIO", "MUNICIPIO.CODMUNICIPIO=REGIONAL.COD_CIUDAD AND MUNICIPIO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO"); 
+$this->db->join("DEPARTAMENTO", "DEPARTAMENTO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO");
+$this->db->join("CNM_ESTADO_EMP", "CNM_ESTADO_EMP.COD_ESTADO_E=CNM_EMPLEADO.COD_ESTADO_E", "left");
+$this->db->where ("CNM_CUOTAS.CONCEPTO  not in ('12','13') 
+AND (CNM_CUOTAS.VALOR_CUOTA<>CNM_CUOTAS.SALDO_CUOTA OR CNM_CUOTAS.CESANTIAS_APLICADAS=1) AND 1=", 1, false);
+$this->db->order_by("CNM_CUOTAS.MES_PROYECTADO, fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO )) ", false);
+$consulta = $this->db->get("CNM_CARTERANOMISIONAL");
+		//echo $this->db->last_query();
+		//die();
+        $datos = $consulta->result_array;
+        if (count($datos) == 0) {
+            $datos = $array_select;
+        }
+        return $datos;
+
     }
 
     function ingresos_tipo_registro($anos, $whe, $post) {
@@ -4894,47 +5122,79 @@ where " . $whe . " " . $group;
         $empleado = $post["empleado"];
         $empleado = explode(" - ", $post["empleado"]);
         $SQL = "SELECT 
-            CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL,CNM_CUOTAS.NO_CUOTA,CNM_CUOTAS.SALDO_CUOTA,
+            CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL, REGIONAL.NOMBRE_REGIONAL,
 NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO) COD_DEUDOR, 
 fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO)) AS NOMBRE_DEUDOR, 
 TIPOCARTERA.NOMBRE_CARTERA TIPO_CARTERA,
-CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL IDENTIFICACION_DE_LA_DEUDA, 
 CNM_CARTERANOMISIONAL.VALOR_DEUDA VALOR_PRESTAMO,
 CNM_CARTERANOMISIONAL.FECHA_ACTIVACION FECHA_DESEMBOLSO,
-CNM_CARTERANOMISIONAL.VALOR_T_CORRIENTE,
-CASE
-WHEN (CALCULO_CORRIENTE=1)THEN
-TIPOTASAINTERES.NOMBRE_TASAINTERES
-WHEN (CALCULO_CORRIENTE=2)THEN
-TIPO_TASA_HISTORICA.NOMBRE_TIPOTASA
-END TIPO_TASA_INTERES_CORRIENTE,
-CNM_CUOTAS.MES_PROYECTADO PERIODO_EN_MORA,
 CNM_CARTERANOMISIONAL.SALDO_DEUDA SALDO,
-CNM_CUOTAS.SALDO_CUOTA CUOTA_PACTADA,
-CNM_CUOTAS.VALOR_INTERES_C INTERESES_CORRIENTES,
-CNM_CUOTAS.AMORTIZACION AMORTIZACION_CAPITAL,
-'' INTERESES_MORA,
-CNM_CARTERANOMISIONAL.SALDO_INTERES_ACUMULADO+CNM_CARTERANOMISIONAL.SALDO_INTERES_MORATORIO INTERESES_A_LA_FECHA,
-CNM_CARTERANOMISIONAL.SALDO_DEUDA SALDO,
-CNM_CUOTAS.SALDO_INTERES_NO_PAGOS,
-CASE
-WHEN (SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)>0 THEN
-CEIL(SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO)
-END DIAS_MORA
+CNM_CARTERANOMISIONAL.SALDO_INTERES_ACUMULADO+CNM_CARTERANOMISIONAL.SALDO_INTERES_MORATORIO INTERESES_A_LA_FECHA
 FROM CNM_CARTERANOMISIONAL
-LEFT JOIN TIPO_TASA_HISTORICA ON  TIPO_TASA_HISTORICA.COD_TIPO_TASA_HIST=CNM_CARTERANOMISIONAL.TIPO_T_V_CORRIENTE
-LEFT JOIN TIPOTASAINTERES ON TIPOTASAINTERES.COD_TIPO_TASAINTERES=CNM_CARTERANOMISIONAL.TIPO_T_F_CORRIENTE
-JOIN CNM_CUOTAS ON CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E 
+JOIN CNM_CUOTAS ON CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E
 JOIN REGIONAL ON REGIONAL.COD_REGIONAL=CNM_CARTERANOMISIONAL.COD_REGIONAL 
 JOIN TIPOCARTERA ON TIPOCARTERA.COD_TIPOCARTERA=CNM_CARTERANOMISIONAL.COD_TIPOCARTERA 
 LEFT JOIN CNM_EMPRESA ON CNM_EMPRESA.COD_ENTIDAD=CNM_CARTERANOMISIONAL.COD_EMPRESA 
 LEFT JOIN CNM_EMPLEADO ON CNM_EMPLEADO.IDENTIFICACION=CNM_CARTERANOMISIONAL.COD_EMPLEADO 
 JOIN MUNICIPIO ON MUNICIPIO.CODMUNICIPIO=REGIONAL.COD_CIUDAD AND MUNICIPIO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO 
 JOIN DEPARTAMENTO ON DEPARTAMENTO.COD_DEPARTAMENTO=REGIONAL.COD_DEPARTAMENTO 
-where (CNM_CARTERANOMISIONAL.COD_EMPRESA='".$empleado[0]."' or CNM_CARTERANOMISIONAL.COD_EMPLEADO='".$empleado[0]."') AND CNM_CUOTAS.SALDO_CUOTA>0 "
-                . " and CNM_CARTERANOMISIONAL.COD_TIPOCARTERA='".$post['concepto2']."' "
-                . " ORDER BY CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL,CNM_CUOTAS.NO_CUOTA";
+where (CNM_CARTERANOMISIONAL.COD_EMPRESA='".$empleado[0]."' or CNM_CARTERANOMISIONAL.COD_EMPLEADO='".$empleado[0]."') "
+                . " and CNM_CARTERANOMISIONAL.COD_TIPOCARTERA='".$post['concepto2']."' 
+				and CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL='".$post['id_deuda']."'"
+                . " 
+				group BY CNM_CUOTAS.ID_DEUDA_E, CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL,
+NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO),
+fn_Razon_Social(NVL(CNM_CARTERANOMISIONAL.COD_EMPRESA, CNM_CARTERANOMISIONAL.COD_EMPLEADO)), 
+TIPOCARTERA.NOMBRE_CARTERA, CNM_CARTERANOMISIONAL.VALOR_DEUDA, 
+CNM_CARTERANOMISIONAL.FECHA_ACTIVACION, CNM_CARTERANOMISIONAL.SALDO_DEUDA, 
+CNM_CARTERANOMISIONAL.SALDO_INTERES_ACUMULADO+CNM_CARTERANOMISIONAL.SALDO_INTERES_MORATORIO, REGIONAL.NOMBRE_REGIONAL";
         $consulta = $this->db->query($SQL);
+        return $datos = $consulta->result_array;
+    }
+	
+	    function empresa_consulta_no_misional_2($post) {
+        $empleado = $post["empleado"];
+        $empleado = explode(" - ", $post["empleado"]);
+        $SQL = "SELECT 
+            CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL,
+SUM(CNM_CUOTAS.SALDO_INTERES_C) INTERES_C
+FROM CNM_CARTERANOMISIONAL
+JOIN CNM_CUOTAS ON CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL=CNM_CUOTAS.ID_DEUDA_E
+where (CNM_CARTERANOMISIONAL.COD_EMPRESA='".$empleado[0]."' or CNM_CARTERANOMISIONAL.COD_EMPLEADO='".$empleado[0]."') "
+                . " and CNM_CARTERANOMISIONAL.COD_TIPOCARTERA='".$post['concepto2']."' 
+				and CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL='".$post['id_deuda']."'"
+                . " 
+				and SYSDATE-CNM_CUOTAS.FECHA_LIM_PAGO > 0 AND CNM_CARTERANOMISIONAL.COD_ESTADO  not in ('1','3','4') 
+		HAVING SUM(DECODE(CNM_CUOTAS.SALDO_CUOTA, 0, 0, 1))>0
+				
+				group BY CNM_CUOTAS.ID_DEUDA_E, CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL";
+        $consulta = $this->db->query($SQL);
+
+        return $datos = $consulta->result_array;
+    }
+	
+		    function ultimo_pago_cert($post) {
+        $deuda = $post["id_deuda"];
+
+        $SQL = "SELECT MAX(FECHA_APLICACION) AS Mayor
+FROM (
+SELECT MAX(FECHA_PAGO) AS FECHA_APLICACION 
+FROM SENA.CNM_CUOTAS_KACTUS 
+WHERE (ID_DEUDA_K= 587) 
+AND CONCEPTO NOT IN (12, 13)
+UNION ALL(
+SELECT MAX(FECHA_APLICACION) AS FECHA_APLICACION 
+FROM SENA.CNM_CESANTIAS_APLICADAS 
+WHERE (ID_DEUDA= 587) 
+)
+UNION ALL(
+SELECT MAX(FECHA_APLICACION) AS FECHA_APLICACION 
+FROM SENA.PAGOSRECIBIDOS 
+WHERE (NRO_REFERENCIA= 587) 
+)
+)";
+        $consulta = $this->db->query($SQL);
+
         return $datos = $consulta->result_array;
     }
     function ingresos_por_sql($post){

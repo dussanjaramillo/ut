@@ -1,6 +1,6 @@
 <div class="preload"></div><img class="load" src="<?php echo base_url('img/27.gif'); ?>" width="128" height="128" />
 <p>
-<center><h1>Reporte Cartera No Misional</h1></center>
+<center><h1>Reporte Historico Pagos por Cartera</h1></center>
 <form id="form1" action="<?php echo base_url('index.php/reporteador/reporte') ?>" method="POST"  onsubmit="return enviar()">
     <!--target="_blank"-->
     <input type="hidden" name="vista" id="vista" value="<?php echo $vista; ?>">
@@ -131,7 +131,6 @@
         var url = "<?php echo base_url("index.php/reporteador/burcar_no_misional") ?>";
         $.post(url, {idusuario: idusuario})
                 .done(function(msg) {
-                    console.log(msg);
                     $('#concepto2').html(msg);
                     $('#id_deuda').html('');
                     jQuery(".preload, .load").hide();
@@ -160,7 +159,6 @@
         var url = "<?php echo base_url("index.php/reporteador/burcar_no_misional_deuda") ?>";
         $.post(url, {idusuario: idusuario, concepto2: concepto2})
                 .done(function(msg) {
-                    console.log(msg);
                     $('#id_deuda').html(msg);
                     jQuery(".preload, .load").hide();
                 }).fail(function(msg) {
@@ -171,4 +169,8 @@
     });
     $("#preloadmini9").hide();
     jQuery(".preload, .load").hide();
+
+    function ajaxValidationCallback(status, form, json, options){
+}
+    
 </script>

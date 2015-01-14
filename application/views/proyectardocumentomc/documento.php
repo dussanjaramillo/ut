@@ -2,7 +2,7 @@
     <br>
     <div style="width: 95%; margin: auto; overflow: hidden;alignment-adjust: center">
         <table width="100%" border="0" id="tabla_inicial">
-            <tr><td colspan="2">Proceso</td><td colspan="2"   style="color: red"><?php echo $consulta[0]['PROCESOPJ'] ?></td></tr>
+            <tr><td colspan="2">Proceso</td><td colspan="2"   style="color: red;text-align:left;" ><?php echo $consulta[0]['PROCESOPJ'] ?></td></tr>
             <tr >
                 <td >
                     <label for="nit">Identificaci&oacute;n:</label>
@@ -18,27 +18,27 @@
                 </td>
             </tr>
             <tr  >
-<!--                <td colspan="1">
+                <td colspan="1">
                     <label for="representante">Representante Legal:</label> 
                 </td>
                 <td colspan="1" class="color">
                 <?php echo $consulta[0]['REPRESENTANTE_LEGAL'] ?>
-                </td>
+                </td><!--
                 -->
-     <!--                <td>
+                     <td>
                          <label for="concepto">Concepto:</label> 
                      </td>
                      <td class="color">
                 <?php echo $consulta[0]['NOMBRE_CONCEPTO'] ?>
-                     </td>-->
+                     </td>
             </tr>
             <tr  >
-<!--                <td colspan="1">
-                    <label for="valor">Valor:</label> 
+                <td colspan="1">
+                    <label for="valor">Estado</label> 
                 </td>
                 <td colspan="1" class="color">
-                <?php echo "$" . number_format($consulta[0]['TOTAL_LIQUIDADO']) ?>
-                </td>-->
+                <?php echo $consulta[0]['RESPUESTA'] ?>
+                </td>
                 <td>
                     <label for="ciudad">Ciudad:</label> 
                 </td>
@@ -87,7 +87,19 @@
 <div id="texto" >
 
     <table width="100%">
-        <tr><td><input name="Titulo_Encabezado" type="text" id="Titulo_Encabezado" class="input-xxlarge" size="100" /></td></tr>
+        <tr><td><div id="div_encabezado" style="display:none ">
+                <table width="100%" border="0" align="center">
+                    <tr>
+                        <td width="23%" rowspan="2"><img src="<?php echo base_url('img/Logotipo_SENA.png') ?>" width="200" height="200" /></td>
+                        <td width="44%" height="94"><div align="center"><h4><b></b></h4></div></td>
+                    </tr>
+                    <tr>
+                        <td height="50" colspan="2"><div align="center">
+                                <input name="Titulo_Encabezado" type="text" id="Titulo_Encabezado" class="input-xxlarge" size="100" />
+                            </div></td>
+                    </tr>
+                </table> 
+                </div></td></tr>
         <tr>
             <td>
                 <textarea id="informacion" style="width: 100%;height: 400px"><?php echo $documento; ?></textarea>
@@ -96,7 +108,10 @@
         <tr>
             <td align="center">
                 <button  class='pdf btn btn-success addpagobtn'>PDF</button>
-                <button id="enviar" class='btn btn-success'>Aprobar</button>
+                <?php if(ID_USER==ID_SECRETARIO): ?>
+                 <button id="enviar" class='btn btn-success'>Pre Aprobar</button>
+                 <?php else:?> <button id="enviar" class='btn btn-success'>Aprobar</button> <?php endif;?> 
+               
                 <button id="atras" class='btn btn-success'>Devoluci&oacute;n</button>
             </td>
         </tr>
@@ -133,12 +148,15 @@
 
 <form id="imprimir_pdf" target="_new" action="<?php echo base_url('index.php/mcinvestigacion/imprimir_pdf') ?>" method="post">
     <textarea id="infor_pdf" name="infor_pdf" style="display: none"></textarea>
-    <input type="hidden" name="tipo_documento" id="tipo_documento" value="1" >
+    <input type="hidden" name="tipo_documento" id="tipo_documento" value="3" >
     <input type="hidden" name="titulo_doc" id="titulo_doc" >
 </form>
 
 <script>
-
+$(document).ready(function() {
+   
+});
+function  ajaxValidationCallback(){}
 
     function presion()
     {
@@ -152,7 +170,8 @@
         var titulo = $("#Titulo_Encabezado").val();
         $("#titulo_doc").val(titulo);
         var cod_respuesta = '<?php echo $post['cod_siguiente'] ?>';
-        if (cod_respuesta == '279' || cod_respuesta == '204') {
+        
+        if (cod_respuesta == '277' || cod_respuesta == '204' ) {
             $("#tipo_documento").val('1');
         }
 

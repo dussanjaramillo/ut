@@ -565,17 +565,12 @@ class Mcinvestigacion extends MY_Controller {
 ////////////////////////////////////////////////////////////////////////////////////////////
 //        define("VEHICULO_OPOSICION", "189");
         $sesion = $this->session->userdata;
-//        echo "<pre>";
-//        print_r($sesion);
-//        echo "</pre>";
-//        define("ID_SECRETARIO", $sesion['id_secretario']);
-//        define("NOMBRE_SECRETARIO", $sesion['secretario']);
-//        define("ID_COORDINADOR", $sesion['id_coordinador']);
-//        define("NOMBRE_COORDINADOR", $sesion['coordinador']);
-        define("ID_SECRETARIO", 1026257831);
+
+        define("ID_SECRETARIO", $sesion['id_secretario']);
         define("NOMBRE_SECRETARIO", $sesion['secretario']);
-        define("ID_COORDINADOR", 1026257831);
+        define("ID_COORDINADOR", $sesion['id_coordinador']);
         define("NOMBRE_COORDINADOR", $sesion['coordinador']);
+     
     }
 
     function index() {

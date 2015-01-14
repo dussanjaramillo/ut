@@ -20,6 +20,7 @@ class Acercamientopersuasivo extends MY_Controller {
         $this->load->model('acercamientopersuasivo_model');
         $this->load->model('numeros_letras_model');
         $this->load->model('plantillas_model');
+       // $this->load->file(APPPATH . "application/config/database.php", true);
 
         $this->load->library('tcpdf/tcpdf.php', 'libupload');
         $this->data['style_sheets'] = array(
@@ -290,9 +291,7 @@ class Acercamientopersuasivo extends MY_Controller {
                 $this->load->view('acercamientopersuasivo/cabecera', $this->data);
                 $this->data['proceso'] = $this->acercamientopersuasivo_model->consulta_procesos(COD_REGIONAL, ID_USUARIO, $proceso);
                 $time = time();
-
                 $fecha_envio = $this->data['proceso'][0]['FECHA_ENVIO'];
-
                 $fecha_actual = date("d-m-Y");
                 $datetime1 = date_create($fecha_envio);
                 $datetime2 = date_create($fecha_actual);
@@ -304,6 +303,8 @@ class Acercamientopersuasivo extends MY_Controller {
                 $this->data['url'] = base_url('index.php/acercamientopersuasivo/guarda_notificacion_recibida');
                 $this->load->view('acercamientopersuasivo/cabecera', $this->data);
                 $this->load->view('acercamientopersuasivo/requerimiento_recibido', $this->data);
+                
+                
                 break;
             case 197://Concurrencia deudor
 
@@ -360,10 +361,6 @@ class Acercamientopersuasivo extends MY_Controller {
         $post['nit'] = $cabecera['IDENTIFICACION'];
         $post['cod_regional'] = $cabecera['COD_REGIONAL'];
         $post['cod_concepto'] = $cabecera['COD_CPTO_FISCALIZACION'];
-//        print_r($post);
-//        die();
-        //  @$consulta2 = $this->acercamientopersuasivo_model->consulta_datosdeuda($this->datos['cod_fiscalizacion']);
-        //  print_r(@$consulta2);die();
         $accion = $post['tipopago'];
         switch ($accion) :
             case '1'://Pago Total (Se debio haber generado la liquidación, y el proceso cambia a Pendiente de Pago)  
@@ -386,7 +383,7 @@ class Acercamientopersuasivo extends MY_Controller {
                 $post['tipo_gestion'] = 106;
                 $post['tipo_respuesta'] = 201;
                 $post['obligacion_aceptada'] = 'S';
-                $titulos = $this->bandejaunificada_model->titulos_coactivo($cod_coactivo);
+                $titulos = $this->acercamientopersuasivo_model->titulos_coactivo( $post['cod_proceso']);
                 $titulos_f = array();
                 $a = 0;
                 foreach ($titulos as $titulo):
@@ -395,6 +392,7 @@ class Acercamientopersuasivo extends MY_Controller {
                         $a++;
                     endforeach;
                 endforeach;
+            
                 break;
             case '4'://No Pago (remite a medidas cautelares y mandamiento de pago)
                 $post['estado_proceso'] = 21; //estado pendiente de pago
@@ -404,15 +402,8 @@ class Acercamientopersuasivo extends MY_Controller {
                 $post['obligacion_aceptada'] = 'N';
                 break;
         endswitch;
-//        @$consulta = $this->cobro_persuasivo_model->consulta_datosdeuda($this->data['datos']['cod_fiscalizacion']);
-//        $this->data['datos']['valordeudanum'] = ((@$consulta[0]['TOTAL_LIQUIDADO']) + (@$consulta[0]['TOTAL_INTERESES']));
-        //Registrar en la traza
-//        $this->datos['idgestioncobro'] = trazar($this->datos['tipo_gestion'], $this->datos['tipo_respuesta'], $this->datos['cod_fiscalizacion'], $this->datos['nit_empresa'], $cambiarGestionActual = 'S', $cod_gestion_anterior = -1, $comentarios = 'traza');
-//        $this->datos['idgestion'] = $this->datos['idgestioncobro']['COD_GESTION_COBRO'];
+
         $this->datos['idgestion'] = $this->traza($post);
-//        echo "<pre>";
-//        print_r($post);
-//        echo "</pre>";
         $resultado = $this->acercamientopersuasivo_model->aceptar_obligaciones($post,$titulos_facilidad);
         if ($resultado) :
             $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>Se ha actualizado la información.</div>');
@@ -424,9 +415,6 @@ class Acercamientopersuasivo extends MY_Controller {
     function guarda_notificacion_recibida() {
         $this->data['message'] = $this->session->flashdata('message');
         $post = $this->input->post();
-//        echo "<pre>";
-//        print_r($post);
-//        echo "</pre>"; die();
         $detalle = unserialize($this->input->post('detalle'));
         $post['cod_cobro'] = $detalle['cod_cobro'];
         $post['cod_proceso'] = $detalle['cod_proceso'];
@@ -652,7 +640,6 @@ class Acercamientopersuasivo extends MY_Controller {
 
         $resultado = $this->acercamientopersuasivo_model->correccion_documento($post);
         if ($resultado) {
-            echo "hola";
             $this->session->set_flashdata('message', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Se ha guardado el texto del documento</div>');
         }
         //actualizamos la ruta 

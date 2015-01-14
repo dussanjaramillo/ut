@@ -5,17 +5,7 @@
 <form id="form1" action="<?php echo base_url('index.php/reporteador/imprimir_certificacion') ?>" method="post" onsubmit="return confirmar()">
     <div style="border: 1px solid #fff;width:800px;margin: 0 auto;padding: 20px;">
         <table width="100%">
-            <tr>
-                <td>Tipo de Certificaci&oacute;n</td>
-                <td>
-                    <select name="tipo_certificacion" id="tipo_certificacion">
-                        <option value="1">Certificación Estado de Cuenta a la fecha</option>
-                        <option value="2">Certificación Estado de Cuenta Anual</option>
-                        <option value="3">Certificación Deuda Saldada</option>
-                        <option value="4">Certificación Deuda Saldada para liberación</option>
-                    </select>
-                </td>
-            </tr>
+
             <tr>
                 <td>Identificaci&oacute;n</td>
                 <td >
@@ -32,10 +22,63 @@
                     </select>
                 </td>
             </tr>
+                        <tr>
+                <td>
+                    Identificacion de la Deuda
+                </td>
+                <td>
+                    <?php $datos = Reporteador::burcar_no_misional_deuda2(isset($_POST['concepto2']) ? $_POST['concepto2'] : '', isset($_POST['empleado']) ? $_POST['empleado'] : '') ?>
+                    <select name="id_deuda"  id="id_deuda">
+                        <option value=""></option>
+                        <?php
+                        foreach ($datos as $concepto) {
+                            if (isset($_POST['id_deuda'])) {
+                                if ($_POST['id_deuda'] == $concepto['COD_CARTERA_NOMISIONAL']) {
+                                    $selec = 'selected="selected"';
+                                } else {
+                                    $selec = "";
+                                }
+                            } else {
+                                $selec = "";
+                            }
+                            ?>
+                            <option <?php echo $selec; ?>  value="<?php echo $concepto['COD_CARTERA_NOMISIONAL'] ?>"><?php echo $concepto["COD_CARTERA_NOMISIONAL"] ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+                        <tr>
+                <td>Tipo de Certificaci&oacute;n</td>
+                <td>
+                    <select name="tipo_certificacion" id="tipo_certificacion">
+                    	<option value=""></option>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td>Aclaraciones</td>
                 <td>
                     <div  id="dialogos"><textarea name="aclaraciones" id="aclaraciones"></textarea></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Cargo Coordinador</td>
+                <td >
+                    <input type="text" id="cargo_coord" name="cargo_coord" required="required">
+                </td>
+            </tr>
+            <tr>
+                <td>Nombre Coordinador</td>
+                <td >
+                    <input type="text" id="nombre_coord" name="nombre_coord" required="required">
+                </td>
+            </tr>
+            <tr>
+                <td>Genera</td>
+                <td >
+                    <input type="text" id="genera" name="genera" required="required">
                 </td>
             </tr>
             <tr>
@@ -79,6 +122,8 @@
         var envio = $('#envio').val();
         var empleado = $('#empleado').val();
         var concepto2 = $('#concepto2').val();
+        var id_deuda = $('#id_deuda').val();
+        var tipo_certificacion = $('#tipo_certificacion').val();
         if (envio == 2) {
             return false
         }
@@ -88,6 +133,16 @@
         }
         if (concepto2 == "") {
             alert('Campo Tipo Cartera Obligatorio');
+            return false;
+        }
+        
+        if (id_deuda == "") {
+            alert('Campo Identificación Deuda Obligatorio');
+            return false;
+        }
+        
+        if (tipo_certificacion == "") {
+            alert('Campo Tipo Certificación Obligatorio');
             return false;
         }
         return true;
@@ -124,6 +179,46 @@
             jQuery(".preload, .load").hide();
         })
         return false;
+    });
+    
+    $("#concepto2").change(function() {
+        var concepto2 = $("#concepto2").val();
+        if (concepto2 == "") {
+            $('#id_deuda').html('');
+            return false;
+        }
+        jQuery(".preload, .load").show();
+        var idusuario = $('#empleado').val();
+        var url = "<?php echo base_url("index.php/reporteador/burcar_no_misional_deuda") ?>";
+        $.post(url, {idusuario: idusuario, concepto2: concepto2})
+                .done(function(msg) {
+                    $('#id_deuda').html(msg);
+                    jQuery(".preload, .load").hide();
+                }).fail(function(msg) {
+            alert('Datos no Encontrados');
+            jQuery(".preload, .load").hide();
+
+        })
+    });
+    
+        $("#id_deuda").change(function() {
+        var id_deuda = $("#id_deuda").val();
+        var concepto2 = $("#concepto2").val();
+        if (id_deuda == "") {
+            $('#tipo_certificacion').html('');
+            return false;
+        }
+        jQuery(".preload, .load").show();
+        var url = "<?php echo base_url("index.php/reporteador/buscar_tipo_cert_nm") ?>";
+        $.post(url, {id_deuda: id_deuda, concepto2: concepto2})
+                .done(function(msg) {
+                 $('#tipo_certificacion').html(msg);
+                    jQuery(".preload, .load").hide();
+                }).fail(function(msg) {
+            alert('Datos no Encontrados');
+            jQuery(".preload, .load").hide();
+
+        })
     });
 function ajaxValidationCallback(){
     

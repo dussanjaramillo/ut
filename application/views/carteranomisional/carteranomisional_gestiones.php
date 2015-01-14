@@ -2,41 +2,41 @@
 <?php 
 switch ($attipoc) {
 	case 1:
-	$height=250;	
+	$height=300;	
 		break;
 	case 2:
-	$height=250;	
+	$height=300;	
 		break;	
 	case 3:
-	$height=250;	
+	$height=300;	
 		break;	
 	case 4:
-	$height=250;	
+	$height=300;	
 		break;	
 	case 5:
-	$height=250;	
+	$height=300;	
 		break;	
 	case 6:
-	$height=250;	
+	$height=300;	
 		break;	
 	case 7:
-	$height=250;	
+	$height=300;	
 		break;	
 	case 8:
-	$height=450;	
+	$height=500;	
 		break;	
 	case 9:
-	$height=250;	
+	$height=300;	
 		break;	
 	case 10:
-	$height=295;	
+	$height=345;	
 		break;	
 	case 11:
-	$height=330;	
+	$height=380;	
 		break;	
 	
 	default:
-	$height=250;	
+	$height=300;	
 		break;
 }
 
@@ -74,12 +74,12 @@ if($attipoc==8||$attipoc==11){
 <p></p>
 */ 
 if($attipoc==8){
-?>
+/*
 <center>
 <input type='button' name='traslado_vivienda' class='btn btn-success' value='Solicitud Traslado Vivienda'  class="btn btn-large  btn-primary" id="traslado_vivienda" style="width : 340px; heigth : 1px">
 </center>
 <p></p>
-
+<?php */?>
 <center>
 <input type='button' name='pagos_seguros' class='btn btn-success' value='Registro Pagos Seguros'  class="btn btn-large  btn-primary" id="pagos_seguros" style="width : 340px; heigth : 1px">
 </center>
@@ -94,22 +94,27 @@ if($attipoc==8){
 <input type='button' name='ver_pago_seguro_v' class='btn btn-success' value='Ver Pagos Seguro Vida'  class="btn btn-large  btn-primary" id="ver_pago_seguro_v" style="width : 340px; heigth : 1px">
 </center>
 <p></p>
-<?php } if($attipoc==10){ ?>
+<?php } if($attipoc==10){ /*
 <center>
 <input type='button' name='cobro_beneficiarios' class='btn btn-success' value='Generación Cobro Beneficiarios'  class="btn btn-large  btn-primary" id="cobro_beneficiarios" style="width : 340px; heigth : 1px">
 </center>
-<p></p>
+<p></p>*/?>
 <?php } if($attipoc!=8){ ?>
 <center>
 <input type='button' name='paso_coactivo' class='btn btn-success' value='Paso a Cobro Coactivo'  class="btn btn-large  btn-primary" id="paso_coactivo" style="width : 340px; heigth : 1px">
 </center>
 <p></p>
-<?php } if($attipoc=8){ ?>
+<?php } if($attipoc==8){ ?>
 <center>
 <input type='button' name='paso_judicial' class='btn btn-success' value='Paso a Cobro Judicial'  class="btn btn-large  btn-primary" id="paso_judicial" style="width : 340px; heigth : 1px">
 </center>
 <p></p>
 <?php } ?>
+<center>
+<input type='button' name='documentos' class='btn btn-success' value='Agregar Documentos'  class="btn btn-large  btn-primary" id="documentos" style="width : 340px; heigth : 1px">
+</center>
+
+<p></p>
 <input type="hidden" id="id_cnm" name="id_cnm" value="<?=$id_cnm?>" >
 <input type="hidden" id="atdoc" name="atdoc" value="<?=$atdoc?>" >
 <input type="hidden" id="atarchivos" name="atarchivos" value="<?=$atarchivos?>" >
@@ -161,6 +166,11 @@ if($attipoc==8){
 	<input type="hidden" id="id_cnm_judicial" name="id_cnm_judicial">
 	<input type="hidden" id="atdoc_judicial" name="atdoc_judicial">
 	<input type="hidden" id="archivos_judicial" name="archivos_judicial">
+</form>
+
+<form id="documentos_form" action="<?= base_url('index.php/carteranomisional/documentos') ?>" method="post" >
+	<input type="hidden" id="id_deuda_docs" name="id_deuda_docs">
+	<input type="hidden" id="tipo_cartera_docs" name="tipo_cartera_docs">
 </form>
 <div id="gestion"></div>
 
@@ -217,6 +227,8 @@ $('#tipo_cartera_rf').val($('#tipo_cartera').val());
 $('#refinanciacion').submit();
 
 }); 	
+
+
 
   $('#generacion_reliq').click(function(){
 $('#id_cnm_reli').val($('#id_cnm').val());
@@ -295,6 +307,12 @@ $('#judicial_form').submit();
         }
 });
 
+  $('#documentos').click(function(){
+$('#id_deuda_docs').val($('#id_cnm').val());
+$('#tipo_cartera_docs').val($('#tipo_cartera').val());
+$('#documentos_form').submit();
+
+}); 	
     function ajaxValidationCallback(status, form, json, options) {
 	
 }

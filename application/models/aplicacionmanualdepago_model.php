@@ -142,7 +142,8 @@ class Aplicacionmanualdepago_model extends CI_Model {
   public function ObtenerPagosPendientes() {
     if (!empty($this->nit) and !empty($this->concepto) and !empty($this->subconcepto)) :
 			$this->db->select("NUM_LIQUIDACION, TOTAL_LIQUIDADO, SALDO_DEUDA, CEIL(SYSDATE - FECHA_VENCIMIENTO) AS DIAS_MORA, " .
-												"TOTAL_INTERESES, TOTAL_CAPITAL, COD_FISCALIZACION, SALDO_CAPITAL, SALDO_INTERES");
+												"TOTAL_INTERESES, TOTAL_CAPITAL, COD_FISCALIZACION, SALDO_CAPITAL, SALDO_INTERES, COD_TIPOPROCESO AS PROCESO, " .
+												"COD_PROCESO_COACTIVO");
 			$this->db->select("DECODE(LIQUIDACION.COD_TIPOPROCESO, '2', 'ACUERDO', '18', 'ACUERDO', 'NO') AS COD_TIPOPROCESO", FALSE);
 			$this->db->select("TO_CHAR(LIQUIDACION.FECHA_INICIO, 'YYYY-MM-DD') AS FECHA_INICIO", FALSE);
 			$this->db->select("TO_CHAR(LIQUIDACION.FECHA_FIN, 'YYYY-MM-DD') AS FECHA_FIN", FALSE);
@@ -159,9 +160,17 @@ class Aplicacionmanualdepago_model extends CI_Model {
       $dato = $this->db->get("LIQUIDACION");//echo $this->db->last_query();exit;
       $dato = $dato->result_array();
       if (!empty($dato)) :
+				$acuerdos = array();
 				foreach($dato as $key=>$cartera) :
 					if($cartera['COD_TIPOPROCESO'] == "ACUERDO") :
-						$dato[$key]['CUOTAS'] = $this->ObtenerCuotasAcuerdos($this->nit, $cartera['NUM_LIQUIDACION'], $this->fechaPago);
+						if($cartera['PROCESO'] == 2) :
+							$dato[$key]['CUOTAS'] = $this->ObtenerCuotasAcuerdos($this->nit, $cartera['NUM_LIQUIDACION'], $this->fechaPago, $cartera['PROCESO']);
+						else :
+							if(!in_array($cartera['COD_PROCESO_COACTIVO'], $acuerdos)) :
+								$dato[$key]['CUOTAS'] = $this->ObtenerCuotasAcuerdos($this->nit, $cartera['COD_PROCESO_COACTIVO'], $this->fechaPago, $cartera['PROCESO'], $acuerdos);
+								$acuerdos[] = $cartera['COD_PROCESO_COACTIVO'];
+							endif;
+						endif;
 					endif;
 				endforeach;
         return $dato;
@@ -170,18 +179,24 @@ class Aplicacionmanualdepago_model extends CI_Model {
     endif;
   }
 	
-	private function ObtenerCuotasAcuerdos($NRO_IDENTIFICACION, $NRO_REFERENCIAPAGO, $FECHA_PAGO) {
+	private function ObtenerCuotasAcuerdos($NRO_IDENTIFICACION, $NRO_REFERENCIAPAGO, $FECHA_PAGO, $COD, $ACUERDOS = NULL) {
 		if(!empty($NRO_IDENTIFICACION) and !empty($NRO_REFERENCIAPAGO)) :
 			$this->db->select("PROYECCIONACUERDOPAGO.PROYACUPAG_SALDOCAPITAL AS SALDO_CAPITAL, " .
 												"PROYECCIONACUERDOPAGO.PROYACUPAG_SALDO_INTCORRIENTE AS SALDO_INTCORRIENTE, " .
 												"PROYECCIONACUERDOPAGO.PROYACUPAG_SALDO_INTACUERDO AS SALDO_INTACUERDO, " .
 												"PROYECCIONACUERDOPAGO.PROYACUPAG_SALDO_CUOTA AS SALDO_CUOTA, " .
 												"PROYECCIONACUERDOPAGO.PROYACUPAG_NUMCUOTA AS NO_CUOTA, " .
-												"PROYECCIONACUERDOPAGO.NRO_ACUERDOPAGO, " .
-												"CEIL(SYSDATE - PROYECCIONACUERDOPAGO.PROYACUPAG_FECHALIMPAGO) AS DIAS_MORA");
+												"PROYECCIONACUERDOPAGO.NRO_ACUERDOPAGO");
+			$this->db->select("CASE WHEN CEIL(SYSDATE - PROYECCIONACUERDOPAGO.PROYACUPAG_FECHALIMPAGO) < 0 THEN 0 ELSE CEIL(SYSDATE - PROYECCIONACUERDOPAGO.PROYACUPAG_FECHALIMPAGO) END AS DIAS_MORA", FALSE);
 			$this->db->select("TO_CHAR(PROYECCIONACUERDOPAGO.PROYACUPAG_FECHALIMPAGO,'YYYY-MM-DD') AS FECHA_VENCIMIENTO", FALSE);
+			if($COD == 2) :
+				$acuerdo = " AND ACUERDOPAGO.NRO_LIQUIDACION='" . $NRO_REFERENCIAPAGO . "'";
+			elseif($COD == 18) :
+				$acuerdo = " AND ACUERDOPAGO.COD_PROCESO_COACTIVO='" . $NRO_REFERENCIAPAGO . "'";
+				$acuerdo .= " AND ACUERDOPAGO.COD_PROCESO_COACTIVO NOT IN (" . implode(",", $ACUERDOS) . ")";
+			endif;
 			$this->db->join("ACUERDOPAGO", "PROYECCIONACUERDOPAGO.NRO_ACUERDOPAGO=ACUERDOPAGO.NRO_ACUERDOPAGO" . 
-											" AND ACUERDOPAGO.ESTADOACUERDO='1' AND ACUERDOPAGO.NRO_LIQUIDACION='" . $NRO_REFERENCIAPAGO . "'" .
+											" AND ACUERDOPAGO.ESTADOACUERDO='1' " . $acuerdo .
 											" AND ACUERDOPAGO.NITEMPRESA='" . $NRO_IDENTIFICACION . "'");
 			$this->db->where("PROYECCIONACUERDOPAGO.PROYACUPAG_ESTADO", "0");
 			$this->db->order_by("PROYECCIONACUERDOPAGO.PROYACUPAG_NUMCUOTA");
@@ -194,7 +209,7 @@ class Aplicacionmanualdepago_model extends CI_Model {
 	
 	function ObtenerPagosPendientesNoMisional() {
 		if (!empty($this->nit) and !empty($this->concepto) and !empty($this->subconcepto)) :
-			$this->db->select("CNM_CUOTAS.NO_CUOTA, CNM_CUOTAS.SALDO_CUOTA, CNM_CUOTAS.MES_PROYECTADO, " .
+			$this->db->select("CNM_CUOTAS.NO_CUOTA, CNM_CUOTAS.SALDO_CUOTA, CNM_CUOTAS.MES_PROYECTADO, CNM_CUOTAS.SALDO_AMORTIZACION, " .
 												"CNM_CUOTAS.SALDO_AMORTIZACION, CNM_CUOTAS.SALDO_INTERES_C, CNM_CARTERANOMISIONAL.COD_CARTERA_NOMISIONAL, " .
 												"CNM_CARTERANOMISIONAL.CALCULO_MORA, CNM_CARTERANOMISIONAL.VALOR_T_MORA, CNM_CARTERANOMISIONAL.TIPO_T_F_MORA, " .
 												"CNM_CARTERANOMISIONAL.TIPO_T_V_MORA");

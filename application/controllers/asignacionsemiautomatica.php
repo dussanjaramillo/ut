@@ -8,6 +8,7 @@ class Asignacionsemiautomatica extends MY_Controller {
 		$this->load->helper(array('form','url','codegen_helper'));
 		$this->load->model('codegen_model','',TRUE);
 		$this->load->model('asigna_model');
+                $this->load->file(APPPATH . "controllers/sgva_client.php", true);
 
 	}
 
@@ -168,6 +169,9 @@ class Asignacionsemiautomatica extends MY_Controller {
 						);
 						//echo "llegue a la condicion de DB";
 						$this->codegen_model->add('ASIGNACIONFISCALIZACION', $data_asignacion, $date);
+                                                 $this->sgva_client = new sgva_client();
+                                                 $resultado = $this->sgva_client->AsignarFiscalizador($data_asignacion);
+                                              
 						$this->codegen_model->edit('EMPRESASEVASORAS', $data_fiscalizada, 'COD_EMPRESA', $empresas[$i]['COD_EMPRESA']);
 					$i++;
 					

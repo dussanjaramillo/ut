@@ -14,6 +14,8 @@
     <th>Interes Corriente</th>
     <th>Interes Mora</th>
     <th>Pago</th>
+    <th>Distribución Capital</th>
+    <th>Distribución Interés C.</th>
     </tr>
   </thead>
  <tbody>
@@ -28,6 +30,8 @@
 <td><?=number_format($data['VALOR_INTERES_C'], 0, ',', '.')  ?></td>
 <td><?=number_format($data['INTERES_MORA_GEN'], 0, ',', '.')  ?></td>
 <td><?=number_format($data['VALOR_PAGADOS'], 0, ',', '.')  ?></td>
+<td><?=number_format($data['AMORTIZACION']-$data['SALDO_AMORTIZACION'], 0, ',', '.')  ?></td>
+<td><?=number_format($data['VALOR_INTERES_C']-$data['SALDO_INTERES_C'], 0, ',', '.')  ?></td>
 
 </tr>
 
@@ -41,7 +45,7 @@
 
  $('#consulta_pagos').dialog({
                 autoOpen: true,
-                width: 1000,
+                width: 1300,
                 height: 470,
                 modal:true,
                 title:'Pagos',
@@ -91,6 +95,8 @@
                       { "sClass": "center" }, 
                       { "sClass": "center" }, 
                       { "sClass": "center" },      
+                      { "sClass": "center" }, 
+                      { "sClass": "center" },  
 
                       ]
 

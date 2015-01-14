@@ -131,6 +131,9 @@ class Reporteador extends MY_Controller {
         return $this->Reporteador_model->tipocartera();
     }
 	
+	function tipocartera2() {
+        return $this->Reporteador_model->tipocartera2();
+    }
 	function estadoempleado() {
         return $this->Reporteador_model->estadoempleado();
     }
@@ -416,6 +419,18 @@ GROUP BY COD_FISCALIZACION_EMPRESA
             case 80:// cartera no misional deudores morosos
                 $informacion = $this->Reporteador_model->r_cartera_no_mis_liquidacion();
                 break;
+			case 81:// cartera no misional general de ingresos
+            $informacion = $this->Reporteador_model->r_cartera_no_misional_gen();
+            break;
+			case 82:// cartera no misional deudores morosos
+            
+                $informacion = $this->Reporteador_model->r_cartera_no_mis_mensual();
+                break;
+			case 83:// cartera no misional deudores morosos
+            
+                $informacion = $this->Reporteador_model->r_cartera_no_mis_cesantias();
+                break;	
+				
             default :
                 $informacion = null;
         }
@@ -1347,6 +1362,15 @@ GROUP BY COD_FISCALIZACION_EMPRESA
         if ($infor == 79 || $general == "todos") {//EXOGENAS
             $dato.='<option value="79">Resumen de la Cartera no Misional</option>';
         }
+        if ($infor == 81 || $general == "todos") {//EXOGENAS
+            $dato.='<option value="81">Resumen de la Cartera no Misional</option>';
+        }
+		if ($infor == 82 || $general == "todos") {//EXOGENAS
+            $dato.='<option value="82">Informe Cartera Mensual Detallado</option>';
+        }
+        if ($infor == 83 || $general == "todos") {//EXOGENAS
+            $dato.='<option value="83">Reporte Anual Saldo Deuda Para Cesantias Ordinarias</option>';
+        }
         return $dato;
     }
 
@@ -1624,7 +1648,7 @@ GROUP BY COD_FISCALIZACION_EMPRESA
 
     function certificados19() {
         $post = $this->input->post();
-        $this->data['titulo'] = "Certificaciones Cartera no Misional";
+        $this->data['titulo'] = "Certificados Cartera no Misional";
         $this->data['vista'] = 'certificados19';
         $this->activo2('certificados19');
         $this->data['input'] = "19";
@@ -1758,12 +1782,15 @@ GROUP BY COD_FISCALIZACION_EMPRESA
                 break;
             case 19:
                 $texto = $this->restpuesta_certificado19();
+				//echo $texto;
+				//die();
                 $array = "La presente se expide a solicitud del Grupo de Procesos y Conciliaciones de La Dirección Jurídica del SENA a los " . strtolower($this->numeros_letras_model->ValorEnLetras(date('d'), "")) . " (" . date('d') . ") dias del mes de " . $this->modificar_mes(date('m')) . " de " . strtolower($this->numeros_letras_model->ValorEnLetras(date('Y'), "")) . " (" . date('Y') . ")";
                 $texto = str_replace('%-EXPEDIDA-%', $array, $texto);
                 break;
         }
+	
         $cod = crc32($texto);
-        if ($cod < 0)
+		if ($cod < 0)
             $cod = $cod * -1;
         $id = $this->Reporteador_model->insertar_certificados($cod);
         $array = "Expedido por el SENA, a los " . strtolower($this->numeros_letras_model->ValorEnLetras(date('d'), "")) . " (" . date('d') . ") dias del mes de " . $this->modificar_mes(date('m')) . " de " . date('Y');
@@ -2300,17 +2327,36 @@ GROUP BY COD_FISCALIZACION_EMPRESA
     function restpuesta_certificado19() {
         $post = $this->input->post();
         $deuda = $this->Reporteador_model->empresa_consulta_no_misional($post);
+		$deuda2 = $this->Reporteador_model->empresa_consulta_no_misional_2($post);
+		$deudaultimopago = $this->Reporteador_model->ultimo_pago_cert($post);
+		$ultimo_pago=explode('/', $deudaultimopago[0]['MAYOR']) ;
+		
+		$array['MES_ULT_PAGO'] = $this->modificar_mes($ultimo_pago[1]);
+        $array['DIA_ULT_PAGO'] = $ultimo_pago[0];
+        $array['ANO_ULT_PAGO'] = '20'.$ultimo_pago[2];
 
+		$array['CARGO_COORD'] = $post['cargo_coord'];
+		$array['NOMBRE_COORD'] = $post['nombre_coord'];
+		$array['GENERA'] = $post['genera'];
+		$array['REGIONAL'] = $deuda[0]['NOMBRE_REGIONAL'];
         $array['DEUDOR'] = $deuda[0]['NOMBRE_DEUDOR'];
         $array['COD_DEUDOR'] = $deuda[0]['COD_DEUDOR'];
         $array['CONCEPTO'] = $deuda[0]['TIPO_CARTERA'];
-        $array['ACLARACIONES'] = 'Aclaraciones a la liquidación de la deuda hipotecaria que se certifica:<br>' . $post['aclaraciones'];
+        $array['ACLARACIONES'] = $post['aclaraciones'];
         $array['MES'] = $this->modificar_mes(date('n'));
         $array['DIA'] = date('d');
         $array['ANO'] = date('Y');
-        $array['VALOR_ACTUAL'] = $deuda[0]['SALDO'];
-        $array['VALOR_INTERESES'] = $deuda[0]['INTERESES_A_LA_FECHA'];
-        $array['VALOR_TOTAL'] = $deuda[0]['SALDO'] + $deuda[0]['INTERESES_A_LA_FECHA'];
+        $array['VALOR_ACTUAL'] = number_format($deuda[0]['SALDO']);
+        
+        if(!empty($deuda2))
+		{
+		$array['INTERES_C_ACUMULADO_MORA'] = $deuda2[0]['INTERES_C'];	
+		}
+		else{
+		$array['INTERES_C_ACUMULADO_MORA'] = 0;
+		}
+		$array['VALOR_INTERESES'] = number_format($deuda[0]['INTERESES_A_LA_FECHA']+$array['INTERES_C_ACUMULADO_MORA']);
+        $array['VALOR_TOTAL'] = number_format($deuda[0]['SALDO'] + $deuda[0]['INTERESES_A_LA_FECHA']+$array['INTERES_C_ACUMULADO_MORA']);
         $array['USUARIO'] = NOMBRE_COMPLETO;
         $table = '<table border="1"><tr>'
                 . "<td>PERIODOS EN MORA</td>"
@@ -2330,19 +2376,19 @@ GROUP BY COD_FISCALIZACION_EMPRESA
                 $txt = $this->Reporteador_model->plantilla(144);
                 break;
             case 2:
-                $txt = $this->Reporteador_model->plantilla(144);
+                $txt = $this->Reporteador_model->plantilla(145);
                 break;
             case 3:
-                $txt = $this->Reporteador_model->plantilla(144);
+                $txt = $this->Reporteador_model->plantilla(146);
                 break;
             case 4:
-                $txt = $this->Reporteador_model->plantilla(144);
+                $txt = $this->Reporteador_model->plantilla(147);
                 break;
         }
 
         $texto = template_tags("./uploads/plantillas/" . $txt, $array);
-//        echo $texto;
-//        die();
+        //echo $texto;
+        //die();
         return $texto;
     }
 
@@ -2756,9 +2802,17 @@ GROUP BY COD_FISCALIZACION_EMPRESA
 
     function r_cartera_no_misional() {
         $this->data['vista'] = 'r_cartera_no_misional';
-        $this->data['titulo'] = 'REPORTE NO MISIONAL';
+        $this->data['titulo'] = 'Reporte General de Ingresos Cartera No Misional';
         $this->activo2('r_cartera_no_misional');
         $this->data['desplegable'] = $this->general('62', "");
+        $this->template->load($this->template_file, 'reporteador/view', $this->data);
+    }
+	
+	    function r_cartera_no_misional_gen() {
+        $this->data['vista'] = 'r_cartera_no_misional_gen';
+        $this->data['titulo'] = 'Reporte General de Ingresos Cartera No Misional';
+        $this->activo2('r_cartera_no_misional_gen');
+        $this->data['desplegable'] = $this->general('81', "");
         $this->template->load($this->template_file, 'reporteador/view', $this->data);
     }
 
@@ -2770,6 +2824,21 @@ GROUP BY COD_FISCALIZACION_EMPRESA
         $this->template->load($this->template_file, 'reporteador/view', $this->data);
     }
 
+    function r_cartera_no_mis_cesantias() {
+        $this->data['vista'] = 'r_cartera_no_mis_cesantias';
+        $this->data['titulo'] = 'Reporte Anual Saldo Deuda Para Cesantias Ordinarias';
+        $this->activo2('r_cartera_no_mis_cesantias');
+        $this->data['desplegable'] = $this->general('83', "");
+        $this->template->load($this->template_file, 'reporteador/view', $this->data);
+    }
+
+function r_cartera_no_mis_mensual() {
+        $this->data['vista'] = 'r_cartera_no_mis_mensual';
+        $this->data['titulo'] = 'Reporte Mensual Detallado';
+        $this->activo2('r_cartera_no_mis_mensual');
+        $this->data['desplegable'] = $this->general('82', "");
+        $this->template->load($this->template_file, 'reporteador/view', $this->data);
+    }
     function r_cartera_no_liquidacion() {
         $this->data['vista'] = 'r_cartera_no_liquidacion';
         $this->data['titulo'] = 'Reporte de Cartera no Misional';
@@ -2780,7 +2849,7 @@ GROUP BY COD_FISCALIZACION_EMPRESA
 
     function r_cartera_no_misional_r() {
         $this->data['vista'] = 'r_cartera_no_misional_r';
-        $this->data['titulo'] = 'Reporte de Cartera no Misional';
+        $this->data['titulo'] = 'Reporte General de Cartera no Misional';
         $this->activo2('r_cartera_no_misional_r');
         $this->data['desplegable'] = $this->general('79', "");
         $this->template->load($this->template_file, 'reporteador/view', $this->data);
@@ -3272,6 +3341,11 @@ GROUP BY COD_FISCALIZACION_EMPRESA
 
     function burcar_no_misional_deuda() {
         $info = $this->Reporteador_model->burcar_no_misional_deuda();
+        return $this->output->set_content_type('application/json')->set_output(json_encode($info));
+    }
+    
+	function buscar_tipo_cert_nm() {
+        $info = $this->Reporteador_model->buscar_tipo_cert_nm();
         return $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
 

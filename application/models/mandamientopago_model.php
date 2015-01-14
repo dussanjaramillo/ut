@@ -1051,8 +1051,10 @@ class mandamientopago_model extends CI_Model {
         }
     }
     function Resolución($ID){
-        $this->db->select('NUM_RESOLUCION, FECHA_RESOLUCION');
-        $this->db->from('MANDAMIENTOPAGO');
+        $this->db->select('MP.NUM_RESOLUCION, MP.FECHA_RESOLUCION,PC.COD_PROCESOPJ, PC.FECHA_AVOCA,VW.CONCEPTO');
+        $this->db->from('MANDAMIENTOPAGO MP');
+        $this->db->join('PROCESOS_COACTIVOS PC','MP.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
+        $this->db->join('VW_PROCESOS_COACTIVOS VW','VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO AND VW.COD_RESPUESTA=PC.COD_RESPUESTA');
         $this->db->where('COD_MANDAMIENTOPAGO',$ID);
         $resultado=$this->db->get();
         $resultado=$resultado->result_array();
