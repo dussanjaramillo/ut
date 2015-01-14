@@ -1,0 +1,15 @@
+<h2 style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></h2>
+<h3 style="text-align: center;"><strong>Servicio Nacional de Aprendizaje</strong></h3>
+<h3 style="text-align: center;"><strong>SENA</strong></h3>
+<p style="text-align: center;">&nbsp;</p>
+<h2 style="text-align: center;"><strong>CERTIFICA:</strong></h2>
+<p style="text-align: center;">Que el contribuyente %-NOMBRE_EMPRESA-% identificado con NIT %-CODEMPRESA-%, cancel&oacute; por el concepto de Fondo Nacional de Formaci&oacute;n Profesional a la Industria de la Construcci&oacute;n FIC, durante la vigencia %-ano-%, los siguientes valores:</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong>%-TABLA_INFORMACION-%</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">%-EXPEDIDA-%</p>
+<p style="text-align: center;"><strong>"LA EXPEDICI&Oacute;N DE ESTA CERTIFICACI&Oacute;N, NO IMPIDE QUE EL SENA VERIFIQUE LA BASE DE LIQUIDACI&Oacute;N DE FIC Y QUE CONSTATE EL CUMPLIMIENTO EN FONDO NACIONAL DE FORMACI&Oacute;N PROFESIONAL DE LA INDUSTRIA DE LA CONTRUCCI&Oacute;N FIC."<br /></strong></p>
+<p style="text-align: center;"><strong>NO TIENE VALIDEZ PARA FINES TRIBUTARIOS</strong></p>
+<h3 style="text-align: center;"><strong>SENA, MAS TRABAJO </strong></h3>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>

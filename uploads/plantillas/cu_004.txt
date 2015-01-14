@@ -1,0 +1,53 @@
+<p style="text-align: right;"> %-ciudad_comunicado-%, %-fecha_comunicado-%</p>
+<p>Sr(a)</p>
+<p>%-nombre_representante-%</p>
+<p>Representante Legal</p>
+<p>%-nombre_empresa-%</p>
+<p>%-nit_empresa-%</p>
+<p>%-dir_empresa-%</p>
+<p>%-ciudad_empresa-%</p>
+<p>&nbsp;</p>
+<p style="text-align: right;"><strong>Asunto: Visita Seguimiento SENA</strong></p>
+<p style="text-align: right;"><strong> <em>Aportes al SENA</em></strong><em>, <strong>Contrato de Aprendizaje </strong>y/o <strong> Contribuci&oacute;n FIC</strong></em></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Respetado (a) %-nombre_representante-%:</p>
+<p>&nbsp;</p>
+<p>El SENA tiene como objetivo principal aportar a la competitividad de Colombia a trav&eacute;s del incremento de la productividad de las empresas y regiones, y la inclusi&oacute;n social de personas y comunidades vulnerables. Para ello, la Entidad invierte los aportes parafiscales generando programas de Responsabilidad Social Empresarial, Formaci&oacute;n, Innovaci&oacute;n y Transferencia de Conocimientos y Tecnolog&iacute;as para las empresas que realizan sus aportes al SENA y en beneficio de todos los colombianos.</p>
+<p>&nbsp;</p>
+<p>Teniendo en cuenta lo establecido en el Art&iacute;culo 15 de la Constituci&oacute;n Pol&iacute;tica, el Art&iacute;culo 8 de la Ley 828 de 2003, los Art&iacute;culos 4 y 5 del Decreto 562 de 1990, y la Ley 789 de 2002 junto con sus &nbsp;Decretos Reglamentarios 933 de 2003 y el 620 de 2005, El SENA hace un seguimiento al pago de los Aportes parafiscales, Contrato de Aprendizaje y/o Contribuci&oacute;n FIC.</p>
+<p>&nbsp;</p>
+<p>Por ello, nos permitimos informarle que el <strong><em>se&ntilde;or(a) %-nombre_fiscalizador-%, Fiscalizador SENA de la Regional %-nombre_regional-%</em></strong>, es la persona asignada y facultada por la Entidad para acompa&ntilde;arlo en este proceso y realizar la visita programada para el <strong><em>d&iacute;a %-fecha_visita-%, hora %-hora_visita-%</em></strong> Podr&aacute; contactarlo al correo electr&oacute;nico <strong><em>%-correo_fisc-% y tel&eacute;fono %-tel_fisc-% ext. %-ext_fisc-%</em></strong></p>
+<p>Este fiscalizados se encuentra facultado para solicitar la informaci&oacute;n que seg&uacute;n su an&aacute;lisis y evaluaci&oacute;n sean necesarios y la conduzcan a cumplir en forma clara y completa con la revisi&oacute;n de las bases de liquidaci&oacute;n de <strong>aportes al SENA</strong>, <strong>Contrato de Aprendizaje </strong>y/o <strong> contribuci&oacute;n FIC</strong>.</p>
+<p>&nbsp;</p>
+<p>Es importante que est&aacute; visita sea atendida por el Representante Legal o qui&eacute;n este delegue a trav&eacute;s de poder, preferiblemente el Contador o Revisor Fiscal, con el conocimiento y autorizaci&oacute;n para suministrar la informaci&oacute;n y aclaraciones que sean pertinentes.</p>
+<p>&nbsp;</p>
+<p>Para el &eacute;xito de la visita le solicitamos tener disponible la siguiente informaci&oacute;n:</p>
+<ul>
+<li>Certificado de representaci&oacute;n Legal y certificado de proponentes</li>
+<li>Fotocopia del RUT.</li>
+<li>Balances de prueba detallados a nivel de subcuenta, originados del software contable de las vigencias 2007 al 2011 consolidados de enero a diciembre de cada a&ntilde;o.</li>
+<li>Fotocopia de las declaraciones de renta de las vigencias 2007 al 2011.</li>
+<li>Certificaci&oacute;n firmada por Revisor Fiscal, del monto total de las vacaciones pagadas (disfrutadas, en dinero y por liquidaci&oacute;n de contratos) de las vigencias 2007 al 2011.</li>
+<li>Copia tarjeta profesional del Revisor Fiscal.</li>
+<li>Dem&aacute;s informaci&oacute;n financiera y soportes que sean necesarios en desarrollo de la revisi&oacute;n.</li>
+</ul>
+<p>Si la empresa realiza obras civiles (construcci&oacute;n) debe adicionar los siguientes documentos:</p>
+<ul>
+<li>Relaci&oacute;n firmada por el Revisor Fiscal, y copia de los contratos ejecutados durante las vigencias 2007 al 2011.</li>
+<li>Certificaci&oacute;n firmada por Revisor Fiscaldel n&uacute;mero de trabajadores de obra contratados directamente, mes a mes en los a&ntilde;os 2007 al 2010 y 2011 de enero a noviembre.</li>
+<li>Relaci&oacute;n de los Consorcios en los cuales ha participado la empresa en los a&ntilde;os 2007 al 2011, anexando: Acta Consorcial, RUT, copia de los contratos, balances detallados por cada vigencia de conformaci&oacute;n de los mismos.&nbsp;</li>
+</ul>
+<p>Para el Contrato de Aprendizaje le solicitamos tener los siguientes documentos:</p>
+<ul>
+<li>Si su empresa no ha registrado los Contratos de Aprendizaje de las vigencias 2009, 2010 2011 y 2012 en el SGVA, le invitamos a actualizar el aplicativo con esta informaci&oacute;n. Si presenta dificultades en el manejo del aplicativo, le informamos que el SENA ha dispuesto jornadas de capacitaci&oacute;n a los empresarios, cronograma que puede consultar a trav&eacute;s del fiscalizador asignado.</li>
+<li>Certificaci&oacute;n firmada por el Representante Legal, informando que seg&uacute;n el Acuerdo 11 de 2008 del SENA, todos los contratos de aprendices se encuentran registrados en el Sistema de Gesti&oacute;n Virtual de Aprendices, SGVA, de las vigencia 2009, 2010, 2011 y 2012.</li>
+<li>Certificaci&oacute;n firmada por el Revisor Fiscal / Contador, de los pagos realizados por monetizaci&oacute;n, si hubiere realizado estos pagos, detallando el monto, fecha de consignaci&oacute;n, periodo de pagos de las vigencias 2009, 2010 2011 y 2012.</li>
+</ul>
+<p>Agradecemos de antemano su tiempo y oportuna colaboraci&oacute;n para la realizaci&oacute;n de est&aacute; visita que le permitir&aacute; al SENA aportarle a la productividad, competitividad y responsabilidad social de Colombia.</p>
+<p>&nbsp;</p>
+<p>Cordialmente,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;</p>
+<br><br>
+<p style="text-align: right;">%-nombre_coordinador-%</p>
+<p style="text-align: right;">Coordinador (a) Relaciones Corporativas e Internacionales</p>

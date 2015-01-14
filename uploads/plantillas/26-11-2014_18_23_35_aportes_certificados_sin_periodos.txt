@@ -1,0 +1,17 @@
+<h2 style="text-align: center;">&nbsp;</h2>
+<h2 style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></h2>
+<p style="text-align: center;"><strong>Servicio Nacional de Aprendizaje</strong></p>
+<h3 style="text-align: center;"><strong>SENA</strong></h3>
+<h3 style="text-align: center;"><strong>CERTIFICA:</strong></h3>
+<p style="text-align: center;">Que el empleador con raz&oacute;n social %-NOMBRE_EMPRESA-%, identificado con el Nit %-CODEMPRESA-%, se encuentra registrado en nuestra base de datos de Aportes durante las &uacute;ltimas cinco (5) vigencias y no registra pagos para la(s) cartera descrita(s) a continuaci&oacute;n:</p>
+<p style="text-align: center;"><strong>%-DEUDAS_ANTERIORES-%</strong></p>
+<p style="text-align: center;">No se encuentra regulada la cuota de aprendizaje; por lo tanto debe acercarse a la Regional del SENA donde esta ubicada su sede principal para efectos de determinar si se encuentra obligado a contratar aprendices.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">%-EXPEDIDA-%</p>
+<p style="text-align: center;">LA EXPEDICI&Oacute;N DE ESTA CERTIFICACI&Oacute;N, NO IMPIDE QUE EL SENA VERIFIQUE LA BASE DE LIQUIDACI&Oacute;N DE APORTES Y QUE CONSTATE EL CUMPLIMIENTO EN CONTRATO DE APRENDIZAJE. NO TIENE VALIDEZ PARA FINES TRIBUTARIOS, NI COMO DOCUMENTO V&Aacute;LIDO PARA SER PRESENTADO EN PROCESOS DE SELECCI&Oacute;N DEL ESTADO ANTE ENTIDADES DISTINTAS AL SENA.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">ACLARACI&Oacute;N: EN CONSIDERACI&Oacute;N A LO REGULADO POR LA LEY 1607 DE 2012, LAS SOCIEDADES Y PERSONAS JUR&Iacute;DICAS Y ASIMILADAS CONTRIBUYENTES DECLARANTES DEL IMPUESTO SOBRE LA RENTA Y COMPLEMENTARIOS, CORRESPONDIENTES A LOS TRABAJADORES QUE DEVENGUEN, INDIVIDUALMENTE CONSIDERADOS, HASTA DIEZ (10) SALARIOS M&Iacute;NIMOS MENSUALES VIGENTES, AS&Iacute; COMO LAS PERSONAS NATURALES EMPLEADORAS, SE ENCUENTRAN EXONERADAS DE LA OBLIGACI&Oacute;N DE PAGO DE LOS APORTES PARAFISCALES AL SENA.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong>SENA, M&Aacute;S TRABAJO</strong></p>
+<p style="text-align: center;">&nbsp;&iquest;Desea saber si este certificado es aut&eacute;ntico? Ingrese a la p&aacute;gina <a href="http://www.sena.edu.co,">www.sena.edu.co,</a> el bot&oacute;n CertiAportes y luego clic en el bot&oacute;n Validaci&oacute;n de Certificaci&oacute;n de Aportes al SENA y digite el siguiente c&oacute;digo de verificaci&oacute;n: %-COD_VERIFICACION2-%</p>
+<p style="text-align: center;">&nbsp;</p>

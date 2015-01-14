@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+</head>
+
+<body>
+<table width="748" border="1">
+  <tr>
+    <th width="101" rowspan="4" scope="row"><div align="center"><img src="%-ruta_imagen-%" width="200" height="168" /></div>      
+    <div align="center"></div>      <div align="center"></div>      <div align="center"></div></th>
+    <td width="232" rowspan="3"><div align="center"><b>Servicio Nacional de Aprendizaje</div>      <div align="center"></div>      <div align="center"></div></td>
+    <td colspan="2" rowspan="4"><div align="center"><b>INFORME DE VISITA</div></td>
+    <td colspan="2"><div align="center"><b>No.</div></td>
+  </tr>
+  <tr>
+    <td height="82" colspan="2"><div align="center"><b>%-nombre_fiscalizador-%</div></td>
+  </tr>
+  <tr>
+    <td height="27" colspan="2"><div align="center"><b>Fecha</div></td>
+  </tr>
+  <tr>
+    <td><div align="center"><b>Relaciones Corporativas e Internacionales</div></td>
+    <td colspan="2"><div align="center"><b>%-fecha_informe-%</div></td>
+  </tr>
+  <tr>
+    <th colspan="6" scope="row"><div align="left"><b>Nombre o razón social: %-nombre_empresa-%</div></th>
+  </tr>
+  <tr>
+    <th scope="row"><div align="left">
+      <p><b>Nit o C.C.</p>
+      <p><b>%-nit_empresa-%</p>
+    </div></th>
+    <td><div align="left">
+      <p><b>Actividad Económica:</p>
+      <p><b>%-actividad_empresa-%</p>
+    </div></td>
+    <td colspan="2"><p align="left"><b>Código:</p>
+    <p align="left"><b>%-ciiu_empresa-%</p></td>
+    <td colspan="2"><p><b>Representante Legal:</p>
+    <p><b>%-representante_empresa-%</p></td>
+  </tr>
+  <tr>
+    <th colspan="2" scope="row"><div align="left">
+      <p><b>Dirección:</p>
+      <p><b>%-direccion_empresa-%</p>
+    </div></th>
+    <td colspan="2"><div align="left">
+      <p><b>Ciudad:</p>
+    </div><b>%-ciudad_empresa-%</td>
+    <td colspan="2"><div align="left">
+      <p><b>Fax:</p>
+      <p><b>%-fax_empresa-%</p>
+    </div></td>
+  </tr>
+  <tr>
+    <th colspan="3" scope="row"><div align="left"><b>e-mail: %-email_empresa-%</div></th>
+    <td width="146"><div align="left"><b>Teléfono 1: %-telefono_1-%</div></td>
+    <td colspan="2"><div align="left"><b>Teléfono 2: %-telefono_2-%</div></td>
+  </tr>
+  <tr>
+    <th colspan="2" scope="row"><div align="left">
+      <p>
+        <input type="checkbox" checked="checked"/>
+        <b>Afiliado a Caja de Compensación Familiar</p>
+      <p>
+        <input type="checkbox" />
+      <b>Empresa Nueva</p>
+    </div></th>
+    <td colspan="4"><div align="left">
+      <p><b>Nombre de la caja:    
+        <input type="checkbox" />
+      <b>Suspendido</p>
+      <p>&nbsp;</p>
+    </div></td>
+  </tr>
+  <tr>
+    <th colspan="2" scope="row"><div align="left">
+      <p><b>ESCRITURA PUBLICA</p>
+      <p>&nbsp;</p>
+    </div></th>
+    <td colspan="2"><p align="left"><b>Notaria:</p>
+    <p align="left">&nbsp;</p></td>
+    <td width="107"><p align="left"><b>Ciudad</p>
+    <p align="left">&nbsp;</p></td>
+    <td width="127"><p align="left"><b>Fecha</p>      <p align="left">&nbsp;</p>    </td>
+  </tr>
+  <tr>
+    <th colspan="2" scope="row"><div align="left">
+      <p>
+        <strong>
+        <input type="checkbox" />
+        </strong>        <b>Cuota de aprendiz regulada</p>
+      <p>&nbsp;</p>
+    </div></th>
+    <td colspan="2"><p align="left"><b>Resolución:</p>      <p align="left">&nbsp;</p>    </td>
+    <td><p align="left"><b>Fecha:</p>
+    <p align="left">&nbsp;</p>      </td>
+    <td><p align="left"><b>Planta de personal:</p>
+    <p align="left">&nbsp;</p></td>
+  </tr>
+  <tr>
+    <th colspan="6" scope="row"><div align="justify"><b>Observaciones:</div></th>
+  </tr>
+  <tr>
+    <th colspan="6" scope="row"><div align="justify"><b>%-observaciones_informe-%</div></th>
+  </tr>
+  <tr>
+    <th colspan="6" scope="row"><div align="justify"><b>Documentos: <br>
+	
+	<b>%-documentos_informe-%
+	</div></th>
+  </tr>
+  <tr>
+    <th colspan="6" scope="row"><div align="center"><b>APLICATIVO   WEB  WWW.SENA.EDU.CO LINK PAGOS EN LINEA</div></th>
+  </tr>
+  <tr>
+    <th colspan="2" scope="row"><div align="center"><b>Nombre, firma y sello del funcionario autorizado por el SENA</div></th>
+    <td colspan="4"><div align="center"><b>Nombre, firma y sello del funcionario autorizado por la empresa</div></td>
+  </tr>
+  <tr>
+    <th colspan="2" scope="row"><div align="center">
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </div></th>
+    <td colspan="4"><div align="center">
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </div></td>
+  </tr>
+    <tr>
+    <th colspan="2" scope="row"><p><b>%-firma_fiscalizador-%</p><b>Tel:%-telefono_fiscalizador-% Ext: %-ext_fiscalizador-%</th>
+    <td colspan="4"><div align="center"></div></td>
+  </tr>
+</table>
+</body>
+</html>

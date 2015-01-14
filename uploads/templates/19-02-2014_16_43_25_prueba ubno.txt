@@ -1,0 +1,379 @@
+<p><!-- [if gte mso 9]><xml>
+ <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]--></p>
+<p><!-- [if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:TrackMoves/>
+  <w:TrackFormatting/>
+  <w:HyphenationZone>21</w:HyphenationZone>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>ES-CO</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:EnableOpenTypeKerning/>
+   <w:DontFlipMirrorIndents/>
+   <w:OverrideTableStyleHps/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!-- [if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]--><!-- [if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Tabla normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin-top:0cm;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:10.0pt;
+	mso-para-margin-left:0cm;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	mso-fareast-language:EN-US;}
+</style>
+<![endif]--></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">SENA &ndash; REGIONAL </span></strong><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&lt;%-DIRECCION_REGIONAL-%&gt;</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">DIRECCION JURIDICA</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">RESOLUCI&Oacute;N No. 00000</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">(&lt;%-FECHA-.%&gt;)</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Por la cual se deja sin efecto un acuerdo de pago</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">La Direcci&oacute;n Jur&iacute;dica del Servicio Nacional de Aprendizaje SENA &ndash; Regional &lt;%-DIRECCION_REGIONAL-%&gt;, en uso de sus atribuciones legales y reglamentarias y,</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';"><span style="mso-tab-count: 1;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>CONSIDERANDO:</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Que esta Direcci&oacute;n con fundamento en el Titulo Ejecutivo &ndash; Resoluci&oacute;n No. XXXX de fecha &lt;%-DIA-%&gt; del mes &lt;%-MES-%&gt; de &lt;%-ANO-% , determin&oacute; que XXXXXX (nombre del deudor PJ o PN), identificado con (NIT o C.C.), adeuda al SENA la suma de XXXXXXXXXX (en letras y n&uacute;meros) ($00000000), por concepto de XXXXXXXXX, la cual posee constancia de ejecutoria de fecha 0000 de XXXX de 00000</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Que con fundamento en lo anterior, esta Direcci&oacute;n con base en los par&aacute;metros jur&iacute;dicos plasmados en la Resoluci&oacute;n 210 de 2007, especialmente en el Art&iacute;culo 21 y conforme a la competencia atribuida por el Decreto 0000 de fecha 000 de XXXX de 0000, procedi&oacute; a avocar conocimiento de las actuaciones administrativas arriba descritas en aras de adelantar las gestiones tendientes al pago de la acreencia, asignando radicaci&oacute;n bajo el consecutivo No. 000000.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Que posteriormente, se procedi&oacute; a adelantar etapa persuasiva, remitiendo al deudor y para el efecto el oficio No. 000000 de fecha 00 de XXXXX de 201-, notificado el d&iacute;a 00 de XXXX del mismo a&ntilde;o, seg&uacute;n gu&iacute;a de mensajer&iacute;a No. 00000 de 4-72; mediante el cual, la administraci&oacute;n lo inst&oacute; a realizar el pago efectivo de la obligaci&oacute;n, invitaci&oacute;n que fue acogida por este, quien solicit&oacute; acuerdo de pago correspondiente.</span></p>
+<p class="MsoNormal" style="text-align: justify; mso-line-height-alt: 10.8pt; margin: 11.5pt 2.45pt 11.5pt 0cm;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif'; mso-fareast-font-family: 'Times New Roman'; mso-fareast-language: ES;">Que el d&iacute;a 00 de XXXXX de 201-, se suscribi&oacute; Acuerdo de Pago No. 00000, aprobado mediante Resoluci&oacute;n No. 00000 de fecha XXXXX, en favor del deudor XXXXXXXX, identificado con (Nit o CC No.), acto administrativo notificado<span style="mso-spacerun: yes;">&nbsp; </span>personalmente al 00 del mes de XXXX del presente a&ntilde;o; en el acuerdo de voluntades se confiri&oacute; seg&uacute;n la cuant&iacute;a de la obligaci&oacute;n, tasada en $0000000, el plazo perentorio de 00 meses, proyectando para el efecto, el pago de igual n&uacute;mero de cuotas de XXXXXXXX cada una, pagaderas los primeros cinco (5) d&iacute;as de cada mes, e incluyendo en cada una de ellas el correspondiente valor de intereses y dem&aacute;s gastos de cobranza causados y liquidados con corte al dia XX de XXXX de 201-. Igualmente, conforme lo dispone el Art&iacute;culo 67 de la Resoluci&oacute;n 210 de 2007, se pact&oacute; clausula aclaratoria de pago, consistente en que frente a un eventual incumplimiento por parte del deudor, dar&aacute; derecho a que el funcionario ejecutor mediante auto motivado, deje sin efecto el acuerdo de pago suscrito, declarando sin vigencia el plazo concedido, ordenando hacer efectiva la garant&iacute;a prestada, y ordenar la pr&aacute;ctica de embargos, secuestros y remate de los bienes, si a ello hay lugar.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Que este despacho observa que a la fecha, el deudor solo cancel&oacute; el equivalente a 00 cuotas, motivo por el cual se proceder&aacute; a dejar sin efecto el acuerdo de pago, a hacer efectivas las garant&iacute;as dispuestas y a reanudar el proceso de ejecuci&oacute;n coactiva radicado bajo el No. 000000, entre otras.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Que en virtud de lo anterior, </span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">RESUELVE:</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: center;" align="center"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">PRIMERO: DEJAR, </span></strong><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">sin efecto el Acuerdo de Pago No. 00000 de fecha 00 de XXX de 201-, suscrito en favor del deudor XXXXXXX, identificado con (Nit o cc No), con fundamento en los argumentos de hecho y derecho dispuestos en la parte motiva del presente acto administrativo.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">SEGUNDO: DECLARAR,</span></strong><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';"> sin vigencia el plazo concedido en el Acuerdo de Pago No. 0000 de fecha 00 de XXX de 201-.y por ello <strong style="mso-bidi-font-weight: normal;">HACER</strong>, efectiva la garant&iacute;a prestada con base en la (p&oacute;liza No. 00000), para el efecto <strong style="mso-bidi-font-weight: normal;">OFICIAR,</strong> a XXXXXXXX.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">TERCERO: ORDENAR</span></strong><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">, el embargo y secuestro de XXXXXXXXXXXX (&hellip;.), (identificar seg&uacute;n naturaleza de la medida) de propiedad del deudor XXXXXXXXX, identificado con (Nit o CC No.), seg&uacute;n certificado (o constancia) de (registro o bancaria) de fecha 00 de XXX de 201-.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">CUARTO: ORDENAR</span></strong><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">, el remate de la propiedad inmueble tipo (apto, lote, casa, etc) identificado con matricula inmobiliaria No. 000000 de la Oficina de Registro de Instrumentos P&uacute;blicos de XXXXXXXX, de conformidad con los par&aacute;metros regulados en el C. de P.C., por expresa remisi&oacute;n del Art&iacute;culo 70 de la Resoluci&oacute;n 210 de 2007.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">QUINTO: LIBRAR</span></strong><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">, los oficios a que haya lugar.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">SEXTO: </span></strong><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Contra esta providencia procede el recurso de reposici&oacute;n ante el funcionario ejecutor, dentro de los cinco (5) d&iacute;as siguientes a su notificaci&oacute;n por correo, seg&uacute;n lo expone el Art&iacute;culo 67 inciso final de la Resoluci&oacute;n 210 de 2007.</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">NOTIF&Iacute;QUESE Y C&Uacute;MPLASE,</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">XXXXXXXXXXX</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">Funcionario ejecutor</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 12.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></strong></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 8.0pt; font-family: 'Arial','sans-serif';">Revis&oacute;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 8.0pt; font-family: 'Arial','sans-serif';">XXXXXXXXXX</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 8.0pt; font-family: 'Arial','sans-serif';">&nbsp;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 8.0pt; font-family: 'Arial','sans-serif';">Proyect&oacute;</span></p>
+<p class="MsoNoSpacing" style="text-align: justify;"><span style="font-size: 8.0pt; font-family: 'Arial','sans-serif';">XXXXXXXXXX</span></p>
+<p>&nbsp;</p>

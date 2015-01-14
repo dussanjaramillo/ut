@@ -1,0 +1,34 @@
+<p 	style="text-align: center;">%-nombre_regional-%</p>
+<p style="text-align: center;">%-cod_regional-%</p>
+<p style="text-align: center;">%-ciudad_comunicado-%</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Se&ntilde;or(a)</p>
+<p>%-nombre_representante-%</p>
+<p>Representante Legal</p>
+<p>%-nombre_empresa-%</p>
+<p>NIT&nbsp;&nbsp; %-nit_empresa-%</p>
+<p>%-dir_empresa-%</p>
+<p>%-ciudad_empresa-%.</p>
+<p style="text-align: right;">Asunto: Presentacion Personal al proceso de Seguimiento y Control de Aportes SENA&nbsp;&nbsp; y FIC</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Respetado(a) se&ntilde;or(a):</p>
+<p>&nbsp;</p>
+<p>Respetuosamente, le informo que una vez verificados los documentos entregados por ustedes,&nbsp;&nbsp; respecto al proceso de seguimiento y control, que adelanta el SENA, mediante comunicado No.____________________________ y espec&iacute;ficamente en cumplimiento con el &iacute;tem &ldquo;dem&aacute;s informaci&oacute;n financiera y soportes que sean necesarios en desarrollo de la revisi&oacute;n&rdquo;, se solicita presentarse en la Calle 65 No. 11 &ndash; 70 Tercer Piso, Oficina de relaciones Corporativas, en un t&eacute;rmino no mayor a cinco (5) d&iacute;as h&aacute;biles, las siguientes personas:</p>
+<p>1. Aclaratoria Personal</p>
+<p>CONTADOR:</p>
+<p>REVISOR FISCAL:</p>
+<p>APODERADO:</p>
+<p>REPRESENTANTE LEGAL:</p>
+<p>Se&ntilde;or Empresario es importante recordarle que de acuerdo a lo establecido en el Articulo 51 del C&oacute;digo de procedimiento administrativo y de lo Contencioso administrativo (Ley 1437 de 2.011) determina que la renuencia a suministrar informaci&oacute;n, la oculten, impidan o no autoricen acceso a los funcionarios, o la remitan incompleta o con errores al SENA, dar&aacute; lugar a multas hasta de 100 SMLMV, situaci&oacute;n que el SENA quiere evitar teniendo en cuenta la necesidad de ser un aliado estrat&eacute;gico del Sector Productivo.</p>
+<p>&nbsp;</p>
+<p>Agradecemos de antemano su tiempo y oportuna colaboraci&oacute;n para la realizaci&oacute;n de est&aacute; reuni&oacute;n que le permitir&aacute; al SENA aportarle a la productividad, competitividad y responsabilidad social de Colombia.</p>
+<p>&nbsp;</p>
+<p>Cordial saludo,</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="text-align: right;">%-nombre_coordinador-%</p>
+<p style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp; Coordinador Relaciones Corporativas e Internacionales</p>
+<p style="text-align: right;">Elaboró: %-nombre_fiscalizador-%<strong><br /> <br /> </strong></p>
+<p style="text-align: center;">&nbsp;</p>

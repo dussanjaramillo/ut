@@ -1,0 +1,24 @@
+<pre><strong>Empresa <%-nombre_empresa-%></strong></pre>
+<p>&nbsp;</p>
+<pre><strong><%-direccion_empresa-%></strong></pre>
+<p>&nbsp;</p>
+<pre><strong>Bogota</strong></pre>
+<p>&nbsp;</p>
+<pre><strong>					2 de Junio de 2008</strong></pre>
+<p>&nbsp;</p>
+<pre>&nbsp;</pre>
+<p>&nbsp;</p>
+<pre><strong>Sr. <%-representante_legal-%></strong></pre>
+<p>&nbsp;</p>
+<pre><strong>Director de Fondos de inversi&oacute;n</strong></pre>
+<p>&nbsp;</p>
+<p>Estimado se&ntilde;or:</p>
+<p>&nbsp;</p>
+<p align="justify">Por medio de la siguiente carta de reclamo, quisiera hacer constar mi insatisfacci&oacute;n con respecto al trato obtenido en su sucursal, por parte del operario Don Francisco Garc&iacute;a que amablemente nos atendi&oacute; en un principio, hasta que la conversaci&oacute;n tom&oacute; derroteros m&aacute;s calientes que finalizaron con una&nbsp; agresi&oacute;n a mi se&ntilde;ora esposa.</p>
+<p>&nbsp;</p>
+<p align="justify">No hemos realizado ninguna denuncia en la polic&iacute;a y preferimos que este lamentable suceso se arregle por la v&iacute;a amistosa. Sin embargo le transmito mi m&aacute;s profundo malestar por lo sucedido y le aplazo una reuni&oacute;n con usted y con el se&ntilde;or Francisco presente para que arreglemos todo de una forma civilizada.</p>
+<p>&nbsp;</p>
+<p align="justify">Sin otro cometido, se despide atentamente</p>
+<p>&nbsp;</p>
+<p><strong>Rodrigo D&iacute;az</strong></p>
+<p><strong>(firma)</strong></p>

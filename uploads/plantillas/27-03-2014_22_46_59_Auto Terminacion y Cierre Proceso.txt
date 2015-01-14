@@ -1,0 +1,33 @@
+<p style="text-align: center;">C&oacute;digo Regional</p>
+<p style="text-align: center;">Ciudad</p>
+<p style="text-align: center;"><strong>&nbsp;</strong></p>
+<p style="text-align: center;"><strong>&nbsp;</strong></p>
+<p style="text-align: center;"><strong>AUTO</strong></p>
+<p><strong>&nbsp;</strong></p>
+<p><strong>&ldquo;Por el cual se ordena el archivo de un expediente</strong>&rdquo;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>El Servicio Nacional de Aprendizaje SENA Regional ______________, con base en la Resoluci&oacute;n No._______, del d&iacute;a _______________ inici&oacute; el cobro de las obligaciones pendientes a favor de la entidad y a cargo de la empresa _____________________ con NIT. ________________________, por concepto de ________________________________,&nbsp;&nbsp; por un valor total de _______________ ($_______) (n&uacute;meros y letras), documentos que constituyen t&iacute;tulo ejecutivo cobrable por el procedimiento administrativo (v&iacute;a gubernativa o coactivo).</p>
+<p>&nbsp;</p>
+<p>El SENA, <strong>(en este espacio se relacionan las circunstancias que dan origen al archivo del expediente</strong>), informaci&oacute;n que fue debidamente verificada al consultar el aplicativo regional de cartera.</p>
+<p>&nbsp;</p>
+<p>Por lo anteriormente expuesto, este Despacho,</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>RESUELVE</strong></p>
+<p>&nbsp;</p>
+<p>Archivar las presentes diligencias de cobro conforme a lo manifestado en la parte considerativa de este prove&iacute;do.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>C&Uacute;MPLASE</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">(NOMBRE Y FIRMA DEL ABOGADO)</p>
+<p style="text-align: center;">Cargo Completo</p>
+<p>&nbsp;</p>
+<p>Proyect&oacute;:</p>
+<p>Revis&oacute;: Nombre Coordinador de Relaciones Corporativas</p>

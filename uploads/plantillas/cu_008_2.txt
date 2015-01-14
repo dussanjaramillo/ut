@@ -1,0 +1,550 @@
+<p 	style="text-align: center;">%-nombre_regional-%</p>
+<p style="text-align: center;">%-cod_regional-%</p>
+<p style="text-align: center;">%-ciudad_comunicado-%</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Se&ntilde;or(a)</p>
+<p>%-nombre_representante-%</p>
+<p>Representante Legal</p>
+<p>%-nombre_empresa-%</p>
+<p>NIT&nbsp;&nbsp; %-nit_empresa-%</p>
+<p>%-dir_empresa-%</p>
+<p>%-ciudad_empresa-%.</p>
+<p style="text-align: right;">Asunto: Requerimiento de documentos Complementarios al proceso de Seguimiento y Control de Aportes SENA&nbsp;&nbsp; y FIC</p>
+<p>Respetada se&ntilde;or(a):</p>
+<p>&nbsp;</p>
+<p>Respetuosamente, le informo que una vez verificados los documentos entregados por ustedes,&nbsp;&nbsp; respecto al proceso de seguimiento y control, que adelanta el SENA, mediante comunicado No.____________________________ y espec&iacute;ficamente en cumplimiento con el &iacute;tem &ldquo;dem&aacute;s informaci&oacute;n financiera y soportes que sean necesarios en desarrollo de la revisi&oacute;n&rdquo;, &ldquo;dem&aacute;s informaci&oacute;n financiera y soportes que sean necesarios en desarrollo de la revisi&oacute;n&rdquo;, se solicita allegar en un t&eacute;rmino no mayor a cinco (5) d&iacute;as h&aacute;biles, los documentos se&ntilde;alados a continuaci&oacute;n:</p>
+<table cellspacing="0" cellpadding="0" border="1">
+
+  <tr>
+    <td align="right">2</td>
+    <td colspan="3"> SOLICITUD DE DOCUMENTOS ESPECIALES</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Verifcacion Aportes SENA:</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="5">AUXILIARES DETALLADOS,    SUBTOTALIZADOS POR   EMPLEADO  DE LAS CUENTAS   CONTABLES     QUE REGISTRAN   LA NOMINA </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><b>Factores de Liquidación de Aportes</td>
+    <td><b>AUXILIAR O DCTOS DICONALES A REVISAR:</td>
+    <td><b>EMPLEADO</td>
+    <td><b>MES  </td>
+    <td><b>AÑO</td>
+    <td><b>VALOR</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>SUELDOS</td>
+    <td>NOMINAS  Y AUXILIARES DE CONTABILIDAD</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td> SOBRE SUELDOS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>SALARIO INTEGRAL 70%</td>
+    <td>NOMINAS  Y AUXILIARES DE CONTABILIDAD</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>SALARIO EN ESPECIE</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>SUPERNUMERARIOS</td>
+    <td>NOMINAS  Y AUXILIARES DE CONTABILIDAD</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>VIÁTICOS (MANUTENCIÓN Y ALOJAMIENTO)</td>
+    <td>UXILIARES    DETALLADOS  D POR EMPLEADO</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>AUXILIO DE TRANSPORTE </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>HORAS EXTRAS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>DOMINICALES Y FESTIVOS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>RECARGO NOCTURNO</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>JORNALES</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>COMISIONES</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>BONIFICACIONES HABITUALES</td>
+    <td>COPIAS DE    CONTRATOS </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>&nbsp;</td>
+    <td>PACTOS COLECTIVOS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PORCENTAJE SOBRE VENTAS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>VACACIONES </td>
+    <td>CERTIFICACION  FIRMADA     POR CONTADOR/ REVISOR FISCAL</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>&nbsp;</td>
+    <td>AUX. DETALLADO DE LAS    CUENTAS  DE VACACIONES POR PAGAR </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>&nbsp;</td>
+    <td>AUX. DETALLADO DE LAS    CUENTAS  DE  PROVISION DE  VACACIONES </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>TRABAJO A DOMICILIO</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>CONTRATOS Y SUBCONTRATOS    (Construcción)</td>
+    <td>AUX. DETALLADOS DE    CUENTAS DE JORNALES Y MANO DE OBRA DE CONTRATISTAS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA TÉCNICA SALARIAL (Sector    Público)</td>
+    <td>EJECUCION   PRESUPUESTAL</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>AUXILIO y/o SUBSIDIO DE ALIMENTACIÓN</td>
+    <td>COPIAS DE CONTRATOS    LABORALES</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA DE SERVICIO (Sector Público)</td>
+    <td>PACTOS COLECTIVOS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA DE LOCALIZACION</td>
+    <td>RESOLUCIONES    DE CONDICONES ESPECIALES  DE PAGOS LABORALES </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA DE VIVIENDA (Sector Público)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>GASTOS DE REPRESENTACIÓN (Sector    Público)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA O INCREMENTO POR ANTIGÜEDAD</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA     DE  PRODUCTIVIDAD</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA DE VACACIONES</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>PRIMA DE NAVIDAD (Sector Privado)</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>CONTRATOS AGRICOLAS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>REMUNERACION SOCIOS INDUSTRIALES</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>HORA CATEDRA</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>OTRAS     BASES SALARIALES   DENOMINADA:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>OTRAS     BASES SALARIALES   DENOMINADA:</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table cellspacing="0" cellpadding="0" border="1">
+  <col width="80" />
+  <col width="183" />
+  <col width="80" span="4" />
+  <tr>
+    <td colspan="2" width="263">Para Construccion:</td>
+    <td width="80"></td>
+    <td width="80"></td>
+    <td width="80"></td>
+    <td width="80"></td>
+  </tr>
+  <tr>
+    <td colspan="3" width="343">AUXILIARES    DETALLADOS, SUBTOTALIZADOS POR TERCERO DE LAS CUENTAS CONTABLES POR LAS    CUALES EL EMPRESARIO  REGISTRA LOS    COSTOS DE  OBRAS EJECUTADAS DE LOS    GRUPOS  14, 61, 72, 74 (O LA CUENTA QUE    EL  CONSTRUCTOR HAYA DETERMINADO)  PARA LA CONTABILIZACION,</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td width="80">A manera    de ejemplo:</td>
+    <td width="183"></td>
+    <td width="80"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td width="80">CODIGO  CUENTA CONTABLE</td>
+    <td width="183">NOMBRE DE LA    CUENTA CONTABLE</td>
+    <td width="80">TERCERO/ NIT DEL    CONTRATISTA</td>
+    <td width="80">NOMBRE O RAZON    SOCIAL  DEL CONTRATISTA</td>
+    <td width="80">DEATLLE DE LA    CUENTA</td>
+    <td width="80">VALOR </td>
+  </tr>
+  <tr>
+    <td align="right">14</td>
+    <td width="183">CUENTAS    CONTABLES DE INVENTARIOS  ORAS DE CONSTRUCCION </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td width="183">PRELIMINARES</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td width="183">DEMOLICION</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>MANO DE OBRA </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>ESTRUCTURA</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>MAMPOSTERIA </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>INSTALACIONES    HIDRAULICAS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>INSTALACIONES    ELECTRICAS</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">71</td>
+    <td>ACABADOS </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td width="183">Y  EN GENERAL TODAS LA CUENTAS DE COSTOS    QUE  CONTEMPLAN LAS ACTIVIDADES DE    CONSTRUCCION   QUE  SE SEÑALAN     EN  LA DESCRIPCION  DETALLADA     DE LA RESOLUCION  DIAN  0139 DEL 21/NOV/2012.</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>ACTUALIZAR LA INFORMACION</td>
+    <td colspan="5">La empresa debe relacionar los    pagado al sena en aportes  o FIC,    indicando:</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td width="183">comprobante o planilla</td>
+    <td width="80">valor del aporte</td>
+    <td width="80">vr.intereses de    mora</td>
+    <td width="80">mes del aporte</td>
+    <td width="80">fecha de pago</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>Por lo anterior, amablemente solicitamos se acuerde una pr&oacute;xima reuni&oacute;n para el d&iacute;a&nbsp; %-fecha_visita-%, hora&nbsp;&nbsp; %-hora_visita-%</p>
+<p>&nbsp;</p>
+<p>Cualquier inquietud con gusto le atender&aacute; el Normalizador de Cartera Fiscalizador %-nombre_fiscalizador-% tel&eacute;fono %-tel_fisc-% Ext %-ext_fisc-% correo electr&oacute;nico&nbsp;&nbsp; %-correo_fisc-%</p>
+<p>&nbsp;</p>
+<p>Se&ntilde;or Empresario es importante recordarle que de acuerdo a lo establecido en el Articulo 51 del C&oacute;digo de procedimiento administrativo y de lo Contencioso administrativo (Ley 1437 de 2.011) determina que la renuencia a suministrar informaci&oacute;n, la oculten, impidan o no autoricen acceso a los funcionarios, o la remitan incompleta o con errores al SENA, dar&aacute; lugar a multas hasta de 100 SMLMV, situaci&oacute;n que el SENA quiere evitar teniendo en cuenta la necesidad de ser un aliado estrat&eacute;gico del Sector Productivo.</p>
+<p>&nbsp;</p>
+<p>Agradecemos de antemano su tiempo y oportuna colaboraci&oacute;n para la realizaci&oacute;n de esta reuni&oacute;n que le permitir&aacute; al SENA aportarle a la productividad, competitividad y responsabilidad social de Colombia.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Cordial saludo,</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="text-align: justify;">&nbsp;</p>
+<p style="text-align: right;">%-nombre_coordinador-%</p>
+<p style="text-align: right;">&nbsp;&nbsp;&nbsp;&nbsp; Coordinador Relaciones Corporativas e Internacionales</p>
+<p>&nbsp;</p>
+<p style="text-align: right;">Elaboró: %-nombre_fiscalizador-%<strong><br /> <br /> </strong></p>

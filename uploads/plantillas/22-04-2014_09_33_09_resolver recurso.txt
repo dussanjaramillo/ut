@@ -1,0 +1,59 @@
+<p>El Director del Servicio Nacional de Aprendizaje SENA Regional %-regional-%, en uso de sus facultades legales y en especial las conferidas por el C&oacute;digo Contencioso Administrativo y las delegadas por el Director General del SENA mediante Resoluci&oacute;n N&ordm; 00770 del 11 de julio de 2001, y</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>C O N S I D E R A N D O:</p>
+<p>&nbsp;</p>
+<p>Que mediante Resolici&oacute;n No.&nbsp;%-cod_resolucion-% del %-fecha-%, notificada personalmente el d&iacute;a 26 de noviembre de 2012, el Director del SENA Regional&nbsp;%-director-% orden&oacute; al empleador %-nombre_empresa-%,con<strong> NIT. %-nit-% </strong>domiciliado en %-domicilio-%. el pago de la suma de&nbsp;%-valor_letras-%<strong> M/CTE ($%-valor-%</strong>), por concepto de los aportes del 2% causados a favor del Servicio Nacional de Aprendizaje SENA.</p>
+<p>&nbsp;</p>
+<p>Que mediante escrito radicado en el SENA bajo el n&uacute;mero xxxxxxxxxxxx y Nis xxxxxxxxxxx del xx de xxxxx de 201x la apoderada de la empresa, interpuso contra la Resoluci&oacute;n&nbsp;%-cod_resolucion-% del&nbsp;%-fecha_resolucion-% recurso de reposici&oacute;n, manifestando su inconformidad con los siguientes argumentos:</p>
+<p>&nbsp;</p>
+<p>&ldquo;<strong>SE TRANSCRIBEN LOS ARGUMENTOS DE LA EMPRESA</strong><strong>&rdquo;</strong></p>
+<p>&nbsp;</p>
+<p><strong>Consideraciones del Despacho:</strong></p>
+<p><strong>&nbsp;</strong></p>
+<p>En materia de aportes al Servicio Nacional de Aprendizaje SENA, la Ley 21 de 1982 establece en el Art&iacute;culo 7 los obligados a efectuarlos as&iacute;: &ldquo;<strong>que est&aacute;n obligados a pagar el subsidio familiar y a efectuar aportes para el Servicio Nacional de Aprendizaje SENA. 1.- La Naci&oacute;n, por intermedio de los Ministerios, Departamentos Administrativos y Superintendencias. 2.- Los Departamentos, (Intendencias, Comisar&iacute;as), el Distrito Especial de Bogot&aacute; y los Municipios. 3.- Los Establecimientos P&uacute;blicos, las Empresas Industriales y Comerciales y las Empresas de Econom&iacute;a Mixta de los &oacute;rdenes Nacional, Departamental, (Intendencial, Comisarial), Distrital y Municipal. 4.- Los empleadores que ocupen uno o m&aacute;s trabajadores permanentes.</strong></p>
+<p>&nbsp;</p>
+<p>Los aportes parafiscales tienen una connotaci&oacute;n especifica que ha sido precisada por la Jurisprudencia Nacional en diferentes ocasiones, estableciendo para dichos aportes que: &ldquo;<strong>Son contribuciones parafiscales los grav&aacute;menes establecidos con car&aacute;cter obligatorio por la Ley, que afectan a un determinado y &uacute;nico grupo social y econ&oacute;mico y se utilizan para beneficio del propio sector</strong><strong>. El manejo, administraci&oacute;n y ejecuci&oacute;n de &eacute;stos recursos se har&aacute; exclusivamente en forma dispuesta por la Ley que los crea y se destinar&aacute;n s&oacute;lo al objeto previsto en ella, lo mismo que los rendimientos y excedentes financieros que resulten al cierre del ejercicio contable</strong>.&rdquo; (Negrita y subrayado fuera de texto).&nbsp;&nbsp;</p>
+<p>&nbsp;</p>
+<p>En este sentido es preciso traer a colaci&oacute;n la Sentencia C &ndash; 490 de 1993 de la H. Corte Constitucional en la que se indic&oacute;<strong>: &ldquo;CONTRIBUCIONES PARAFISCALES. A diferencia de las tasas, las contribuciones parafiscales son obligatorias y no confieren al ciudadano el derecho a exigir del Estado la prestaci&oacute;n de un servicio o la transferencia de un bien. Se diferencian de los impuestos en la medida en que carecen de la generalidad propia de ese tipo de grav&aacute;menes tanto en materia de sujeto pasivo del tributo, cuanto que tiene una especie de afectaci&oacute;n y no se destinan a las arcas generales del tesoro p&uacute;blico. La doctrina suele se&ntilde;alar que las contribuciones parafiscales se encuentran en medio camino entre las tasas y los impuestos, dado que de una parte son fruto de la soberan&iacute;a fiscal del Estado, son obligatorias, no guardan relaci&oacute;n directa ni inmediata con el beneficio otorgado al contribuyente. Pero, de otro lado se cobran solo a un gremio o colectividad espec&iacute;fica y se destinan a cubrir las necesidades o intereses de dicho gremio o comunidad.&rdquo; </strong></p>
+<p>&nbsp;</p>
+<p>En consecuencia la Jurisprudencia precisa que son caracter&iacute;sticas de esta contribuci&oacute;n parafiscal:</p>
+<p>&nbsp;</p>
+<p><strong>Obligatoriedad:</strong> El recurso parafiscal es de observancia obligatoria por quienes se hallen dentro de los supuestos de la norma creadora del mencionado recurso. Por tanto, el Estado tiene el poder coercitivo para garantizar su cumplimiento.</p>
+<p><strong>Singularidad:</strong> En oposici&oacute;n al impuesto el recurso parafiscal tiene la caracter&iacute;stica de afectar un determinado y &uacute;nico grupo social o econ&oacute;mico.</p>
+<p>&nbsp;</p>
+<p><strong>Destinaci&oacute;n:</strong> Sectorial: Los recursos extra&iacute;dos del sector o sectores econ&oacute;micos o sociales determinados se revierten en beneficio exclusivo del propio sector o sectores.&rdquo; (Sentencia C-490 Nov. 28/93 Magistrado ponente Dr. Alejandro Mart&iacute;nez Caballero).</p>
+<p>&nbsp;</p>
+<p>As&iacute; mismo, los aportes parafiscales constituyen un gravamen obligatorio por el que responde un determinado y &uacute;nico grupo social econ&oacute;mico conformado por los empleadores, y cuentan adem&aacute;s con una destinaci&oacute;n especifica en beneficio de ese mismo sector o grupo social<strong>, </strong>pues con ese aporte se apoya la formaci&oacute;n profesional integral cual es la Misi&oacute;n Institucional; de igual forma se ajusta a las definiciones jurisprudenciales dadas al concepto de aporte parafiscal, as&iacute; se desprende de la Sentencia C-1179 de 2001 cuando define aporte parafiscal como: &ldquo;Gravamen obligatorio que no tiene el car&aacute;cter de remuneraci&oacute;n de un servicio prestado por el Estado, no afectan a todos los ciudadanos sino &uacute;nicamente a un grupo econ&oacute;mico determinado, tiene una destinaci&oacute;n especifica en cuanto se utilizan para el beneficio del sector econ&oacute;mico que soporta el gravamen, no se someten a las normas de ejecuci&oacute;n presupuestal y son admitidos por &oacute;rganos que hacen parte de ese mismo rengl&oacute;n econ&oacute;mico.&rdquo;</p>
+<p>&nbsp;</p>
+<p>As&iacute; las cosas, se tiene que la obligaci&oacute;n parafiscal es un v&iacute;nculo jur&iacute;dico entre el Estado y las personas, del que se desprende como principal obligaci&oacute;n frente a aquel, la de cumplir una obligaci&oacute;n que consiste en dar, hacer y no hacer que de manera resumida y en t&eacute;rminos generales corresponde a las obligaciones de pagar, informar y abstenerse de evadir o eludir el pago de la contribuci&oacute;n, enmarcados en los deberes generales consagrados en el art&iacute;culo 95 de la Constituci&oacute;n Pol&iacute;tica aludiendo al deber moral de satisfacer los tributos que surgen de la participaci&oacute;n de la vida social y a contribuir con las cargas p&uacute;blicas.</p>
+<p>&nbsp;</p>
+<p>El SENA como ente que recauda y administra los aportes parafiscales cuenta con amplias facultades de fiscalizaci&oacute;n frente a quienes tienen la obligaci&oacute;n de cumplir con aquellos, es as&iacute; como mediante Resoluci&oacute;n 704 de 1985 se adopt&oacute; el manual de aportes para la entidad, como documento de consulta para el cumplimiento de las actividades relacionadas con la fiscalizaci&oacute;n y el recaudo de aportes que posteriormente fue derogada por la Resoluci&oacute;n 1698 de 1992, con la cual se adopt&oacute; el manual de procedimientos de aportes del Servicio Nacional de Aprendizaje SENA.</p>
+<p>&nbsp;</p>
+<p>Precisado lo anterior, el Despacho entrar&aacute; a analizar los argumentos presentados por la recurrente frente al pago ordenado mediante la Resoluci&oacute;n %-cod_resolucion-% del %-fecha-%</p>
+<p>&nbsp;</p>
+<p>En primer lugar, argumenta la recurrente, que &hellip;.. SE EMPIEZAN A ANALIZAR UNO POR UNO LOS ARGUMENTOS DE LA EMPRESA EN EL RECURSO Y SE PONE LA CONSIDERACION DEL DESPACHO FRENTE A CADA UNO&hellip;</p>
+<p>&nbsp;</p>
+<p>As&iacute; las cosas, concluye el Despacho que debe revocar la resoluci&oacute;n recurrida, teniendo en cuenta que se verific&oacute; que CENTIGON COLOMBIA S.A. efectu&oacute; el pago de los aportes parafiscales durante los periodos revisados.</p>
+<p><strong>&nbsp;</strong></p>
+<p>En m&eacute;rito de lo anteriormente expuesto,</p>
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></p>
+<p>RESUELVE</p>
+<p>&nbsp;</p>
+<p><strong>ART&Iacute;CULO PRIMERO:</strong> Revocar en todas y cada una de sus partes el contenido de la Resoluci&oacute;n No %-cod_resolucion-% del %-fecha-%, de conformidad con la parte considerativa del presente Acto Administrativo.</p>
+<p><strong>ART&Iacute;CULO SEGUNDO:</strong> Notificar al representante legal o apoderado de la empresa %-nombre_empresa-% con <strong>NIT. %-nit-%, </strong>el contenido de la presente resoluci&oacute;n conforme a lo se&ntilde;alado en los art&iacute;culos 67 y siguientes del C&oacute;digo de Procedimiento Administrativo y de lo Contencioso Administrativo, haci&eacute;ndole saber que contra la misma no procede recurso alguno, quedando agotada la v&iacute;a gubernativa.</p>
+<p>&nbsp;</p>
+<p><strong>ART&Iacute;CULO TERCERO: </strong>La presente resoluci&oacute;n rige a partir de la fecha de su ejecutoria.</p>
+<p><strong>&nbsp;</strong></p>
+<p>Dada en %-ciudad-% a los %-fecha_actual-%</p>
+<p>&nbsp;</p>
+<p><strong>NOTIFIQUESE Y CUMPLASE</strong></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>%-director-%</strong></p>
+<p><strong>Director Regional <br /></strong></p>
+<p>&nbsp;</p>
+<p>Revis&oacute;: %-reviso-%</p>
+<p>Abogado del despacho</p>
+<p>Proyect&oacute;: %-reviso-%</p>
+<p>Abogada de Relaciones Corporativas.</p>

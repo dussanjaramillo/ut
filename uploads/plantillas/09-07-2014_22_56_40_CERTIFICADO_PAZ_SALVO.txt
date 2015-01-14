@@ -1,0 +1,26 @@
+<h2 style="text-align: center;">&nbsp;</h2>
+<h2 style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></h2>
+<p style="text-align: center;"><strong>Servicio Nacional de Aprendizaje&nbsp;</strong></p>
+<p style="text-align: center;"><strong> SENA</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<h3 style="text-align: center;"><strong>CERTIFICA:</strong></h3>
+<p>&nbsp;</p>
+<p style="text-align: center;">Que el empleador con raz&oacute;n social %-NOMBRE_EMPRESA-%, identificado con el NIT %-CODEMPRESA-%, se encuentra registrado en la base de datos de Aportes del SENA, encontr&aacute;ndose al d&iacute;a con los pagos de Aportes Parafiscales mensuales a la fecha y no presenta registros en cartera.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Contrato de Aprendizaje: No se encuentra regulada la cuota de aprendizaje; por lo tanto debe acercarse a la Regional SENA donde est&aacute; ubicada su sede principal para efectos de determinar si se encuentra obligado a contratar aprendices.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">NO TIENE VALIDEZ PARA FINES TRIBUTARIOS, NI COMO DOCUMENTO V&Aacute;LIDO PARA SER PRESENTADO EN PROCESOS DE SELECCI&Oacute;N DEL ESTADO ANTE ENTIDADES DISTINTAS AL SENA.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">ACLARACI&Oacute;N: EN CONSIDERACI&Oacute;N A LO REGULADO POR LA LEY 1607 DE 2012, LAS SOCIEDADES Y PERSONAS JUR&Iacute;DICAS Y ASIMILADAS CONTRIBUYENTES DECLARANTES DEL IMPUESTO SOBRE LA RENTA Y COMPLEMENTARIOS, CORRESPONDIENTES A LOS TRABAJADORES QUE DEVENGUEN, INDIVIDUALMENTE CONSIDERADOS, HASTA DIEZ (10) SALARIOS M&Iacute;NIMOS MENSUALES VIGENTES, AS&Iacute; COMO LAS PERSONAS NATURALES EMPLEADORAS, SE ENCUENTRAN EXONERADAS DE LA OBLIGACI&Oacute;N DE PAGO DE LOS APORTES PARAFISCALES AL SENA.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">LA EXPEDICI&Oacute;N DE ESTA CERTIFICACI&Oacute;N, NO IMPIDE QUE EL SENA VERIFIQUE LA BASE DE LIQUIDACI&Oacute;N DE APORTES Y QUE CONSTATE EL CUMPLIMIENTO EN CONTRATO DE APRENDIZAJE.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">%-EXPEDIDA-% &nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<h3 style="text-align: center;"><strong>SENA, MAS TRABAJO </strong></h3>
+<p style="text-align: center;">&iquest;Desea saber si este certificado es aut&eacute;ntico? Ingrese a la p&aacute;gina <a href="http://www.sena.edu.co">www.sena.edu.co</a>, bot&oacute;n CertiAportes y luego clic en el bot&oacute;n Validaci&oacute;n de Certificaci&oacute;n de aportes al SENA y digite el siguiente c&oacute;digo de verificaci&oacute;n: %-COD_VERIFICACION2-%</p>

@@ -1,0 +1,16 @@
+<h2 style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></h2>
+<p style="text-align: center;"><strong>Servicio Nacional de Aprendizaje</strong></p>
+<p style="text-align: center;"><strong>SENA</strong></p>
+<h2 style="text-align: center;"><strong>CERTIFICA:</strong></h2>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Que para el n&uacute;mero de transacci&oacute;n %-TRANSACCION-% se cancel&oacute; por concepto de Fondo Nacional de Formaci&oacute;n Profesional de la Industria de la Construcci&oacute;n FIC, el valor y de acuerdo a la siguiente informaci&oacute;n de pagos realizados por el bot&oacute;n de Pagos:</p>
+<p>&nbsp;</p>
+<p style="text-align: center;">%-TABLA_INFORMACION-%</p>
+<p style="text-align: center;">%-EXPEDIDA-%</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>&nbsp;</strong></p>
+<p style="text-align: center;"><strong>&ldquo;LA EXPEDICI&Oacute;N DE ESTA CERTIFICACI&Oacute;N, NO IMPIDE QUE EL SENA VERIFIQUE LA BASE DE LIQUIDACI&Oacute;N DE FIC Y QUE CONSTATE EL CUMPLIMIENTO EN FONDO NACIONAL DE FORMACI&Oacute;N PROFESIONAL DE LA INDUSTRIA DE LA CONSTRUCCI&Oacute;N FIC.&rdquo;</strong></p>
+<p style="text-align: center;"><strong>NO TIENE VALIDEZ PARA FINES TRIBUTARIOS</strong></p>
+<h3 style="text-align: center;"><strong>SENA, M&Aacute;S TRABAJO</strong></h3>
+<p>&nbsp;</p>

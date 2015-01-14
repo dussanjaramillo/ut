@@ -1,0 +1,59 @@
+<p align="center">%-ciudad-%</p>
+<p>&nbsp;</p>
+<p>%-trato-%<br />
+  <br />
+  %-nombre-%<br />
+  <br />
+  Representante Legal<br />
+  <br />
+  %-nombreEmpresa-%<br />
+  <br />
+  %-nit-%<br />
+  <br />
+  %-direccion-%<br />
+  <br />
+  %-ciudad-%<br />
+  <br />
+  </p>
+<p align="right"><strong>Asunto:</strong> Informaci&oacute;n Proceso Liquidaci&oacute;n<br />
+  <br />
+  Aportes al SENA, Contrato de Aprendizaje y/o Contribuci&oacute;n FIC<br />
+  <br /></p>
+<p align="justify">  <br />
+  <br />
+  <br />
+  <br />
+  Respetado(a) <strong>%-nombre-%</strong>:<br />
+  <br />
+  <br />
+  <br />
+  Dando alcance a la comunicaci&oacute;n enviada por el <strong>SENA No. X-2014-XXXXX del %-dd-%/%-mm-%/2014</strong>, donde se le envi&oacute; requerimiento Visita Seguimiento SENA en Aportes, Contrato de Aprendizaje y/o Contribuci&oacute;n FlC, atentamente me permito enviarle copia de la Liquidaci&oacute;n por concepto de <strong>%-concepto-%</strong> N&deg; <strong>%-num_liquidacion-%</strong> del (<strong>%-fecha_liquidacion-%</strong>), del cual su empresa ya tuvo conocimiento.<br />
+  <br />
+  A continuaci&oacute;n enviamos el reporte generado para cada concepto:<br />
+  <br />
+  <strong><em>%-respuesta-%</em></strong><br />
+  <br />
+  Es importante recordarle, que en el t&eacute;rmino de cinco (5) d&iacute;as h&aacute;biles del recibo de esta comunicaci&oacute;n, el Servicio Nacional de Aprendizaje iniciar&aacute; el procedimiento administrativo sancionatorio determinado en el Articulo 47 y siguientes del C&oacute;digo de Procedimiento Administrativo y de lo Contencioso Administrativo, ya que ha encontrado m&eacute;ritos suficientes para adelantar este procedimiento.<br />
+  <br />
+  EL SENA, les estar&aacute; citando con el fin de notificarlos del Auto de Formulaci&oacute;n de Cargos correspondiente. Con el pago oportuno de sus obligaciones aportar&aacute; a la productividad, competitividad y responsabilidad social de Colombia.<br />
+  <br />
+  <br />
+  <br />
+  </p>
+  <p>
+  Cordialmente, <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <strong>%-coordinador-% </strong><br />
+  <br />
+  Coordinadora Relaciones Corporativas e Internacionales <br />
+  <br />
+  <br />
+  <br />
+  Anexo:(X) Folios.<br />
+  <br />
+  Proyect&oacute;:</p>
+<p>%-fiscalizador-%</p>

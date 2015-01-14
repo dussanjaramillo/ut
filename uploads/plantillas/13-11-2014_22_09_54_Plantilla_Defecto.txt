@@ -1,0 +1,40 @@
+<p>&nbsp;</p>
+<table border="1" width="100%" align="center">
+<tbody>
+<tr>
+<td>
+<div align="center"><strong>Identificaci&oacute;n</strong></div>
+</td>
+<td>
+<div align="center"><strong>Ejecutado</strong></div>
+</td>
+<td>
+<div align="center"><strong>Concepto</strong></div>
+</td>
+<td>
+<div align="center"><strong>Telefono</strong></div>
+</td>
+<td>
+<div align="center"><strong>Direccion</strong></div>
+</td>
+<td>
+<div align="center"><strong>Saldo Deuda</strong></div>
+</td>
+</tr>
+<tr>
+<td>%-identificacion-%</td>
+<td>%-ejecutado-%</td>
+<td>%-concepto-%</td>
+<td>%-telefono-%</td>
+<td>%-direccion-%</td>
+<td>%-saldo_deuda-%</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

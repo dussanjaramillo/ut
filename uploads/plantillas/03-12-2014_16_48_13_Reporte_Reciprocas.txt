@@ -1,0 +1,17 @@
+<h2 style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></h2>
+<h3 style="text-align: center;"><strong>Servicio Nacional de Aprendizaje</strong></h3>
+<h3 style="text-align: center;"><strong>SENA</strong></h3>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">En virtud de las normas emitidas por la Contadur&iacute;a General de la Naci&oacute;n, relacionada con las operaciones rec&iacute;procas, el Servicio Nacional de Aprendizaje- SENA certifica que el empleador.</p>
+<p style="text-align: center;">&nbsp;</p>
+<h2 style="text-align: center;"><strong>%-NOMBRE_EMPRESA-%</strong></h2>
+<p>&nbsp;</p>
+<h3 style="text-align: center;"><strong>Con N&uacute;mero de Identificaci&oacute;n: %-CODEMPRESA-%</strong></h3>
+<p>&nbsp;</p>
+<p style="text-align: center;">Cancel&oacute; entre el 1 de Enero al 31 de Diciembre de %-ANO-% un total por aportes a nivel nacional de: %-VALOR_LETRAS-% ($%-VALOR_TOTAL-%) correspondientes a pagos al Servicio Nacional de Aprendizaje &ndash;SENA discriminados as&iacute;:</p>
+<p style="text-align: center;">%-TABLA_INFORMACION-%</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Si presenta alguna inconformidad favor dirigirse a la Oficina de Recaudo y Cartera de la Direcci&oacute;n General ubicada en Bogot&aacute; o comunicarse con el n&uacute;mero telef&oacute;nico 5461500 ext. 12657 o 12662 de Bogot&aacute; para la correspondiente verificaci&oacute;n y/o correcci&oacute;n de la informaci&oacute;n.</p>
+<p style="text-align: center;">%-EXPEDIDA-%</p>
+<p style="text-align: center;">&nbsp;</p>
+<h3 style="text-align: center;"><strong>SENA, MAS TRABAJO</strong></h3>

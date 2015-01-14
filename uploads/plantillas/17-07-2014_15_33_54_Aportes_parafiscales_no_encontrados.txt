@@ -1,0 +1,19 @@
+<p style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></p>
+<p style="text-align: center;"><strong>Servicio Nacional de Aprendizaje</strong></p>
+<p style="text-align: center;"><strong>SENA</strong></p>
+<p style="text-align: center;"><strong>Certificaci&oacute;n Tributaria por Vigencia</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Para los efectos de los articulos 108,114 y 664 (modificados por el articulo 25 de la ley 788 de 2002 ) del estatuto Tributario, el articulo 34 de la ley 119 de 1994 y de mas normas concordantes; el Servicio Nacional de Aprendizaje - SENA certifica que:</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong>%-NOMBRE_EMPRESA-%</strong></p>
+<p style="text-align: center;"><strong>con numero de identificaci&oacute;n : <strong>%-CODEMPRESA-%</strong><br /></strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong>No hay pagos por aportantes parafiscales para esta vigencia en nuestras Bases de Datos</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Si&nbsp; presenta alguna inconformidad favor dirigirse&nbsp; a la Oficina de Relaciones Corporativas de la Regional del SENA mas cercana o la oficina de Recaudos y Cartera de la Direcci&oacute;n General ubicada en Bogot&aacute; para la correspondiente verificaci&oacute;n y/o correcci&oacute;n.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">%-EXPEDIDA-%</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong>LA PRESENTE CERTIFICACI&Oacute;N NO HACE LAS VIGENCIAS DE PAZ Y SALVO INTEGRAL, NI COMO DOCUMENTO VALIDO PARA SER PRESENTADO EN PROCESOS DE SELECCI&Oacute;N DEL ESTADO</strong></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

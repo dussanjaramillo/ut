@@ -1,0 +1,17 @@
+<p style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></p>
+<p style="text-align: center;"><strong>Servicio de</strong> <strong>Nacional de Aprendizaje</strong></p>
+<p style="text-align: center;"><strong>SENA</strong></p>
+<p style="text-align: center;"><strong>Certificaci&oacute;n Tributaria por Vigencia</strong></p>
+<p><strong>&nbsp;</strong></p>
+<p>Para los efectos de los art&iacute;culos 108, 114 y 664 (modificado por el art&iacute;culo 25 de la ley 788 de 2002) del Estatuto Tributario, el art&iacute;culo 34 de la ley 119 de 1994 y dem&aacute;s normas concordantes; el Servicio Nacional de Aprendizaje &ndash; SENA certifica que:</p>
+<p style="text-align: center;"><strong>%-NOMBRE_EMPRESA-%</strong></p>
+<p style="text-align: center;"><strong>Con N&uacute;mero de Identificaci&oacute;n: <strong>%-CODEMPRESA-%</strong><br /></strong></p>
+<p><strong>&nbsp;</strong></p>
+<p>Cancel&oacute; un total de aportes a nivel nacional de:&nbsp;<strong>%-VALOR_LETRAS-%</strong>&nbsp; ($<strong>%-VALOR_TOTAL-%</strong>) correspondientes a los Aportes Parafiscales por la vigencia 2013, discriminados as&iacute;:</p>
+<p style="text-align: center;"><strong>%-TABLA_INFORMACION-%</strong></p>
+<p>Si presenta alguna inconformidad favor dirigirse a la Oficina de Relaciones Corporativas de la Regional del SENA m&aacute;s cercana o a la oficina de Recaudo y Cartera de la Direcci&oacute;n General ubicada en Bogot&aacute;, para la correspondiente verificaci&oacute;n y/o correcci&oacute;n.</p>
+<p>&nbsp;</p>
+<p>%-EXPEDIDA-%</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong>LA PRESENTE CERTIFICACI&Oacute;N NO HACE LAS VECES DE PAZ Y SALVO INTEGRAL Y NO PUEDE SER PRESENTADO EN PROCESOS DE SELECCI&Oacute;N DEL ESTADO.</strong></p>
+<p style="text-align: center;"><strong>SENA, M&Aacute;S TRABAJO</strong></p>

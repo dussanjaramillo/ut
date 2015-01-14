@@ -1,0 +1,25 @@
+<h2 style="text-align: center;">&nbsp;</h2>
+<h2 style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></h2>
+<p style="text-align: center;"><strong>Servicio de</strong> <strong>Nacional de Aprendizaje</strong></p>
+<h3 style="text-align: center;"><strong>SENA</strong></h3>
+<h3 style="text-align: center;"><strong>Certifica:</strong></h3>
+<p style="text-align: center;">Que el empleador con Raz&oacute;n Social %-NOMBRE_EMPRESA-%&nbsp; identificado con el Nit %-CODEMPRESA-%, se encuentra registrado en nuestra base de datos de Aportes durante las &uacute;ltimas cinco (5) vigencias y no registra pagos de los per&iacute;odos descritos a continuaci&oacute;n:</p>
+<p style="text-align: center;">&nbsp;</p>
+<h3 style="text-align: center;"><strong>MESES SIN PAGO POR VIGENCIA</strong></h3>
+<p style="text-align: center;">%-TABLA_INFORMACION-%</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">%-DEUDAS_ANTERIORES-%</p>
+<p style="text-align: center;">No se encuentra regulada la cuota de aprendizaje; por lo tanto debe acercarse a la regional SENA donde est&aacute; ubicada su sede principal para efectos de determinar si se encuentra obligado a contratar aprendices.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">Que hasta tanto el empleador no cancele los per&iacute;odos anteriormente relacionados o aclare su situaci&oacute;n ante la respectiva regional del SENA en el cual tiene su sede principal, no se encuentra al d&iacute;a con los pagos mensuales por concepto de aportes parafiscales.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;NO TIENE VALIDEZ PARA FINES TRIBUTARIOS, NI COMO DOCUMENTO VALIDO PARA SER PRESENTADO EN PROCESOS DE SELECCI&Oacute;N DEL ESTADO ANTE ENTIDADES DISTINTAS DEL SENA.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">ACLARACI&Oacute;N: EN CONSIDERACI&Oacute;N ALO REGULADO POR LA LEY 1607 DE 2012, LAS SOCIEDADES Y PERSONAS JUR&Iacute;DICAS Y ASIMILADAS CONTRIBUYENTES DECLARANTES DEL IMPUESTO SOBRE LA RENTA Y COMPLEMENTARIOS, CORRESPONDIENTES A LOS TRABAJADORES QUE DEVENGUEN, INDIVIDUALMENTE CONSIDERADOS, HASTA DIEZ (10) SALARIOS M&Iacute;NIMOS MENSUALES VIGENTES, AS&Iacute; COMO LAS PERSONAS NATURALES EMPLEADORAS, SE ENCUENTRAN EXONERADAS DE LA OBLIGACI&Oacute;N DE PAGO DE LOS APORTES PARAFISCALES DEL SENA.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;LA EXPEDICI&Oacute;N DE ESTA CERTIFICACI&Oacute;N, NO IMPIDE QUE EL SENA VERIFIQUE LA BASE DE LIQUIDACI&Oacute;N DE APORTES Y QUE CONSTATE EL CUMPLIMIENTO EN CONTRATO DE APRENDIZAJE.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;%-EXPEDIDA-%</p>
+<p style="text-align: center;">&nbsp;</p>
+<h3 style="text-align: center;"><strong>SENA, M&Aacute;S TRABAJO </strong></h3>
+<p style="text-align: center;">&iquest;Desea saber si &eacute;ste certificado es aut&eacute;ntico? Ingrese a la p&aacute;gina <a href="http://www.sena.edu.co">www.sena.edu.co</a> , clic en el bot&oacute;n Validaci&oacute;n de Certificaci&oacute;n de aportes -SENA y digite el siguiente c&oacute;digo de verificaci&oacute;n: %-COD_VERIFICACION2-%</p>

@@ -1,0 +1,21 @@
+<h2 style="text-align: center;">&nbsp;</h2>
+<h2 style="text-align: center;"><strong>MINISTERIO DE TRABAJO</strong></h2>
+<p style="text-align: center;"><strong>Servicio Nacional de Aprendizaje</strong></p>
+<h3 style="text-align: center;"><strong>SENA</strong></h3>
+<h3 style="text-align: center;"><br /><strong>Certificaci&oacute;n Tributaria por Vigencia</strong></h3>
+<p style="text-align: center;"><br />Para los efectos de los art&iacute;culos 108, 114 y 664 (modificado por el art&iacute;culo 25 de la ley 788 de&nbsp; 2002) del Estatuto Tributario, el art&iacute;culo 34 de la Ley 119 de 1994 y dem&aacute;s normas concordantes; el Servicio Nacional de Aprendizaje &ndash; SENA certifica que:</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;<strong>%-NOMBRE_EMPRESA-%</strong></p>
+<h3 style="text-align: center;"><br /><strong>Con N&uacute;mero de identificaci&oacute;n: <strong>%-CODEMPRESA-%</strong></strong></h3>
+<p style="text-align: center;">&nbsp;Cancel&oacute; un total de aportes a nivel nacional de:&nbsp;%-VALOR_LETRAS-% ($%-VALOR-%) correspondientes a los Aportes Parafiscales por la vigencia %-ANO-%, discriminados as&iacute;:</p>
+<p style="text-align: center;">&nbsp;<strong>%-TABLA_INFORMACION-%</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">NO TIENE VALIDEZ PARA FINES TRIBUTARIOS, NI COMO DOCUMENTO V&Aacute;LIDO PARA SER PRESENTADO EN PROCESOS DE SELECCI&Oacute;N DEL ESTADO ANTE ENTIDADES DISTINTAS DE SENA.</p>
+<p style="text-align: center;">ACLARACI&Oacute;N: EN CONSIDERACI&Oacute;N A LO REGULADO POR LA LEY 1607 DE 2012, LAS SOCIEDADES Y PERSONAS JUR&Iacute;DICAS Y ASIMILADAS CONTRIBUYENTES DECLARANTES DEL IMPUESTO SOBRE LA RENTA Y COMPLEMENTARIOS, CORRESPONDIENTES A LOS TRABAJADORES QUE DEVENGUEN, INDIVIDUALMENTE CONSIDERADOS, HASTA DIEZ (10) SALARIOS M&Iacute;NIMOS MENSUALES VIGENTES, ASI COMO LAS PERSONAS NATURALES EMPLEADORAS, SE ENCUENTRAN EXONERADAS DE LA OBLIGACI&Oacute;N DE PAGO DE LOS APORTES PARAFISCALES AL SENA.</p>
+<p style="text-align: center;">LA EXPEDICI&Oacute;N DE ESTA CERTIFICACI&Oacute;N, NO IMPIDE QUE EL SENA VERIFIQUE LA BASE DE LIQUIDACI&Oacute;N DE APORTES Y QUE CONSTATE EL CUMPLIMIENTO EN CONTRATO DE APRENDIZAJE.</p>
+<p style="text-align: center;"><br />%-EXPEDIDA-%</p>
+<p>&nbsp;</p>
+<h3 style="text-align: center;"><strong>SENA, M&Aacute;S TRABAJO</strong></h3>
+<p style="text-align: center;">&nbsp;&iquest;Desea saber si este certificado es aut&eacute;ntico? Ingrese a la p&aacute;gina <a href="http://www.sena.edu.co,">www.sena.edu.co,</a> el bot&oacute;n CertiAportes y luego clic en el bot&oacute;n Validaci&oacute;n de Certificaci&oacute;n de Aportes al SENA y digite el siguiente c&oacute;digo de verificaci&oacute;n: %-COD_VERIFICACION2-%</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

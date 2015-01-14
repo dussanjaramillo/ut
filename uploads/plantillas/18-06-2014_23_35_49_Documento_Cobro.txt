@@ -1,0 +1,15 @@
+<p><strong>CONSTANCIA DE EJECUTORIA</strong></p>
+<p>&nbsp;</p>
+<p>RAZ&Oacute;N SOCIAL: %-NOMBRE_EMPRESA-%</p>
+<p>&nbsp;NIT: %-NIT-%</p>
+<p>&nbsp;</p>
+<p>Teniendo en cuenta que la Resoluci&oacute;n No. %-NRO_RESOLUCION-% del %-FECHA_RESOLUCION-%, fue notificada (personalmente, por aviso, etc.),&nbsp;&nbsp; el d&iacute;a %-FECHA_CITACION-%, conforme a lo establecido en el art&iacute;culo 69 del C&oacute;digo de Procedimiento Administrativo y de lo Contencioso Administrativo, sin que se hubieran interpuesto los recursos a que ten&iacute;a lugar en el t&eacute;rmino previsto para el efecto, se declara ejecutoriada la mencionada Resoluci&oacute;n el d&iacute;a %-FECHA_EJECUTORIA-%.</p>
+<p>&nbsp;</p>
+<p>Dada en %-REGIONAL-%, el d&iacute;a %-FECHA-%.</p>
+<p>&nbsp;</p>
+<p>NOMBRE COMPLETO</p>
+<p>Coordinador/a %-COORDINADOR_REGIONAL-%</p>
+<p>Grupo de Relaciones Corporativas e Internacionales</p>
+<p>&nbsp;</p>
+<p>Proyect&oacute;: %-USUARIO-%</p>
+<p>Revis&oacute;: %-USUARIO-%</p>

@@ -1,0 +1,30 @@
+<p style="text-align: center;"><strong>%-ciudad_comunicado-%,</strong></p>
+<p>&nbsp;</p>
+<p>Sr(a)</p>
+<p>%-nombre_representante-%</p>
+<p>Representante Legal</p>
+<p>%-nombre_empresa-%</p>
+<p>%-nit_empresa-%</p>
+<p>%-dir_empresa-%</p>
+<p>%-ciudad_empresa-%</p>
+<p style="text-align: right;"><strong>Asunto: Segunda Citaci&oacute;n Visita Seguimiento SENA</strong></p>
+<p style="text-align: right;"><strong><em>Aportes al SENA</em></strong><em>, <strong>Contrato de Aprendizaje </strong>y/o <strong> Contribuci&oacute;n FIC</strong></em></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>Respetado(a) %-nombre_representante-%:</p>
+<p>&nbsp;</p>
+<p>Debido al incumplimiento de la visita programada para el pasado d&iacute;a %-fecha_primera_visita-%, hora %-hora_primera_visita-%, en las instalaciones de su empresa, a trav&eacute;s de la comunicaci&oacute;n %-nro_com-% y confirmada telef&oacute;nicamente el d&iacute;a xxxx de xxx de xxx. El Servicio Nacional de Aprendizaje SENA, le solicita presentarse en nuestras oficinas ubicadas en <strong><em>Direcci&oacute;n _______________________________</em></strong>, en el horario xxx de lunes a viernes, dentro de los cinco (5) d&iacute;as siguientes al recibo de esta comunicaci&oacute;n con el fin de hacer el seguimiento al pago de los <strong>Aportes al SENA, Contrato de Aprendizaje y/o Contribuci&oacute;n FIC</strong>, de acuerdo a lo establecido en el Art&iacute;culo 15 de la Constituci&oacute;n Pol&iacute;tica, el Art&iacute;culo 8 de la Ley 828 de 2003, los Art&iacute;culos 4 y 5 del Decreto 562 de 1990, y la Ley 789 de 2002 junto con sus &nbsp;Decretos Reglamentarios 933 de 2003 y el 620 de 2005, el SENA hace un seguimiento al pago de los Aportes parafiscales, Contrato de Aprendizaje y/o Contribuci&oacute;n FIC.</p>
+<p>&nbsp;</p>
+<p>Le recordamos que el <strong><em>se&ntilde;or(a) %-nombre_fiscalizador-%, Fiscalizador SENA</em></strong>, es la persona asignada y facultada por la Entidad para acompa&ntilde;arlo en este proceso<strong><em>.</em></strong> Podr&aacute; contactarlo al correo electr&oacute;nico <strong><em>%-correo_fisc-% y tel&eacute;fono %-tel_fisc-% ext. %-ext_fisc-%.</em></strong></p>
+<p>&nbsp;</p>
+<p>Se&ntilde;or Empresario es importante recordarle que de acuerdo a lo establecido en el Articulo 51 del C&oacute;digo de procedimiento administrativo y de lo Contencioso administrativo (Ley 1437 de 2.011) determina que la renuencia a suministrar informaci&oacute;n, la oculten, impidan o no autoricen acceso a los funcionarios, o la remitan incompleta o con errores al SENA, dar&aacute; lugar a multas hasta de 100 SMLMV, situaci&oacute;n que el SENA quiere evitar teniendo en cuenta la necesidad de ser un aliado estrat&eacute;gico del Sector Productivo.</p>
+<p>&nbsp;</p>
+<p>En el t&eacute;rmino de cinco (5) d&iacute;as h&aacute;biles del recibo de esta comunicaci&oacute;n, el Servicio Nacional de Aprendizaje iniciar&aacute; el procedimiento administrativo sancionatorio determinado en el Articulo 47 y siguientes del C&oacute;digo de Procedimiento Administrativo y de lo Contencioso Administrativo, ya que ha encontrado m&eacute;ritos suficientes para adelantar este procedimiento.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Agradecemos de antemano su tiempo y oportuna colaboraci&oacute;n para la realizaci&oacute;n de esta solicitud.</p>
+<p>&nbsp;</p>
+<p>Cordialmente,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p style="text-align: right;">%-nombre_coordinador-%</p>
+<p style="text-align: right;">Coordinadora Relaciones Corporativas e Internacionales</p>
+<p>&nbsp;</p>
