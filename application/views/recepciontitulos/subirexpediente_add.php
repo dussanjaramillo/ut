@@ -1,35 +1,28 @@
 
-<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>
-    <?php
-    if (isset($message)) {
-        echo $message;
-    } else {
-        echo "Adjunte los archivos correspondientes a subir en el expediente";
-    }
-    ?>
-</div>   
+<!--<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>-->
 <div class="preload"></div><img class="load" src="<?php echo base_url('img/27.gif'); ?>" width="128" height="128" />
 <div class="caja_negra" id="caja_negra" style="width: 60%; background: #F8F8F8; border-color: black; border: 1px solid grey; margin: auto; overflow: hidden;alignment-adjust: central ;padding: 15px 50px 0">
     <?php
     $attributes = array("id" => "myform");
     echo form_open_multipart("recepciontitulos/Soporte_Expediente", $attributes);
-    ?> 
-    <input type="hidden" id="cod_coactivo" name="cod_coactivo" value="<?php echo $cod_coactivo; ?>" readonly> 
-    <input type="hidden" id="cod_respuesta" name="cod_respuesta" value="<?php echo $cod_respuesta; ?>"  readonly> 
-    <input type="hidden" id="comentario" name="comentario" readonly>  
-    <input type="hidden" id="fecha" name="fecha" readonly>  
-    <input type="hidden" id="numero" name="numero" readonly >  
+    ?>
+    <input type="hidden" id="cod_coactivo" name="cod_coactivo" value="<?php echo $cod_coactivo; ?>" readonly>
+    <input type="hidden" id="cod_respuesta" name="cod_respuesta" value="<?php echo $cod_respuesta; ?>"  readonly>
+    <input type="hidden" id="comentario" name="comentario" readonly>
+    <input type="hidden" id="fecha" name="fecha" readonly>
+    <input type="hidden" id="numero" name="numero" readonly >
     <center>
         <?php
         echo form_label('<b>Tipo de Archivo:</b> <span class="required"></span>', 'cod_tipo');
         echo "<div style=' color: red ;font-size:19px'>$tipo</div>";
         echo form_error('tipo_archivo', '<div>', '</div>');
         ?>
-        <br>        
+        <br>
     </center>
-    <div id="carga_archivo" class="alert-success"></div><br>    
+    <div id="carga_archivo" class="alert-success"></div><br>
     <br>
-    <center>        
+    <center>
         <?php
         $data = array(
             'name' => 'cargar',
@@ -40,7 +33,17 @@
         echo form_button($data);
         ?>
         <br><br>
-        <div class="respuesta" id="respuesta"></div>
+        <div class="respuesta" id="respuesta">
+            <div  class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                if (isset($message2)) {
+                    echo $message2;
+                } else {
+                    echo "Adjunte los archivos correspondientes a subir en el expediente";
+                }
+                ?>
+            </div>
+        </div>
     </center>
 </div>
 <br>
@@ -50,7 +53,7 @@
     <center>
         <b>N° Radicado:</b> <input type="text" name="numero_radicacion" id="numero_radicacion" class="span1" /> -
         <b>Fecha de Radicado:</b> <input name="fecha_radicacion" id="fecha_radicacion" type="text" class="span2" readonly/>
-    </center>   
+    </center>
     <?php
     echo form_label('<b>Comentarios</b><span class="required"></span>', 'lb_comentarios');
     $datacomentarios = array(
@@ -63,7 +66,7 @@
     );
     echo form_textarea($datacomentarios);
     echo '<br>';
-    ?>   
+    ?>
     <br>
 </div>
 <div id="resultado"></div>
@@ -115,7 +118,7 @@
         $("#comentarios").val(comentarios);
         $("#numero_radicacion").val(radicado);
     }
-    
+
     $("#preloadmini").hide();
     $("#fecha_aviso").hide();
     $("#documentar").hide();
@@ -131,7 +134,7 @@
     function comprobarextension() {
         if ($("#userfile").val() != "") {
             var archivo = $("#userfile").val();
-            var extensiones_permitidas = new Array(".pdf", ".jpg", ".png", ".jpeg");
+            var extensiones_permitidas = new Array(".pdf");
             var mierror = "";
             //recupero la extensiÃ³n de este nombre de archivo
             var extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
@@ -144,7 +147,7 @@
             }
             if (!permitida) {
                 jQuery("#userfile").val("");
-                mierror = '<div  class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Comprueba la extensión de los archivos a subir.\nSólo se pueden subir archivos con extensiones: ' + extensiones_permitidas.join() + '</div>';
+                mierror = '<div  class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>Comprueba la extensión de los archivos a subir.\nSólo se pueden subir archivos con extensiones: ' + extensiones_permitidas.join() + '</div>';
                 $("#respuesta").css('display', 'block');
                 document.getElementById("respuesta").innerHTML = mierror;
             }
@@ -249,11 +252,11 @@
     }
 
 
-</script> 
+</script>
 <style>
     .columna_derecha {
         float:right; /* Alineación a la derecha */
-        width:20%;        
+        width:20%;
         //  border:solid lightblue 1px;
     }
 

@@ -24,21 +24,23 @@ class Consultarcarteraycapacitacion extends MY_Controller {
         var_dump($this->data['registros']);
     }
 
-    function index() {
+    public function index() {
         $this->manage();
     }
 
-    function manage() {
+    public function manage() {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->logged_in()
-                    || $this->ion_auth->in_menu('consultarcarteraycapacitacion/index')
-                    || $this->ion_auth->in_group('Abogados relaciones corporativas ')) {
+                || $this->ion_auth->in_menu('consultarcarteraycapacitacion/index')
+                || $this->ion_auth->in_group('Abogados relaciones corporativas ')) {
             //template data
             $this->template->set('title', 'Consultar cartera y pago');
             $this->data['message'] = $this->session->flashdata('message');
-            $this->template->load($this->template_file, 'consultarcarteraycapacitacion/consultarcarteraycapacitacion_list', $this->data);
+            $this->template->load($this->template_file, 'consultarcarteraycapacitacion/consultarcarteraycapacitacion_list',
+                $this->data);
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área.</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button"
+                    class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área.</div>');
                 redirect(base_url() . 'index.php/inicio');
             }
         } else {

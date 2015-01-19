@@ -63,11 +63,11 @@
             <center><h3>Verificar Reorganizacion</h3></center><br>
             <table width="100%" border="0" align="center">
                 <tr>
-                    <td width="23%"><input type="radio" name="radio" id="radio_pc" value="Procesos Concursales" />                        
+                    <td width="23%"><input type="radio" name="radio" id="radio_pc" value="Regimen de Insolvencia" checked="checked" />                        
                         Procesos Concursales</td>
-                    <td width="26%"><input type="radio" name="radio" id="radio_ri" value="Regimen de Insolvencia" checked="checked"/>
+                    <td width="26%"><input type="radio" name="radio" id="radio_ri" value="Regimen de Insolvencia"/>
                         Régimen de Insolvencia</td>
-                    <td width="13%"><input type="radio" name="radio" id="radio_otro" value="Otros" />                        
+                    <td width="13%"><input type="radio" name="radio" id="radio_otro" value="Regimen de Insolvencia" />                        
                         Otros</td>
                     <td width="38%"><input type="radio" name="radio" id="radio_noreorganizacion" value="No Organizacion" />                        
                         No esta en Proceso de Reorganización</td>
@@ -77,9 +77,9 @@
             <center>
                 <div class="Concursal" id="Concursal">
                     <select name="select" id="tipo_concursal">
-                        <option value="Liquidacion Forzosa">Liquidacion Forzosa</option>
-                        <option value="Concordato">Concordato</option>
-                        <option value="Restructuración">Restructuración</option>
+                        <option value="Regimen de Insolvencia">Liquidacion Forzosa</option>
+                        <option value="Regimen de Insolvencia">Concordato</option>
+                        <option value="Regimen de Insolvencia">Restructuración</option>
                     </select>
                 </div>
                 <div class="Otros" id="Otros">¿Cuál? <input type="text" name="txt_otros" id="txt_otros" /></div>
@@ -194,7 +194,7 @@ echo form_close();
         } else {
             $(".Prescripcion").hide();
             $(".Acumulacion").hide();
-            $(".Reorganizacion").hide();
+            $(".Reorganizacion").show();
         }
     }
     $('#radio_otro').click(function() {
@@ -252,13 +252,7 @@ echo form_close();
         var proximo_prescribir = '0';
         var check = $("input[type='checkbox']:checked").length;
         var cantidad = <?php echo sizeof($tipo_exigibilidad); ?>;
-        if (cantidad != check) {
-            if (confirm("Se verificaran los titulos como NO Exigibles ¿Desea Continuar?")) {
-                cod_respuesta = '<?php echo TITULO_NO_EXIGIBLE ?>';
-                comentarios_exigibilidad = $("#comentarios_exigibilidad").val();
-            }
-        } else {
-            var opcion_1 = $("input[name='radio']:checked").val();
+        var opcion_1 = $("input[name='radio']:checked").val();
             if (opcion_1 == 'Regimen de Insolvencia') {
                 comentarios_exigibilidad = $("#comentarios_exigibilidad").val();
                 comentarios_reorganizacion = $("#comentarios_reorganizacion").val();
@@ -290,20 +284,20 @@ echo form_close();
                     }
                 }
             }
-
-        }
-        var cod_titulo = "<?php echo $cod_titulo; ?>";
-        var url = '<?php echo base_url('index.php/recepciontitulos/Guardar_ExigibilidadTitulo') ?>';
-        $.post(url, {cod_titulo: cod_titulo, cod_respuesta: cod_respuesta, proximo_prescribir: proximo_prescribir, tiempo: tiempo, reorganizacion: reorganizacion, comentarios_exigibilidad: comentarios_exigibilidad, comentarios_reorganizacion: comentarios_reorganizacion})
-                .done(function(msg) {
-                    $(".preload, .load").hide();
-                    alert('Se ha verificado el estado de los títulos');
-                    location.href = '<?php echo base_url('index.php/bandejaunificada') ?>';
-                }).fail(function(smg, fail) {
-            $(".preload, .load").hide();
-            alert('Se ha verificado el estado de los títulos');
-            $(".preload, .load").hide();
-        });
+			var cod_titulo = "<?php echo $cod_titulo; ?>";
+			var url = '<?php echo base_url('index.php/recepciontitulos/Guardar_ExigibilidadTitulo') ?>';
+			$.post(url, {cod_titulo: cod_titulo, cod_respuesta: cod_respuesta, proximo_prescribir: proximo_prescribir, tiempo: tiempo, reorganizacion: reorganizacion, comentarios_exigibilidad: comentarios_exigibilidad, comentarios_reorganizacion: comentarios_reorganizacion})
+					.done(function(msg) {
+						$(".preload, .load").hide();
+						alert('Se ha verificado el estado de los títulos');
+						location.href = '<?php echo base_url('index.php/bandejaunificada') ?>';
+					}).fail(function(smg, fail) {
+				$(".preload, .load").hide();
+				alert('Se ha verificado el estado de los títulos');
+				$(".preload, .load").hide();
+			});
+        
+			
 
     });
 

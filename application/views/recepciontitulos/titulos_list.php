@@ -86,7 +86,15 @@ echo form_open(current_url(), $attributes);
 <script type="text/javascript" language="javascript" charset="utf-8">
     // Verifica que el usuario selecciona todos los documentos del checklist
     function validarSeleccion() {
-        var form   = document.myform;
+		 var total = $("input[type='checkbox']:checked").length;
+		var cantidad = '<?php echo sizeof($controles); ?>';
+		if (total != cantidad) {
+            alert("No se han Chequeado todos los documentos. ");
+            return false;
+        }else{
+			return true;			
+		}
+       /*  var form   = document.myform;
         var valReg = false;
         <?php $datasel= json_encode($controles); ?>
         eval('miObjSel =<?php echo $datasel; ?>');
@@ -97,6 +105,6 @@ echo form_open(current_url(), $attributes);
                 return false;
             }                
         }
-        return true;
+        return true; */
     }
 </script>    

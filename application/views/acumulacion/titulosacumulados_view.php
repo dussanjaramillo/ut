@@ -11,7 +11,7 @@
             <td width="111"><div align="center"><b>Valor Obligación</b></div></td>
         </tr>
         <tr>
-            <td><?php echo $titulos_acumulados['EXPEDIENTE']; ?></td>
+            <td><?php echo $titulos_acumulados['NO_EXPEDIENTE']; ?></td>
             <td><?php echo $titulos_acumulados['CONCEPTO']; ?></td>                
             <td><?php echo "$" . number_format($titulos_acumulados['SALDO_CAPITAL'], 0, '.', '.'); ?></td>
             <td><?php echo "$" . number_format($titulos_acumulados['SALDO_INTERES'], 0, '.', '.'); ?></td>

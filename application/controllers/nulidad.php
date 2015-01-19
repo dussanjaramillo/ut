@@ -512,6 +512,7 @@ class Nulidad extends MY_Controller {
                 $datos["COD_PROCESO_COACTIVO"] = $cod_coactivo;
                 $datos["COD_RESPUESTA"] = $cod_respuesta;
                 $this->nulidad_model->actualizacion_nulidad($datos);
+				redirect(base_url() . 'index.php/bandejaunificada/procesoscoactivos');
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta ?rea.</div>');
                 redirect(base_url() . 'index.php/inicio');

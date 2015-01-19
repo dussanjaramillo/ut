@@ -617,6 +617,9 @@ class Recepciontitulos extends MY_Controller {
                     $dato_coactivo['PROCEDENCIA'] = $proceso['PROCEDENCIA']; //-1 MISIONAL -2 NO MISIONAL
                     $dato_coactivo['ACUMULACION'] = '0'; //-0 NO HAY ACUMULACION -1 HAY ACUMULACION
                     $cod_procesocoac = $this->acumulacion_model->insertar_acumulacion($dato_coactivo);
+					if($proceso['NATURALEZA'] == ''){
+						$proceso['NATURALEZA'] = '1';
+					}
                     /*
                      * CON EL CODIGO INSERTADO SE ACTUALIZA EL COD_PJ
                      */
@@ -634,21 +637,29 @@ class Recepciontitulos extends MY_Controller {
                     $acumulacion_coactiva['COD_ESTADO_TITULO'] = 2; //activo
                     $acumulacion_coactiva['COD_RECEPCIONTITULO'] = $cod_titulo;
                     $this->acumulacion_model->insertar_titulosacumulacion($acumulacion_coactiva); //condicionar
+					/*
+					*	TRAZA CON CODIGO COACTIVO
+					*/
+					$this->TrazaCoactivo($cod_procesocoac->COD_PROCESO_COACTIVO, NO_ACUMULACION_TITULOS, $post['comentarios_exigibilidad']);
                 } else if ($cod_respuesta == TITULO_REGIMEN_INSOLVENCIA) {
                     /*
                      * INSERTAR CODIGO PARA PROCESOS EN TODO COACTIVO
                      */
                     $proceso = $this->consultartitulos_model->get_codprocesojuridico($cod_titulo);
+					print_r($proceso);
                     $dato_coactivo['ABOGADO'] = COD_USUARIO;
                     $dato_coactivo['COD_RESPUESTA'] = TITULO_REGIMEN_INSOLVENCIA;
                     $dato_coactivo['IDENTIFICACION'] = $proceso['IDENTIFICACION'];
                     $dato_coactivo['PROCEDENCIA'] = $proceso['PROCEDENCIA']; //-1 MISIONAL -2 NO MISIONAL
                     $dato_coactivo['ACUMULACION'] = '0'; //-0 NO HAY ACUMULACION -1 HAY ACUMULACION
                     $cod_procesocoac = $this->acumulacion_model->insertar_acumulacion($dato_coactivo);
+					if($proceso['NATURALEZA'] == ''){
+						$proceso['NATURALEZA'] = '1';
+					}
                     /*
                      * CON EL CODIGO INSERTADO SE ACTUALIZA EL COD_PJ
                      */
-                    $cod_pj = $proceso['REGIONAL'] . '-' . $proceso['OBLIGACION'] . '-' . $proceso['NATURALEZA'] . '-' . $proceso['COBRO'] . '-' . $cod_procesocoac->COD_PROCESO_COACTIVO . '-00';
+                    $cod_pj = $proceso['NO_CARTERA'];
                     /*
                      * ACTUALIZAR CODIGO DE PROCESO JURIDICO
                      */
@@ -662,6 +673,10 @@ class Recepciontitulos extends MY_Controller {
                     $acumulacion_coactiva['COD_ESTADO_TITULO'] = 2; //activo
                     $acumulacion_coactiva['COD_RECEPCIONTITULO'] = $cod_titulo;
                     $this->acumulacion_model->insertar_titulosacumulacion($acumulacion_coactiva); //condicionar
+					/*
+					*	TRAZA CON CODIGO COACTIVO
+					*/
+					$this->TrazaCoactivo($cod_procesocoac->COD_PROCESO_COACTIVO, TITULO_REGIMEN_INSOLVENCIA, $post['comentarios_exigibilidad']);
                 } else if ($cod_respuesta == TITULO_PRESCRITO) {
                     /*
                      * INSERTAR CODIGO PARA PROCESOS EN TODO COACTIVO
@@ -680,6 +695,10 @@ class Recepciontitulos extends MY_Controller {
                     $acumulacion_coactiva['COD_ESTADO_TITULO'] = 2; //activo
                     $acumulacion_coactiva['COD_RECEPCIONTITULO'] = $cod_titulo;
                     $this->acumulacion_model->insertar_titulosacumulacion($acumulacion_coactiva); //condicionar
+					/*
+					*	TRAZA CON CODIGO COACTIVO
+					*/
+					$this->TrazaCoactivo($cod_procesocoac->COD_PROCESO_COACTIVO, TITULO_PRESCRITO, $post['comentarios_exigibilidad']);
                 }
 
                 /*
@@ -693,6 +712,10 @@ class Recepciontitulos extends MY_Controller {
                 $datos_actualizacion['COMENTARIOS_REORGANIZACION'] = $comentarios_reorganizacion;
                 $datos_actualizacion['PROXIMO_PRESCRIBIR'] = $proximo_prescribir;
                 $this->consultartitulos_model->actualizacion_estado_titulo($datos_actualizacion);
+				/*
+				*	TRAZA CON CODIGO DEL TITULO
+				*/
+					$this->TrazaTitulo($cod_titulo, $cod_respuesta, $comentarios_exigibilidad);
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta Ã¡rea.</div>');
                 redirect(base_url() . 'index.php/recepciontitulos');
@@ -1034,7 +1057,7 @@ class Recepciontitulos extends MY_Controller {
         }
     }
 
-    function Soporte_Expediente() {
+   function Soporte_Expediente() {
         if ($this->ion_auth->logged_in()) {
             if ($this->input->post('cod_coactivo')) {
 
@@ -1060,11 +1083,13 @@ class Recepciontitulos extends MY_Controller {
                             $this->data['tipo'] = TIPO_2;
                             break;
                     }
+
                     $this->template->set('title', 'Jurisdicción Coactiva -> Auto que Avoca Conocimiento al Expediente');
                     $this->data['cod_coactivo'] = $cod_coactivo;
                     $this->data['cod_respuesta'] = $cod_respuesta;
                     $this->data['archivos'] = $archivos;
                     $this->template->load($this->template_file, 'recepciontitulos/comprobacionexp_add', $this->data);
+
                 } else {
                     $datos['COD_RESPUESTAGESTION'] = $cod_respuesta;
                     $datos['FECHA_RADICADO'] = $fecha;
@@ -1075,6 +1100,33 @@ class Recepciontitulos extends MY_Controller {
                      * OBTENER NOMBRE DEL ARCHIVO
                      */
                     $file = $this->do_multi_upload($cod_coactivo, "Expediente"); //1- pdf y archivos de imagen
+                    if(isset($file['error']) && $file['error']!= ''):
+                        $this->data['message2'] = $file['error'];
+                         switch ($cod_respuesta) {
+                        case AUTO_AVOCA_SUBIDO:
+                            $this->data['tipo'] = TIPO_1;
+                            break;
+                        default :
+                            $this->data['tipo'] = TIPO_2;
+                            break;
+                    }
+                        /*
+                         * CONSULTAR DOCUMENTO PARA IMPRIMIR
+                         */
+                        $documento = $this->documentospj_model->get_plantilla_proceso($cod_coactivo);
+                        $this->data['titulo_encabezado'] = $documento['TITULO_ENCABEZADO'];
+                        $urlplantilla2 = "uploads/recepciontitulos/" . $cod_coactivo . "/" . $documento['NOMBRE_DOCUMENTO'];
+                        $arreglo = array();
+                        $this->data['documento'] = template_tags($urlplantilla2, $arreglo);
+                        /*
+                         * CARGAR VISTA
+                         */
+                        $this->template->set('title', 'Jurisdicción Coactiva');
+                        $this->data['message'] = "Los archivos de soporte a subir son únicamente PDF";
+                        $this->data['cod_coactivo'] = $cod_coactivo;
+                        $this->data['cod_respuesta'] = $cod_respuesta;
+                        $this->template->load($this->template_file, 'recepciontitulos/subirexpediente_add', $this->data);
+                        else:
                     switch ($cod_respuesta) {
                         case AUTO_AVOCA_SUBIDO:
                             $datos['COD_TIPO_EXPEDIENTE'] = 2;
@@ -1106,6 +1158,7 @@ class Recepciontitulos extends MY_Controller {
                     $this->data['cod_respuesta'] = $cod_respuesta;
                     $this->data['archivos'] = $this->documentospj_model->get_documentosexpediente($verificar);
                     $this->template->load($this->template_file, 'recepciontitulos/comprobacionexp_add', $this->data);
+                    endif;
                 }
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta �rea.</div>');
@@ -1329,7 +1382,7 @@ class Recepciontitulos extends MY_Controller {
         createPdfTemplateOuput($nombre_pdf, $html, false, $data);
     }
 
-    private function do_multi_upload($cod_fiscalizacion, $carpeta) {
+     private function do_multi_upload($cod_fiscalizacion, $carpeta) {
         $estructura = "./uploads/recepciontitulos/" . $cod_fiscalizacion . "/" . $carpeta . "/";
         if (!file_exists($estructura)) {
             if (!mkdir($estructura, 0777, true)) {
@@ -1338,8 +1391,8 @@ class Recepciontitulos extends MY_Controller {
         }
         $config = array();
         $config['upload_path'] = $estructura;
-        $config['allowed_types'] = '*';
-        $config['max_size'] = '2048';
+        $config['allowed_types'] = 'pdf';
+        $config['max_size'] = '5120';
         $this->load->library('upload', $config);
         $files = $_FILES;
         if (sizeof($files) == 0) {

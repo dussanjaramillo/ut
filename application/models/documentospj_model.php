@@ -401,8 +401,11 @@ class Documentospj_model extends CI_Model {
                 )
             )
             ORDER BY 1, 2");
-        $dato = $dato->result();
-        return $dato[0];
+		if ($dato->num_rows() > 0) {
+            $dato = $dato->result();
+			return $dato[0];
+        }
+        
     }
 
     function cabecera($proceso, $respuesta) {

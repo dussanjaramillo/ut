@@ -16,10 +16,11 @@ class Consultarcarteraycapacitacion_model extends CI_Model {
         $this->db->join('GESTIONCOBRO GC', 'GC.COD_GESTION_COBRO = EJ.COD_GESTION_COBRO', 'inner');
         $this->db->join('RESPUESTAGESTION RG', 'RG.COD_RESPUESTA = GC.COD_TIPO_RESPUESTA', 'inner');
         $this->db->join('REVOCATORIA RV', 'RS.COD_RESOLUCION = RV.COD_RESOLUCION', 'LEFT');
-//        $this->db->where('RG.COD_RESPUESTA !=',143);
+        // $this->db->where('RG.COD_RESPUESTA !=',143);
         $this->db->where('Rs.COD_ESTADO not in (80,419)', "", false);
         $this->db->where('EJ.ESTADO', 0);
         $this->db->where('RS.ABOGADO', ID_USER);
+        $this -> db -> or_where('RS.COORDINADOR', ID_USER);
         $this->db->order_by('FECHA_EJECUTORIA', 'desc');
         $this->db->limit($lenght, $reg);
         if ($search) {
@@ -31,6 +32,8 @@ class Consultarcarteraycapacitacion_model extends CI_Model {
             $this->db->or_like('RG.NOMBRE_GESTION', $search);
         }
         $query = $this->db->get();
+        // echo $this -> db -> last_query();
+        // die();
 
         return $query->result();
     }
@@ -44,10 +47,11 @@ class Consultarcarteraycapacitacion_model extends CI_Model {
         $this->db->join('GESTIONCOBRO GC', 'GC.COD_GESTION_COBRO = EJ.COD_GESTION_COBRO', 'inner');
         $this->db->join('RESPUESTAGESTION RG', 'RG.COD_RESPUESTA = GC.COD_TIPO_RESPUESTA', 'inner');
         $this->db->join('REVOCATORIA RV', 'RS.COD_RESOLUCION = RV.COD_RESOLUCION', 'LEFT');
-//        $this->db->where('RG.COD_RESPUESTA !=',143);
+        // $this->db->where('RG.COD_RESPUESTA !=',143);
         $this->db->where('Rs.COD_ESTADO not in (80,419)', "", false);
         $this->db->where('EJ.ESTADO', 0);
         $this->db->where('RS.ABOGADO', ID_USER);
+        $this -> db -> or_where('RS.COORDINADOR', ID_USER);
         $this->db->order_by('FECHA_EJECUTORIA', 'desc');
 
         if ($search) {
@@ -65,7 +69,7 @@ class Consultarcarteraycapacitacion_model extends CI_Model {
         return $query->num_rows();
     }
 
-    ////// funciones para traer datos 
+    ////// funciones para traer datos
 
     function getResolucion($cod) {
         $this->db->select('RS.NUMERO_RESOLUCION,RS.COD_CPTO_FISCALIZACION,RS.FECHA_ACTUAL,TG.TIPOGESTION,TG.COD_GESTION,CF.NOMBRE_CONCEPTO,TG2.TIPOGESTION as CITACION,TG2.COD_GESTION AS CGESTION,RS.NUM_RECURSO,EM.*');

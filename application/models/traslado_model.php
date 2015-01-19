@@ -120,6 +120,17 @@ class Traslado_model extends CI_Model {
             unset($datos['COD_PROCESO_COACTIVO']);
             $this->db->update("TRASLADO_JUDICIAL", $datos);
         endif;
+    }    
+	/*
+     * ACTUALIZAR EN PROCESOS COACTIVOS CUANDO YA SE HAYA INSERTADO EN TRASLADO
+     */
+
+    public function actualizacion_coactivo($datos) {
+        if (!empty($datos)) :
+            $this->db->where("COD_PROCESO_COACTIVO", $datos['COD_PROCESO_COACTIVO']);
+            unset($datos['COD_PROCESO_COACTIVO']);
+            $this->db->update("PROCESOS_COACTIVOS", $datos);
+        endif;
     }
 
 }

@@ -618,13 +618,19 @@ class Traslado extends MY_Controller {
                     $datos2["COD_RESPUESTA"] = $this->input->post('estado');
                     $datos2["COD_MOTIVOTRASLADO"] = '1';
                     $this->traslado_model->insertar_traslado($datos2);
+					/*
+                     * MODIFICAR EN LA TABLA DE PROCESOS COACTIVOS PARA QUE EN LA BANDEJA NO SE VISUALICE
+                     */
+                    $datos_traslado["COD_PROCESO_COACTIVO"] = $this->input->post('cod_coactivo');
+                    $datos_traslado["COD_RESPUESTA"] = $this->input->post('estado');
+                    $this->traslado_model->insertar_traslado($datos_traslado);
                 } else {
                     /*
                      * ACTUALIZAR SI ES UN TRASLADO Q ESTA EN PROCESO
                      */
                     $datos2["COD_PROCESO_COACTIVO"] = $this->input->post('cod_coactivo');
                     $datos2["COD_RESPUESTA"] = $this->input->post('estado');
-                    $this->traslado_model->actualizacion_traslado($datos2);
+                    $this->traslado_model->actualizacion_coactivo($datos2);
                 }
                 /*
                  * INSERTAR TRAZA

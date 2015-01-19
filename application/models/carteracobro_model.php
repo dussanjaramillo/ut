@@ -51,7 +51,7 @@ class Carteracobro_model extends CI_Model {
         $this->db->join("FISCALIZACION", "FISCALIZACION.COD_FISCALIZACION=LIQUIDACION.COD_FISCALIZACION");
         $this->db->join("EMPRESA", "EMPRESA.CODEMPRESA = LIQUIDACION.NITEMPRESA");
         $this->db->join("CONCEPTOSFISCALIZACION", "CONCEPTOSFISCALIZACION.COD_CPTO_FISCALIZACION=LIQUIDACION.COD_CONCEPTO");
-                $this->db->join("(SELECT GESTIONCOBRO.COD_FISCALIZACION_EMPRESA,GESTIONCOBRO.COD_TIPOGESTION FROM GESTIONCOBRO 
+                $this->db->join("(SELECT GESTIONCOBRO.COD_FISCALIZACION_EMPRESA,GESTIONCOBRO.COD_TIPOGESTION FROM GESTIONCOBRO
 WHERE GESTIONCOBRO.COD_TIPOGESTION=9
 GROUP BY GESTIONCOBRO.COD_FISCALIZACION_EMPRESA,GESTIONCOBRO.COD_TIPOGESTION ) B", "B.COD_FISCALIZACION_EMPRESA=LIQUIDACION.COD_FISCALIZACION");
          $this->db->where("LIQUIDACION.COD_FISCALIZACION  NOT IN (
@@ -67,6 +67,7 @@ GROUP BY GESTIONCOBRO.COD_FISCALIZACION_EMPRESA,GESTIONCOBRO.COD_TIPOGESTION ) B
          $num[]="2";
          $this->db->where_in("CONCEPTOSFISCALIZACION.COD_CPTO_FISCALIZACION",$num,FALSE);
         $dato = $this->db->get("LIQUIDACION");
+
         return $dato->result_array;
     }
     function guardar_abogado($post){
@@ -101,7 +102,7 @@ GROUP BY GESTIONCOBRO.COD_FISCALIZACION_EMPRESA,GESTIONCOBRO.COD_TIPOGESTION ) B
         }
     }
 
-    function empresa($nit = NULL) {  //funcion para traer datos de la empresa 
+    function empresa($nit = NULL) {  //funcion para traer datos de la empresa
         $this->nit = (!empty($nit)) ? $nit : $this->nit;
         if (!empty($this->nit)) :
             $this->db->select("MUNICIPIO.NOMBREMUNICIPIO,REGIONAL.CEDULA_DIRECTOR,REGIONAL.CEDULA_COORDINADOR_RELACIONES,REGIONAL.EMAIL_REGIONAL,USER1.NOMBRES || ' ' || USER1.APELLIDOS COORDINADOR_REGIONAL,"
@@ -176,10 +177,10 @@ USER1.NOMBRES || ' ' || USER1.APELLIDOS COORDINADOR_REGIONAL ",false);
     }
 
     function guardar_resolucion($informacion, $id_user) {
-        
+
     }
 
-    function resolucion_guardar_contrato($informacion, $id_user) {//guarda la informacion de la resolucion del contrato de aprendizaje 
+    function resolucion_guardar_contrato($informacion, $id_user) {//guarda la informacion de la resolucion del contrato de aprendizaje
         $this->db->set('COD_REGIONAL', $informacion['id_regional']);
         $this->db->set('NITEMPRESA', $informacion['nit']);
         $this->db->set('CUOTA', $informacion['cuota']);
@@ -261,9 +262,9 @@ USER1.NOMBRES || ' ' || USER1.APELLIDOS COORDINADOR_REGIONAL ",false);
         $id_resolucion = $dato->result_array[0];
         $this->gestion_resolucion($id_resolucion['COD_RESOLUCION'], $id_user->IDUSUARIO);
         trazar("21", "30", $informacion['cod_fis'], $informacion['nit'], $cambiarGestionActual = 'S', $comentarios = "");
-        
-        
-        
+
+
+
         return $id_resolucion['COD_RESOLUCION'];
     }
 
