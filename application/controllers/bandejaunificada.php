@@ -28,12 +28,6 @@ class Bandejaunificada Extends MY_Controller {
         $this->data['javascripts'] = array(
             'js/jquery.dataTables.min.js',
             'js/jquery.dataTables.defaults.js',
-            'js/jquery.validationEngine-es.js',
-            'js/jquery.validationEngine.js',
-            'js/tinymce/tinymce.jquery.min.js',
-            'js/tinymce/plugins/moxiemanager/plugin.min.js',
-            'js/tinymce/tinymce.js',
-            'js/ajaxfileupload.js',
         );
         $this->data['user'] = $this->ion_auth->user()->row();
         if ($this->data['user']) {
@@ -143,6 +137,7 @@ class Bandejaunificada Extends MY_Controller {
                                         echo $html_0;
                                         break;
                                     case 173:
+                                    case 886:
                                         $html_1 = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
@@ -193,7 +188,7 @@ class Bandejaunificada Extends MY_Controller {
                                         <input type="hidden" name="cod_titulo" id="cod_titulo" value="' . $cod_coactivo . '">
                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                         <input type="hidden" name="cod_coactivo_prescripcion" id="cod_coactivo_prescripcion" value="' . $cod_coactivo . '">
-                                             <input type="hidden" name="cod_coactivo_traslado" id="cod_coactivo_traslado" value="' . $cod_coactivo . '">
+                                        <input type="hidden" name="cod_coactivo_traslado" id="cod_coactivo_traslado" value="' . $cod_coactivo . '">
                                         <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
                                         </form>';
                                         echo $html;
