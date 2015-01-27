@@ -37,10 +37,13 @@
 				echo form_hidden('COD_PROCESO_COACTIVO'    , $auto->COD_PROCESO_COACTIVO);
 				echo form_hidden('NUM_AUTOGENERADO'     , $auto->NUM_AUTOGENERADO);
 				?>
+          
+          <div style="text-align: center;   ">Código Proceso: <span style="color:red"><?php echo $this->data['proceso']['COD_PROCESOPJ'];    ?>  </span><br><br></div>
         <div class="controls controls-row">
+        
           <div class="span4">
             <?php
-						echo form_label('Nit', 'NIT_EMPRESA');
+						echo form_label('Identificación', 'NIT_EMPRESA');
 						$data = array('name'        => 'NIT_EMPRESA',
 													'id'          => 'NIT_EMPRESA',
 													'value'       => $auto->NIT_EMPRESA,
@@ -52,7 +55,7 @@
           </div>
           <div class="span4">
             <?php
-						echo form_label('Razon Social', 'RAZON_SOCIAL');
+						echo form_label('Ejecutado', 'RAZON_SOCIAL');
 						$data = array('name'        => 'RAZON_SOCIAL',
 													'id'          => 'RAZON_SOCIAL',
 													'value'       => $auto->RAZON_SOCIAL,
@@ -158,15 +161,15 @@
         <div class="controls controls-row">
           <div class="span4">
             <?php
-						if($secretario == true) :
-							echo form_label('¿Aprueba el Auto de Terminación y Cierre?', 'DEVOLVER_A');
+                                                    if($secretario == TRUE) :
+							echo form_label('¿Pre-Aprueba el Auto de Terminación y Cierre?', 'DEVOLVER_A');
 							$data = array('name'	=> 'DEVOLVER_A',
 													'id'			=> 'DEVOLVER_A',
 													'value'		=> "S",
 													'class'		=> 'pull-left'
 										);
 							echo form_radio($data);
-							echo form_label('&nbsp;APROBADO&nbsp;', 'DEVOLVER_A', array('class' => "pull-left"));
+							echo form_label('&nbsp;PRE-APROBADO&nbsp;', 'DEVOLVER_A', array('class' => "pull-left"));
 							$data = array('name'	=> 'DEVOLVER_A',
 													'id'			=> 'DEVOLVER_A',
 													'value'		=> "N",
@@ -232,20 +235,21 @@
 						$data = array('name' => 'button',
 													'id' => 'submit-button',
 													'value' => 'PDF',
-													'type' => 'submit',
+													'type' => 'button', 
+                                                                                                        'onclick'=>'generar_pdf()',
 													'content' => '<i class="fa fa-file fa-lg"></i> PDF',
 													'class' => 'btn btn-info'
 										);
 						echo form_button($data)." ";
-						$data = array('name' => 'button',
-													'id' => 'submit-button',
-													'value' => 'Imprimir',
-													'type' => 'submit',
-													'content' => '<i class="fa fa-print fa-lg"></i> Imprimir',
-													'class' => 'btn btn-info'
-										);
-						echo form_button($data);
-						echo '&nbsp;<a href="'.base_url('index.php/verfpagosprojuridicos/index').'" class="btn btn-warning btn-lg" role="button"><i class="fa fa-ban fa-lg"></i> Cancelar</a> ';
+//						$data = array('name' => 'button',
+//													'id' => 'submit-button',
+//													'value' => 'Imprimir',
+//													'type' => 'submit',
+//													'content' => '<i class="fa fa-print fa-lg"></i> Imprimir',
+//													'class' => 'btn btn-info'
+//										);
+						//echo form_button($data);
+						echo '&nbsp;<a href="'.base_url('index.php/bandejaunificada/index').'" class="btn btn-warning btn-lg" role="button"><i class="fa fa-ban fa-lg"></i> Cancelar</a> ';
 						$data = array('name' => 'button',
 													'id' => 'submit-button',
 													'value' => 'Guardar',
@@ -260,7 +264,12 @@
       </div>
     </div>
   </div>
-</div>
+       <?php echo form_close(); ?>
+</div><div id="respuesta"></div>
+<form id="form_pdf" name="form_pdf" target = "_blank"  method="post" action="<?php echo base_url('index.php/verfpagosprojuridicos/pdf') ?>">
+    <textarea id="descripcion_pdf" name="descripcion_pdf" style="width: 100%;height: 300px; display:none"></textarea>  
+    <input type="hidden" name="nombre_archivo" id="nombre_archivo">
+</form>
 <div class="alert alert-success" id="alert" style="display: none">
   <button class="close" data-dismiss="alert" type="button">×</button>
   El auto se <?php echo ( ($auto == NULL) ? ' almaceno' : 'actualizo' )?> con exito. </div>
@@ -269,10 +278,50 @@ $(document).ready(function() {
 	$("#fecha_radicado").datepicker({
 		dateFormat: "yy/mm/dd",
 		changeMonth: true,
-		maxDate: "0",
+		maxDate: "0"
 	});
 });
-
+function base64_encode(data)
+        {
+            var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+            var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
+                    ac = 0,
+                    enc = '',
+                    tmp_arr = [];
+            if (!data)
+            {
+                return data;
+            }
+            do
+            {
+                o1 = data.charCodeAt(i++);
+                o2 = data.charCodeAt(i++);
+                o3 = data.charCodeAt(i++);
+                bits = o1 << 16 | o2 << 8 | o3;
+                h1 = bits >> 18 & 0x3f;
+                h2 = bits >> 12 & 0x3f;
+                h3 = bits >> 6 & 0x3f;
+                h4 = bits & 0x3f;
+                tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
+            }
+            while (i < data.length);
+            enc = tmp_arr.join('');
+            var r = data.length % 3;
+            return (r ? enc.slice(0, r - 3) : enc) + '==='.slice(r || 3);
+        }
+        function generar_pdf()
+        {
+            var informacion = tinymce.get('documento').getContent();
+            if (informacion == '' || informacion == false)
+            {
+                mierror = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Debe ingresar la informaciÃ³n del Requerimiento de Acercamiento en el Texto Enriquecido' + '</div>';
+                document.getElementById("respuesta").innerHTML = mierror;
+                $("#respuesta").fadeOut(3000);
+                return false;
+            }
+            document.getElementById("descripcion_pdf").value = base64_encode(informacion);
+            $("#form_pdf").submit();
+        }
 function subirPantalla() {
 	$('html, body').animate({
 			scrollTop: '0px'

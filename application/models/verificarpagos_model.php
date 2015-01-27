@@ -81,9 +81,10 @@ class Verificarpagos_model extends CI_Model {
 		if(!empty($data)) :
 			$this->db->set("FECHA_CREACION_AUTO", "SYSDATE", FALSE);
 			$this->db->insert("AUTOSJURIDICOS", $data);
+                        //echo $this->db->last_query();die();
 			$query = $this->db->query("SELECT AutosJuridico_num_autogene_SEQ.CURRVAL FROM dual");
 			$query = $query->row();
-			//echo "<pre>";print_r($query);exit;
+			//echo "<pre>";print_r($query);die();
 			return $query->CURRVAL;
 		else :
 			return false;

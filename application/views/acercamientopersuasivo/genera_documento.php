@@ -144,6 +144,7 @@
             document.getElementById("nombre_archivo").value = nombre_archivo;
             var url = "<?php echo base_url('index.php/requerimientoacercamiento/pdf') ?>";
             var informacion = tinymce.get('informacion').getContent();
+            alert(informacion);
             if (informacion == '' || informacion == false)
             {
                 mierror = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Debe ingresar la informaciÃ³n del Requerimiento de Acercamiento en el Texto Enriquecido' + '</div>';
@@ -157,7 +158,7 @@
 //
 
         function f_guardar(rta_siguiente) {
-
+           $("#ajax_load").show();
             var url = "<?= base_url() ?>index.php/acercamientopersuasivo/guardar";
             var nit =<?php echo $cabecera['IDENTIFICACION'] ?>;
             var cod_cobro = "<?php echo $post['cod_cobro']; ?>";
@@ -171,7 +172,7 @@
                 url: url,
                 data: {cod_proceso: cod_proceso, observaciones: observaciones, rta_siguiente: rta_siguiente, cod_cobro: cod_cobro, respuesta: respuesta, descripcion: descripcion, nit: nit, nombre_archivo: nombre},
                 success: function(data)
-                {
+                {   $("#ajax_load").hide();
                     $('#resultado').dialog('close');
                     $('#resultado *').remove();
                     $("#respuesta").html(data);
@@ -180,6 +181,7 @@
                 }
                 ,
                 error: function(result) {
+                     $("#ajax_load").hide();
                     alert("Datos incompletos");
                 }
             });

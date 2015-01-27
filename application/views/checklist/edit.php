@@ -21,6 +21,7 @@
                 </td>
                 <td>
                     <?php echo form_input('descripcion', $descripcion) ?>
+                    <?php echo form_hidden('descripcion_old', $descripcion) ?>
                 </td>
             </tr>
             <tr>

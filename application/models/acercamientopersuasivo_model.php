@@ -45,7 +45,7 @@ class Acercamientopersuasivo_model extends CI_Model {
             $query = $query . " AND PC.COD_PROCESO_COACTIVO = " . $cod_proceso;
         endif;
         $resultado = $this->db->query($query);
-        //echo $this->db->last_query();
+       // echo $this->db->last_query();die();
         $resultado = $resultado->result_array();
         return $resultado;
     }
@@ -458,8 +458,8 @@ class Acercamientopersuasivo_model extends CI_Model {
         $this->db->select('VW.NUM_LIQUIDACION');
         $this->db->from('VW_PROCESOS_COACTIVOS VW');
         $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_RESPUESTA=VW.COD_RESPUESTA');
-        $this->db->join('RECEPCIONTITULOS RT', 'RT.COD_RECEPCIONTITULO=VW.NO_EXPEDIENTE');
         $this->db->where('VW.COD_PROCESO_COACTIVO', $cod_coactivo);
+        $this->db->join('RECEPCIONTITULOS RT', 'RT.COD_RECEPCIONTITULO=VW.NO_EXPEDIENTE');
         $this->db->where('RT.CERRADO', 0);
         $where = 'VW.SALDO_DEUDA >0';
         $this->db->where($where);

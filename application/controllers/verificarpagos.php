@@ -140,6 +140,7 @@ class Verificarpagos extends MY_Controller {
     }
 
     public function crearAutosCierre($codfiscalizacion = FALSE, $titulos = array()) {
+        //print_r($titulos);die();
         if ($codfiscalizacion === FALSE) :
             $procesos = $this->verificarpagos->obtenerFiscalizacion();
             if (!empty($procesos)) :
@@ -159,7 +160,7 @@ class Verificarpagos extends MY_Controller {
                         $proceso = $this->verificarpagos->obtenerFiscalizacion($codfiscalizacion);
                         if (!empty($proceso)) :
                             $cod_gestioncobro = trazarProcesoJuridico(436, 1132, "", $proceso['COD_PROCESO_COACTIVO'], "", "", "");
-                            $data = array("COD_TIPO_AUTO" => "1", "COD_PROCESO_COACTIVO" => $proceso['COD_PROCESO_COACTIVO'], "COD_ESTADOAUTO" => "7",
+                            $data = array("COD_TIPO_AUTO" => "1", "COD_TIPO_PROCESO" => "1", "COD_PROCESO_COACTIVO" => $proceso['COD_PROCESO_COACTIVO'], "COD_ESTADOAUTO" => "7",
                                 "CREADO_POR" => $proceso['ABOGADO'], "ASIGNADO_A" => $proceso['ABOGADO'], "COD_GESTIONCOBRO" => $cod_gestioncobro
                             );
                             $auto = $this->verificarpagos->crearAuto($data);

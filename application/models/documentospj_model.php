@@ -57,10 +57,7 @@ class Documentospj_model extends CI_Model {
 
     public function get_secretario_regional() {
         $this->db->select("U.NOMBRES,U.APELLIDOS,U.IDUSUARIO");
-        $this->db->join("REGIONAL R", "R.COD_REGIONAL = U.COD_REGIONAL");
-        $this->db->join("USUARIOS_GRUPOS UG", "UG.IDUSUARIO = U.IDUSUARIO");
-        $this->db->join("GRUPOS G", "G.IDGRUPO = UG.IDGRUPO");
-        $this->db->where("G.IDGRUPO", SECRETARIO);
+        $this->db->join("REGIONAL R", "R.CEDULA_SECRETARIO= U.IDUSUARIO");
         $this->db->where("R.COD_REGIONAL", COD_REGIONAL);
         $dato = $this->db->get("USUARIOS U");
         if ($dato->num_rows() > 0) {
@@ -316,11 +313,7 @@ class Documentospj_model extends CI_Model {
 
     public function get_director_coordinador_regional() {
         $this->db->select("U.NOMBRES,U.APELLIDOS,U.IDUSUARIO");
-        $this->db->join("REGIONAL R", "R.COD_REGIONAL = U.COD_REGIONAL");
-        $this->db->join("USUARIOS_GRUPOS UG", "UG.IDUSUARIO = U.IDUSUARIO");
-        $this->db->join("GRUPOS G", "G.IDGRUPO = UG.IDGRUPO");
-        $this->db->where("G.IDGRUPO", COORDINADOR);
-        $this->db->or_where("G.IDGRUPO", DIRECTOR);
+        $this->db->join("REGIONAL R", "R.CEDULA_COORDINADOR = U.IDUSUARIO");
         $this->db->where("R.COD_REGIONAL", COD_REGIONAL);
         $dato = $this->db->get("USUARIOS U");
         if ($dato->num_rows() > 0) {

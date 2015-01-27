@@ -28,19 +28,13 @@ if (isset($custom_error))
     <tbody>
         <?php
         if ($consulta) {
-//         echo "<pre>";
-//        print_r($consulta);
-//        echo "</pre>";
             /* PROCESOS COACTIVOS   */
             $m = 0;
             foreach ($consulta as $data) {
-//                echo "<pre>";
-//                print_r($data);
-//                echo "</pre>";
-////                die();?> 
+               ?>
 
                 <tr>
-                    <td><?php echo $m;?></td>
+                    <td><?php //echo $m;?></td>
                     <td>
                         <!--Si no se ha aprobado el auto que avoca conocimiento no se debe visualizar el codigo del proceso-->
                         <?php
@@ -157,26 +151,27 @@ if (isset($custom_error))
                         else:
                             $cod_abogado = 0;
                         endif;
-                        $estado = explode("*?*", $data['CODIGOS_RESPUESTAS']);
-                        $nombre = explode("*?*", $data['RESPUESTAS_UNIDAS']);
-                        $estado = array_unique($estado); //Para eliminar los codigos de respuestas repetidos
-                        $nombre = array_unique($nombre); //Para eliminar los nombres de respuestas repetidos
-                        $estado = array_values($estado); //Armo nuevamente las posiciones del array
-                        $nombre = array_values($nombre); //Armo nuevamente las posiciones del array
+                       // echo  $data['CODIGOS RESPUESTAS'];
+                    $estado = explode("*?*", $data['CODIGOS_RESPUESTAS']);
+//echo "<br>"; echo $data['RESPUESTAS_UNIDAS'];
+                    $nombre = explode("*?*", $data['RESPUESTAS_UNIDAS']);
+                    $estado = array_unique($estado); //Para eliminar los codigos de respuestas repetidos
+                    $nombre = array_unique($nombre); //Para eliminar los nombres de respuestas repetidos
+                    $estado = array_values($estado); //Armo nuevamente las posiciones del array
+                    $nombre = array_values($nombre); //Armo nuevamente las posiciones del array
+                    ?>
+                    <div id="a" style="display:block">
+                        <?php
+                        $l = 0;
+                        foreach ($estado as $key => $value) {
+
+                            if ((isset($value)) && $value != ''):
+                                $estado[$l] = $value;
+                                $l++;
+                            endif;
+                        }
                         ?>
-                        <div id="a" style="display:block">
-                            <?php
-                            echo "<pre>";
-                            print_r( $estado);
-                            echo "</pre>";
-                            for ($b = 0; $b < count($estado); $b++):
-                                if ($estado[$b]):
-                                    echo $nombre[$b] . "<br>";
-                                endif;
-                            endfor;
-                            ?>
-                        </div>
-                        <select name="estados" id="estados"  onchange="f_enviar(this.value, '<?php echo $m; ?>', '<?php echo $data['COD_REGIONAL'] ?> ', '<?php echo $cod_abogado ?>', '<?php echo $data['COD_PROCESO'] ?>');" >
+                        <select name="estados" id="estados"  onchange="f_enviar('<?php echo $data['CPTO'] ?>', '<?php echo $data['PROCESOPJ'] ?>', '<?php echo $data['IDENTIFICACION'] ?>',this.value, '<?php echo $m; ?>', '<?php echo $data['COD_REGIONAL'] ?> ', '<?php echo $cod_abogado ?>', '<?php echo $data['COD_PROCESO'] ?>');" >
                             <option value="0">Seleccione el Estado</option>
                             <?php
                             for ($i = 0; $i < count($nombre); $i++):
@@ -239,12 +234,15 @@ if (isset($custom_error))
 </div>
 <div style="text-align:center; display:none" >
     <form name="form_proceso" method="post" id="form_proceso" target="_blank" action="" >
-        <input type="text" name="cod_coactivo_traslado" id="cod_coactivo_traslado" >
-        <input type="text" name="cod_coactivo_prescripcion" id="cod_coactivo_prescripcion">
+        <form name="form_proceso" method="post" id="form_proceso" target="_blank" action="" >
+        <input type="text" name="cod_coactivo_traslado" id="cod_coactivo_traslado2" >
+        <input type="text" name="cod_coactivo_prescripcion" id="cod_coactivo_prescripcion2">
         <input type="text" name="cod_coactivo_liquidacion" id="cod_coactivo_liquidacion">
         <input type="text" name="cod_coactivo_nulidad" id="cod_coactivo_nulidad">
         <input type="text" name="cod_coactivo_terminacion" id="cod_coactivo_terminacion">
-        <input type="text" name="cod_coactivo_rem" id="cod_coactivo_rem">
+        <input type="text" name="cod_coactivo_remisibilidad" id="cod_coactivo_remisibilidad">
+        <input type="text" name="cod_coactivo_facilidad" id="cod_coactivo_facilidad">
+    </form>
 
     </form>
 
@@ -275,12 +273,12 @@ if (isset($custom_error))
         });
     }
     /*Al seleccionar un estado del proceso coactivo, se consulta el responsable de realizar la gestión */
-    function f_enviar(cod_respuesta, i, regional, cod_abogado, cod_proceso)
+    function f_enviar(concepto, expediente, nit,cod_respuesta, i, regional, cod_abogado, cod_proceso)
     {
 
         $("#preload").show();
         var url = "<?= base_url("index.php/bandejaunificada/Funcionarios") ?>";
-        $.post(url, {cod_respuesta: cod_respuesta, regional: regional, cod_abogado: cod_abogado, cod_proceso: cod_proceso}, function(data) {
+        $.post(url, {concepto: concepto, expediente: expediente, nit: nit,cod_respuesta: cod_respuesta, regional: regional, cod_abogado: cod_abogado, cod_proceso: cod_proceso}, function(data) {
             $("#responsable_" + i).html(data);
             $("#preload").hide();
         })
@@ -297,16 +295,18 @@ if (isset($custom_error))
     }
     /*Función que envia un proceso a los diferentes procesos transversales*/
     /*Recibe el cod del proceso */
-    function enviar_proceso(cod_coactivo, url_formulario) {
+     function enviar_proceso(cod_coactivo, url_formulario) {
         $("#cod_coactivo_liquidacion").val(cod_coactivo);
-        $("#cod_coactivo_traslado").val(cod_coactivo);
-        $("#cod_coactivo_prescripcion").val(cod_coactivo);
+        $("#cod_coactivo_traslado2").val(cod_coactivo);
+        $("#cod_coactivo_prescripcion2").val(cod_coactivo);
         $("#cod_coactivo_nulidad").val(cod_coactivo);
         $("#cod_coactivo_terminacion").val(cod_coactivo);
-        $("#cod_coactivo_rem").val(cod_coactivo);
+        $("#cod_coactivo_remisibilidad").val(cod_coactivo);
+        $("#cod_coactivo_facilidad").val(cod_coactivo);
         $("#form_proceso").attr("action", url_formulario);
         $("#form_proceso").submit();
     }
+
 
     /*Visualiza ventana modal para seleccionar el proceso transversal*/
     function f_procesos(cod_coactivo, visualiza) {

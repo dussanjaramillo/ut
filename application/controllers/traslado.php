@@ -623,14 +623,14 @@ class Traslado extends MY_Controller {
                      */
                     $datos_traslado["COD_PROCESO_COACTIVO"] = $this->input->post('cod_coactivo');
                     $datos_traslado["COD_RESPUESTA"] = $this->input->post('estado');
-                    $this->traslado_model->insertar_traslado($datos_traslado);
+                    $this->traslado_model->actualizacion_coactivo($datos_traslado);
                 } else {
                     /*
                      * ACTUALIZAR SI ES UN TRASLADO Q ESTA EN PROCESO
                      */
                     $datos2["COD_PROCESO_COACTIVO"] = $this->input->post('cod_coactivo');
                     $datos2["COD_RESPUESTA"] = $this->input->post('estado');
-                    $this->traslado_model->actualizacion_coactivo($datos2);
+                    $this->traslado_model->actualizacion_traslado($datos2);
                 }
                 /*
                  * INSERTAR TRAZA
@@ -685,7 +685,7 @@ class Traslado extends MY_Controller {
         $config = array();
         $config['upload_path'] = $estructura;
         $config['allowed_types'] = '*';
-        $config['max_size'] = '2048';
+        $config['max_size'] = '5048';
         $this->load->library('upload', $config);
         $files = $_FILES;
         if (sizeof($files) == 0) {

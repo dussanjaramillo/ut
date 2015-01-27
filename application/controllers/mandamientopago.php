@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 class Mandamientopago extends MY_Controller {
 
@@ -4624,7 +4624,7 @@ class Mandamientopago extends MY_Controller {
                             );
                             $update = $this->mandamientopago_model->editMandamiento($dato, $this->input->post('clave'));
                             $this->session->set_flashdata('message', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>La Notificación se ha modificado correctamente.</div>');
-                            redirect(base_url() . 'index.php/mandamientopago/nits');
+                            redirect(base_url() . 'index.php/bandejaunificada/index');
                         } else {
                             $this->data['custom_error'] = '<div class="error"><p>Ha ocurrido un error...</p></div>';
                             echo $this->data['custom_error'];
@@ -5022,7 +5022,7 @@ class Mandamientopago extends MY_Controller {
                             );
                             $update = $this->mandamientopago_model->editMandamiento($dato, $this->input->post('clave'));
                             $this->session->set_flashdata('message', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>La Notificación se ha modificado correctamente.</div>');
-                            redirect(base_url() . 'index.php/mandamientopago/nits');
+                            redirect(base_url() . 'index.php/bandejaunificada/index');
                         } else {
                             $this->data['custom_error'] = '<div class="error"><p>Ha ocurrido un error...</p></div>';
                             echo $this->data['custom_error'];
@@ -6638,25 +6638,16 @@ class Mandamientopago extends MY_Controller {
             $this->load->library("tcpdf/tcpdf");
             $html = $this->input->post('mandamiento');
             $html = str_replace("'", "\"", $html);
-            //echo $html;
-            ob_clean();
-            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-            $pdf->SetCreator(PDF_CREATOR);
-            $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-            $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-            $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-            $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-            $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-            $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-            $pdf->setFontSubsetting(true);
-            $pdf->SetFont('dejavusans', '', 8, '', true);
-            $pdf->SetTitle('Mandamiento de Pago');
-            $pdf->AddPage();
-            $pdf->writeHTML($html, true, false, true, false, '');
-            $pdf->Output('datos.pdf', 'I');
-            $this->template->load($this->template_file, 'mandamientopago/mandamientopago_pdf', $this->data);
+            $post = $this->input->post();
+            $html = $post['infor_pdf'];
+            $nombre_pdf = '';
+            $titulo = $this->input->post('titulo_doc');
+            $tipo = $this->input->post('tipo_documento');
+            $data[0] =$tipo;
+            $data[1] =  $titulo;
+            createPdfTemplateOuput($nombre_pdf, $html, false, $data);
+        exit();
+            //$this->template->load($this->template_file, 'mandamientopago/mandamientopago_pdf', $this->data);
         } else {
             redirect(base_url() . 'index.php/auth/login');
         }

@@ -28,7 +28,7 @@
         $html .= '
             <tr>
                 <td align="left">' . $data["ID_CONCEPTO"] . '</td> 
-                <td align="left">' . $data["NOMBRE_TIPO"] . '</td> 
+                <td align="left">' . $data["NOMBRE_CONCEPTO"] . '</td> 
                 <td align="left">' . $data["DESCRIPCION"] . '</td> 
                 <td align="left">' . $data["TEXTO"] . '</td>
                 <td align="center">' . $data["ORDEN"] . '</td>

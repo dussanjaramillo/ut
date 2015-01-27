@@ -38,6 +38,7 @@ class Bandejaunificada Extends MY_Controller {
         $this->load->file(APPPATH . "controllers/verificarpagos.php", true);
 
         $sesion = $this->session->userdata;
+        
         define("ID_SECRETARIO", $sesion['id_secretario']);
         define("NOMBRE_SECRETARIO", $sesion['secretario']);
         define("ID_COORDINADOR", $sesion['id_coordinador']);
@@ -60,7 +61,7 @@ class Bandejaunificada Extends MY_Controller {
             $titulo = $this->input->post('cod_titulo') ? $this->input->post('cod_titulo') : FALSE;
             $this->data['consulta'] = $this->bandejaunificada_model->procesos_coactivos(ID_REGIONAL, ID_USUARIO, $cod_coactivo, $titulo);
             $this->data['ruta_traslado_judicial'] = base_url() . 'index.php/traslado/Crear_AutoTraslado';
-            $this->template->load($this->template_file, 'bandeja/procesos', $this->data);
+            $this->template->load($this->template_file, 'bandeja/bandejaprocesos', $this->data);
         } else {
             redirect(base_url() . 'index.php/auth/login');
         }
@@ -73,7 +74,7 @@ class Bandejaunificada Extends MY_Controller {
             $titulo = $this->input->post('cod_titulo') ? $this->input->post('cod_titulo') : FALSE;
             $this->data['consulta'] = $this->bandejaunificada_model->procesos_coactivos(ID_REGIONAL, ID_USUARIO, $cod_coactivo, $titulo);
             $this->data['ruta_traslado_judicial'] = base_url() . 'index.php/traslado/Crear_AutoTraslado';
-            $this->template->load($this->template_file, 'bandeja/procesos', $this->data);
+            $this->template->load($this->template_file, 'bandeja/bandejaprocesos', $this->data);
         } else {
             redirect(base_url() . 'index.php/auth/login');
         }
@@ -83,10 +84,9 @@ class Bandejaunificada Extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             $cod_coactivo = $this->input->post('cod_coactivo') ? $this->input->post('cod_coactivo') : FALSE;
             $titulo = $this->input->post('cod_titulo') ? $this->input->post('cod_titulo') : FALSE;
-
             $this->data['consulta'] = $this->bandejaunificada_model->procesos_coactivos(ID_REGIONAL, ID_USUARIO, $cod_coactivo, $titulo);
             $this->data['ruta_traslado_judicial'] = base_url() . 'index.php/traslado/Crear_AutoTraslado';
-            $this->template->load($this->template_file, 'bandeja/procesos', $this->data);
+            $this->template->load($this->template_file, 'bandeja/bandejaprocesos', $this->data);
         } else {
             redirect(base_url() . 'index.php/auth/login');
         }
@@ -98,17 +98,21 @@ class Bandejaunificada Extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('bandejaunificada/procesos')) {
                 $post = $this->input->post();
+                echo "<pre>";print_r($post); echo "</pre>";
                 $cod_regional = $post['regional'];
                 $respuesta = $post['cod_respuesta'];
                 $cod_coactivo = $post['cod_proceso'];
                 $cod_abogado = $post['cod_abogado'];
+                $post['recepcion_id']=$post['cod_proceso'];
+                $regional=$this->bandejaunificada_model->regional($cod_regional);
                 if ($respuesta):
                     $this->data['responsable'] = $this->bandejaunificada_model->consulta_responsable($respuesta);
                     $cargo = $this->data['responsable'][0]['IDCARGO'];
                     $url = base_url() . 'index.php/' . $this->data['responsable'][0]['URLGESTION'];
+                    $responsable=$this->bandejaunificada_model->consulta_responsable($cod_regional); 
                     switch ($cargo):
                         case '7'://SECRETARIO
-                            echo "<li>" . strtoupper(NOMBRE_SECRETARIO) . "(Secretario)" . "</li>";
+                            echo "<li>" . strtoupper($regional['NOMBRE_SECRETARIO']) . "(Secretario)" . "</li>";
                            if (ID_SECRETARIO == ID_USUARIO):
                             $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
@@ -155,7 +159,7 @@ class Bandejaunificada Extends MY_Controller {
                                         $mandamiento = $this->bandejaunificada_model->mandamiento($cod_coactivo);
                                         $medidas = $this->bandejaunificada_model->medidas($cod_coactivo);
                                         $acercamiento = $this->bandejaunificada_model->acercamiento($cod_coactivo);
-                                        if ($medidas):
+                                        if ($mandamiento):
                                             $html_mc = '<form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/mandamientopago/nits' . '">
                                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
@@ -163,7 +167,7 @@ class Bandejaunificada Extends MY_Controller {
                                                         </form>';
                                             echo $html_mc;
                                         endif;
-                                        if ($mandamiento):
+                                        if ($medidas):
                                             $html_mp = '<form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/mcinvestigacion/abogado' . '">
                                                          <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                              
@@ -198,7 +202,7 @@ class Bandejaunificada Extends MY_Controller {
                             endif;
                             break;
                         case '9'://COORDINADOR
-                            echo "<li>" . strtoupper(NOMBRE_COORDINADOR) . "(Funcionario Ejecutor)" . "</li>";
+                            echo "<li>" . strtoupper($regional['NOMBRE_COORDINADOR']) . "(Funcionario Ejecutor)" . "</li>";
                            if (ID_COORDINADOR == ID_USUARIO):
                             $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
@@ -288,19 +292,25 @@ class Bandejaunificada Extends MY_Controller {
                 $titulos = $this->bandejaunificada_model->titulos_coactivo($cod_coactivo);
                 $titulos_terminacion = array();
                 $a = 0;
+               // print_r( $titulos);
                 foreach ($titulos as $titulo):
+                 //   print_r( $titulo);
                     foreach ($titulo as $dato):
                         /* Verificar si un titulo ya tiene un auto de cierre creado */
+                  //  print_r($dato);
                         $datos = array('TITULO' => $dato, 'COD_PROCESO' => $cod_coactivo);
                         $existe = $this->bandejaunificada_model->AutoTerminacionTitulo($datos);
+                        // print_r($existe);
+                       // echo "<br>";
                         if (empty($existe) || $existe==FALSE):
                             $titulos_terminacion[$a] = $dato;
                             $a++;
                         endif;
                     endforeach;
                 endforeach;
+                //print_r($titulos_terminacion); die();
                 if (count($titulos_terminacion) > 0):
-                        //echo "hola";die();
+                        
                     $this->verificarpagos = new verificarpagos();
                     $resultado = $this->verificarpagos->crearAutosCierre($cod_coactivo, $titulos_terminacion);
                     if ($resultado):
@@ -346,7 +356,7 @@ class Bandejaunificada Extends MY_Controller {
             $titulo = $this->input->post('cod_titulo') ? $this->input->post('cod_titulo') : FALSE;
             $this->data['consulta'] = $this->bandejaunificada_model->Procesos(ID_REGIONAL, ID_USUARIO, $cod_coactivo, $titulo);
             $this->data['ruta_traslado_judicial'] = base_url() . 'index.php/traslado/Crear_AutoTraslado';
-            $this->template->load($this->template_file, 'bandeja/bandejaprocesos', $this->data);
+            $this->template->load($this->template_file, 'bandeja/procesos', $this->data);
         } else {
             redirect(base_url() . 'index.php/auth/login');
         }

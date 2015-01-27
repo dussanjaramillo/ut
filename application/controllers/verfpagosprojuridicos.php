@@ -29,12 +29,12 @@ class Verfpagosprojuridicos extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->helper(array('form', 'url', 'template', 'traza_fecha_helper'));
+        $this->load->library('form_validation','tcpdf/tcpdf.php');
+        $this->load->helper(array('form', 'url', 'template', 'traza_fecha_helper','traza_fecha'));
         $this->load->model($this->controller . '_model', '', TRUE);
-        $this->load->library('form_validation');
+        $this->load->model('plantillas_model');
         $this->data['custom_error'] = '';
-
+        $this->load->library('tcpdf/tcpdf.php', 'libupload');
         //Cargamos los javascript nesesarios
         $this->data['javascripts'] = array(
             'js/jquery.dataTables.min.js',
@@ -46,12 +46,18 @@ class Verfpagosprojuridicos extends MY_Controller {
             'css/jquery.dataTables_themeroller.css' => 'screen',
             'css/validationEngine.jquery.css' => 'screen'
         );
+        $sesion = $this->session->userdata;
+        
+        define("ID_SECRETARIO", $sesion['id_secretario']);
+        define("NOMBRE_SECRETARIO", $sesion['secretario']);
+        define("ID_COORDINADOR", $sesion['id_coordinador']);
+        define("NOMBRE_COORDINADOR", $sesion['coordinador']);
     }
 
     function index() {
         //verificamos login
         if ($this->ion_auth->logged_in()) :
-            if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('verfpagosprojuridicos/index')) :
+            if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('verfpagosprojuridicos/index') || $this->ion_auth->in_menu('bandejaunificada/index') ) :
                 $this->data['limit_numrows'] = $this->limit_numrows;
                 $this->data['message'] = $this->session->flashdata('message');
                 $this->template->load($this->template_file, $this->controller . '/lista', $this->data);
@@ -71,7 +77,6 @@ class Verfpagosprojuridicos extends MY_Controller {
             $this->verfpagosprojuridicos_model->set_limit_numrows($this->limit_numrows);
             $idusuario = $this->verfpagosprojuridicos_model->set_idusuario();
             $this->verfpagosprojuridicos_model->set_idgrupo();
-
             $data['registros'] = $this->verfpagosprojuridicos_model->listAutos();
             $total = $this->verfpagosprojuridicos_model->listAutos(true);
 
@@ -98,12 +103,15 @@ class Verfpagosprojuridicos extends MY_Controller {
 
     function auto() {
         if ($this->ion_auth->logged_in()) {
+            
             $url_seg = $this->uri->segment(3);
             //$cod_fiscalizacion = $this->input->post('COD_FISCALIZACION');
             $cod_gestion = $this->input->post('COD_GESTION');
             $num_autogenerado = ( $this->input->post('NUM_AUTOGENERADO') != '' ) ? $this->input->post('NUM_AUTOGENERADO') : $url_seg;
-            $cod_tipo_auto = $cod_tipo_proceso = 1;
-            $cod_gestioncobro = $documento = '';
+            $cod_tipo_auto = 1;
+            $cod_tipo_proceso = 1;
+            $cod_gestioncobro = '';
+            $documento = '';
             $codplantilla = '';
             $plantilla = NULL;
             $data = array();
@@ -144,22 +152,24 @@ class Verfpagosprojuridicos extends MY_Controller {
                         $asignar = "secretario si el auto esta listo";
                         $this->data['secretarios'] = array('idsecretario' => $this->session->userdata['id_secretario']);
                     endif;
-
                     $file_txt = $this->docs . $auto->NOMBRE_DOC_GENERADO;
                     $cod_tipo_auto = $auto->COD_TIPO_AUTO;
                     $cod_tipo_proceso = $auto->COD_TIPO_PROCESO;
                     $codplantilla = '';
                     $cod_fiscalizacion = $auto->COD_FISCALIZACION;
+                    if($auto->NOMBRE_DOC_GENERADO):
                     if (file_exists(realpath($file_txt))) :
                         $documento = read_template($file_txt);
                     else :
                         $documento = "";
                     endif;
+                    else:$documento='';
+                    endif;
 
                     /* if (!empty($cod_fiscalizacion)) :
                       $fiscalizacion = $this->verfpagosprojuridicos_model->retriveFiscalizacion($cod_fiscalizacion);
                       else : */
-                    $fiscalizacion->COD_FISCALIZACION = "";
+                    //$fiscalizacion->COD_FISCALIZACION = "";
                     //endif;
                     //if ($auto == NULL) :
                     $cod_gestioncobro = $auto->COD_PROCESO_COACTIVO; //$this->verfpagosprojuridicos_model->retriveGestionActual($cod_fiscalizacion);
@@ -187,9 +197,10 @@ class Verfpagosprojuridicos extends MY_Controller {
                     $this->data['cod_procesoremate'] = (isset($this->cod_procesoremate)) ? $this->cod_procesoremate : "";
                     $this->data['asignar'] = $asignar;
                     $this->data['action_label'] = ($auto != NULL) ? 'Actualizar' : 'Agregar';
+                    $this->data['proceso']=$this->verfpagosprojuridicos_model->proceso($cod_gestioncobro);
                     $this->template->load($this->template_file, $this->controller . '/form', $this->data);
                 else :
-                    $this->session->set_flashdata('message', '<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área o la información no existe.</div>');
+                   // $this->session->set_flashdata('message', '<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área o la información no existe.</div>');
                     redirect(base_url() . 'index.php/verfpagosprojuridicos/index');
                 endif;
             else :
@@ -246,6 +257,7 @@ class Verfpagosprojuridicos extends MY_Controller {
     }
 
     function save() {
+        $cod_proceso=$this->input->post('COD_PROCESO_COACTIVO');
         $timestamp = now();
         $timezone = 'UM5';
         $daylight_saving = FALSE;
@@ -263,10 +275,13 @@ class Verfpagosprojuridicos extends MY_Controller {
         $genera = true;
         $documento = trim($this->input->post('documento'));
         $auto = $this->verfpagosprojuridicos_model->retrievetAuto($num_autogenerado);
-        //echo "<pre>";print_r($auto);exit();
         if (empty($auto->NOMBRE_DOC_GENERADO)) {
+            if (!file_exists($this->docs)) :
+            mkdir($this->docs, 0777, true);
+            endif;
             $name_documento = create_template($this->docs, $documento);
-        } else {
+           
+        } else {  
             $file_txt = $this->docs . $auto->NOMBRE_DOC_GENERADO;
 
             if (file_exists(realpath($file_txt))) :
@@ -286,38 +301,45 @@ class Verfpagosprojuridicos extends MY_Controller {
         $idgrupo = $this->verfpagosprojuridicos_model->set_idgrupo();
         $asignado_a = ($this->input->post('ASIGNADO_A') == 0) ? $idusuario : $this->input->post('ASIGNADO_A');
         $devolver = $this->input->post('DEVOLVER_A');
+       // print_r($name_documento);die();
         if (empty($devolver)) :
             $devolver = "N";
         endif;
-
+        
         $cod_gestioncobro = (!isset($COD_GESTIONCOBRO)) ? $auto->COD_GESTIONCOBRO : $COD_GESTIONCOBRO;
         $revisado_por = $revisado = $aprobado_por = $aprobado = "";
         $button = $this->input->post("button");
+      //  echo $idusuario;die();
         if ($asignado_a == $idusuario) :
-            if ($this->ion_auth->user()->row()->idcoordinador == $idusuario) :
+            if (ID_COORDINADOR == $idusuario) :
                 if ($devolver == "N") :
                     if ($button != "PDF" and $button != "Imprimir") :
                         $asignado_a = $auto->COD_ABOGADO;
-                        $cod_gestioncobro = trazar(438, 1134, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
-                    else :
+                        //$cod_gestioncobro = trazar(438, 1134, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
+                        $cod_gestioncobro = trazarProcesoJuridico(438, 1134, "", $cod_proceso, "", "", "");
+                        else :
                         $cod_gestioncobro = $auto->COD_GESTIONCOBRO;
                     endif;
                 else :
                     if ($button != "PDF" and $button != "Imprimir") :
                         $revisado_por = $idusuario;
                         $revisado = 1;
-                        $cod_gestioncobro = trazar(438, 1135, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
-                    else :
+                     // $cod_gestioncobro = trazar(438, 1135, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
+                        $cod_gestioncobro = trazarProcesoJuridico(438, 1135, "",  $cod_proceso, "", "", "");
+
+                        else :
                         $revisado_por = $auto->REVISADO_POR;
                         $revisado = $auto->REVISADO;
                         $cod_gestioncobro = $auto->COD_GESTIONCOBRO;
                     endif;
                 endif;
-            elseif ($this->ion_auth->user()->row()->idsecretario == $idusuario) :
+            elseif (ID_SECRETARIO == $idusuario) :
                 if ($devolver == "N") :
                     if ($button != "PDF" and $button != "Imprimir") :
                         $asignado_a = $auto->COD_ABOGADO;
-                        $cod_gestioncobro = trazar(439, 1136, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
+                       // $cod_gestioncobro = trazar(439, 1136, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
+                       $cod_gestioncobro = trazarProcesoJuridico(439, 1136, "",  $cod_proceso, "", "", "");
+
                     else :
                         $cod_gestioncobro = $auto->COD_GESTIONCOBRO;
                     endif;
@@ -326,7 +348,8 @@ class Verfpagosprojuridicos extends MY_Controller {
                         $asignado_a = $auto->COD_ABOGADO;
                         $aprobado_por = $idusuario;
                         $aprobado = 1;
-                        $cod_gestioncobro = trazar(439, 1137, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
+                        $cod_gestioncobro = trazarProcesoJuridico(439, 1137, "",  $cod_proceso, "", "", "");
+                        //$cod_gestioncobro = trazar(439, 1137, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
                     else :
                         $aprobado_por = $auto->APROBADO_POR;
                         $aprobado = $auto->APROBADO;
@@ -346,7 +369,8 @@ class Verfpagosprojuridicos extends MY_Controller {
                         $num_radicado = $this->input->post('numradicado');
                     endif;
                     if ($button != "PDF" and $button != "Imprimir") :
-                        $cod_gestioncobro = trazar(440, 1138, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
+                        $cod_gestioncobro = trazarProcesoJuridico(440, 1138, "",  $cod_proceso, "", "", "");
+                      //  $cod_gestioncobro = trazar(440, 1138, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
                     else :
                         $asignado_a = $auto->ASIGNADO_A;
                         $cod_gestioncobro = $auto->COD_GESTIONCOBRO;
@@ -356,13 +380,14 @@ class Verfpagosprojuridicos extends MY_Controller {
                 endif;
             endif;
         elseif ($asignado_a != $idusuario) :
-            if ($this->ion_auth->user()->row()->idcoordinador != $idusuario and $this->ion_auth->user()->row()->idsecretario != $idusuario) :
+            if (ID_COORDINADOR != $idusuario and ID_SECRETARIO != $idusuario) :
                 $cod_gestioncobro = trazar(437, 1133, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
             elseif ($this->ion_auth->user()->row()->idcoordinador == $idusuario) :
                 if ($devolver == "N") :
                     if ($button != "PDF" and $button != "Imprimir") :
                         $asignado_a = $auto->COD_ABOGADO;
-                        $cod_gestioncobro = trazar(438, 1134, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
+                        $cod_gestioncobro = trazarProcesoJuridico(438, 1134, "",  $cod_proceso, "", "", "");
+                        //$cod_gestioncobro = trazar(438, 1134, $auto->COD_FISCALIZACION, $auto->NIT_EMPRESA, "S");
                     else :
                         $cod_gestioncobro = $auto->COD_GESTIONCOBRO;
                     endif;
@@ -389,7 +414,7 @@ class Verfpagosprojuridicos extends MY_Controller {
             "NOMBRE_DOC_FIRMADO" => $name_documento_firmado, "COD_GESTIONCOBRO" => $cod_gestioncobro,
             "FECHA_DOC_FIRMADO" => ($fecha_doc_firmado == true) ? $fecha_radicado : "", "NUM_RESOLUCION" => $num_radicado);
         //echo "<pre>";print_r($data);exit();
-        $cod_fiscalizacion = $this->input->post('COD_FISCALIZACION');
+        $cod_fiscalizacion = $this->input->post('COD_PROCESO_COACTIVO');
         $save = $this->verfpagosprojuridicos_model->saveAuto($data, $num_autogenerado, $cod_fiscalizacion);
         if ($save == false) :
             $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área o la información no existe.</div>');
@@ -424,6 +449,17 @@ class Verfpagosprojuridicos extends MY_Controller {
         } else {
             return $data = array('upload_data' => $this->upload->data());
         }
+    }
+      function pdf() {
+
+        $html = utf8_encode(base64_decode($this->input->post('descripcion_pdf')));
+        $nombre_pdf = $this->input->post('nombre_archivo');
+        $titulo = '';
+        $tipo = 3;
+        $data[0] = $tipo;
+        $data[1] = $titulo;
+        createPdfTemplateOuput($nombre_pdf, $html, false, $data);
+        exit();
     }
 
 }

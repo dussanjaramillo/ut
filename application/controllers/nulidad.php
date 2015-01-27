@@ -856,7 +856,7 @@ class Nulidad extends MY_Controller {
         $config = array();
         $config['upload_path'] = $estructura;
         $config['allowed_types'] = '*';
-        $config['max_size'] = '2048';
+        $config['max_size'] = '5048';
         $this->load->library('upload', $config);
         $files = $_FILES;
         if (sizeof($files) == 0) {

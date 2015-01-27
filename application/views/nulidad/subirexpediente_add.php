@@ -67,7 +67,7 @@
     <br>
 </div>
 <div id="resultado"></div>
-<input type="hidden" name="documento" id="documento" value="<?php print_r($documento); ?>"/>
+<input type="hidden" value='<?= $documento; ?>' name="documento" id="documento">
 <br>
 <center>
     <?php
@@ -142,7 +142,22 @@
                 }
                 //si estoy aqui es que no se ha podido submitir
                 else {
-                    enviar();
+                   	var file = $("#userfile")[0].files[0];
+					var fileSize = file.size;
+					var resultado = 0;
+					if(fileSize > 5242880) {
+						$('#userfile').val('');
+						resultado = (fileSize/1024)/1024;
+						var resultado1 = Math.round(resultado*100)/100 ; 
+						mierror = "";
+						mierror = '<div  class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'El archivo (' + archivo + ') a superado el limite de tamaño para adjuntos de 5Mb. Tamaño archivo de: ' + resultado1 + ' Mb </div>';
+
+						$("#respuesta").css('display', 'block');
+						document.getElementById("respuesta").innerHTML = mierror;
+						$("#respuesta");
+					} else {
+						enviar();
+					}
                 }
             } else {
                 alert('Debe seleccionar un documento');

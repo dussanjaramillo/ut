@@ -1,6 +1,6 @@
 <?php if( ! defined('BASEPATH') ) exit('No direct script access allowed'); ?>
 <div class="center-form-xlarge">
-	<?php echo $custom_error; ?>
+	<?php //echo $custom_error; ?>
   <div class="text-center">
     <h2>Procesos para Auto de Cierre y Terminación del Proceso</h2>
   </div>
@@ -24,6 +24,10 @@
     </tbody>
   </table>
 </div>
+<br>
+<div style="text-align: center;">  <form id="form_bandeja" action="<?php echo base_url('index.php/bandejaunificada/index'); ?>" method="post">
+        <button class="btn btn-warning btn-lg"> Cancelar </button>
+    </form></div>
 <script type="text/javascript" language="javascript" charset="utf-8">
 //generación de la tabla mediante json
 function dataTable() {

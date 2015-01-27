@@ -11,24 +11,21 @@ class Inicio extends MY_Controller {
 	}	
 	
 
-	function index(){
-        if ($this->ion_auth->logged_in())
+    function index()
            {
+        if ($this->ion_auth->logged_in()) {
             //template data
             $this->template->set('title', 'Página de bienvenida');
             $this->data['user']= $this->ion_auth->user()->row();
             $this->data['message']='<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Mensaje de bienvenida.</div>';
            	$this->template->load($this->template_file, 'inicio/inicio',$this->data); 
-           } 
-           else
-            {
+        } else {
               redirect(base_url().'index.php/auth/login');
             }
     }
-	function register(){
         
-       
-           
+    function register()
+    {
                 $this->load->library('form_validation');    
                 $this->data['custom_error'] = '';
                 $this->form_validation->set_rules('nombre', 'Alias / Apodo', 'required|trim|xss_clean|max_length[128]');               

@@ -125,7 +125,7 @@ class Verfpagosprojuridicos_model extends CI_Model {
         $this->db->where('AUTOSJURIDICOS.NUM_AUTOGENERADO', $num_autogenerado);
         $this->db->where('AUTOSJURIDICOS.ASIGNADO_A', $this->idusuario);
 //1033700504	1033700504
-        $query = $this->db->get(); //exit($this->db->last_query());
+        $query = $this->db->get(); //echo $this->db->last_query();die();
 
         if ($query->num_rows() > 0) {
             $array = $query->row();
@@ -220,10 +220,20 @@ class Verfpagosprojuridicos_model extends CI_Model {
                 unset($data['FECHA_DOC_FIRMADO']);
             endif;
             $this->db->update("AUTOSJURIDICOS", $data);
+           // echo $this->db->last_query();die();
             return true;
         else :
             return false;
         endif;
+    }
+       function proceso($cod_coactivo){
+        $this->db->select('PC.COD_PROCESOPJ');
+        $this->db->from('PROCESOS_COACTIVOS PC');
+        $this->db->where('PC.COD_PROCESO_COACTIVO',$cod_coactivo);
+        $resultado=$this->db->get('');
+        $resultado=$resultado->result_array();
+        return $resultado[0];
+        
     }
 
 }

@@ -10,6 +10,7 @@
 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Acercamientopersuasivo extends MY_Controller {
 
     function __construct() {
@@ -20,7 +21,7 @@ class Acercamientopersuasivo extends MY_Controller {
         $this->load->model('acercamientopersuasivo_model');
         $this->load->model('numeros_letras_model');
         $this->load->model('plantillas_model');
-       // $this->load->file(APPPATH . "application/config/database.php", true);
+        // $this->load->file(APPPATH . "application/config/database.php", true);
 
         $this->load->library('tcpdf/tcpdf.php', 'libupload');
         $this->data['style_sheets'] = array(
@@ -60,11 +61,12 @@ class Acercamientopersuasivo extends MY_Controller {
         define("PENDIENTE_PAGO", "199"); //Tipo de respuesta:Pendiente de pago
         define("MEDIDAS_CAUTELARES_MANDAMIENTO_PAGO", "204");
         define("REQUERIMIENTO_ACERCAMIENTO_DEVUELTO", "187");
-        $this->data['user'] = $this->ion_auth->user()->row();
-        if ($this->data['user']) {
-            define("ID_USUARIO", $this->data['user']->IDUSUARIO);
-            define("COD_REGIONAL", $this->data['user']->COD_REGIONAL);
-        }
+        if ($this->ion_auth->logged_in()):
+            $this->data['user'] = $this->ion_auth->user()->row();
+            if ($this->data['user']) {
+                define("ID_USUARIO", $this->data['user']->IDUSUARIO);
+                define("COD_REGIONAL", $this->data['user']->COD_REGIONAL);
+            }endif;
 
         $this->data['message'] = $this->session->flashdata('message');
 
@@ -103,7 +105,8 @@ class Acercamientopersuasivo extends MY_Controller {
         }
     }
 
-    /*Metodo que permite visualizar los procesos del abogado*/
+    /* Metodo que permite visualizar los procesos del abogado */
+
     function abogado() {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('bandejaunificada/procesos')) {
@@ -111,12 +114,13 @@ class Acercamientopersuasivo extends MY_Controller {
                 $this->data['ruta_bandeja'] = base_url() . 'index.php/bandejaunificada/procesos';
                 $this->data['titulo'] = 'Gestion Requerimientos Abogado';
                 $this->data['nom_usuario'] = $this->data['user']->NOMBRES . " " . $this->data['user']->APELLIDOS;
+
                 $cod_coactivo = ($this->input->post('cod_coactivo')) ? $this->input->post('cod_coactivo') : FALSE;
                 $this->data['cod_coactivo'] = $cod_coactivo;
                 if ($this->input->post('cod_coactivo')):
                     $proceso = $this->input->post('cod_coactivo');
                     $respuesta = $this->input->post('cod_respuesta');
-                    $this->data['consulta'] = $this->acercamientopersuasivo_model->consulta_procesos(COD_REGIONAL, ID_USUARIO,NULL, $cod_coactivo);
+                    $this->data['consulta'] = $this->acercamientopersuasivo_model->consulta_procesos(COD_REGIONAL, ID_USUARIO, $cod_coactivo);
                     $cod_cobro = $this->data['consulta'][0]['COD_COBRO'];
 
                     //echo  $this->data['titulo'];die();
@@ -124,7 +128,7 @@ class Acercamientopersuasivo extends MY_Controller {
                 else:
                     $this->data['user'] = $this->ion_auth->user()->row();
 
-                    $this->data['consulta'] = $this->acercamientopersuasivo_model->consulta_procesos(COD_REGIONAL, ID_USUARIO, NULL,$cod_coactivo);
+                    $this->data['consulta'] = $this->acercamientopersuasivo_model->consulta_procesos(COD_REGIONAL, ID_USUARIO, NULL);
                     $this->template->load($this->template_file, 'acercamientopersuasivo/procesos', $this->data);
                 endif;
             } else {
@@ -205,7 +209,7 @@ class Acercamientopersuasivo extends MY_Controller {
     }
 
     function leer_plantilla($cod_plantilla) {
-         $this->data['informacion'] = $this->plantillas_model->plantillas($cod_plantilla);
+        $this->data['informacion'] = $this->plantillas_model->plantillas($cod_plantilla);
         $urlplantilla2 = "uploads/plantillas/" . $this->data['informacion'][0]['ARCHIVO_PLANTILLA'];
         $arreglo = array();
         /*
@@ -220,107 +224,107 @@ class Acercamientopersuasivo extends MY_Controller {
     }
 
     function vistas() {
-   if ($this->ion_auth->logged_in()) {
+        if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('bandejaunificada/procesos')) {
-        $this->data['post'] = $this->input->post();
-        $respuesta = $this->data['post']['cod_respuesta'];
-        $proceso = $this->data['post']['cod_proceso'];
-        $cod_persuasivo = $this->data['post']['cod_cobro'];
-        $this->data['url_generar_pdf'] = base_url() . 'index.php/acercamientopersuasivo/pdf';
-        $this->data['cabecera'] = $this->acercamientopersuasivo_model->cabecera($respuesta, $proceso);
-        $ruta = $this->data['post']['ruta'];
-        if ($ruta):
-             $this->data['documento'] = $this->leer_fichero_completo($ruta);
-            $this->data['documento'] = $this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
-       
-        else:
-            $this->data['documento'] = $this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
-
-        endif;
-        switch ($respuesta):
-            case 184:/* Generar Documento de Acercamiento */
-            case 187:/* Corregir Documento de Acercamiento */
-                $this->data['url'] = 'acercamientopersuasivo/guardar';
-                $this->data['rta_siguiente'] = 186;
-                $ruta = $this->data['post']['ruta'];
-                if ($respuesta == 187):/* Consulta el contenido del documento que se debe corregir */
-                    $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
-                endif;
-                if ($ruta):
-                     $this->data['documento'] = $this->leer_fichero_completo($ruta);
-
-                else:
-                    $this->data['documento'] = $this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
-                endif;
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->load->view('acercamientopersuasivo/genera_documento', $this->data);
-                break;
-            case 186:
-                $this->data['url'] = 'acercamientopersuasivo/guardar';
-                $this->data['cod_aprobacion'] = 188;
-                $this->data['cod_devolucion'] = 187;
-                $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->load->view('acercamientopersuasivo/revisar_documento', $this->data);
-                break;
-            case 188:
-                $this->data['url'] = 'acercamientopersuasivo/guardar';
-                $this->data['cod_aprobacion'] = 1091;
-                $this->data['cod_devolucion'] = 187;
-                $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->load->view('acercamientopersuasivo/revisar_documento', $this->data);
-                break;
-            case 1091: /* Documento Aprobado */
-                $this->data['url'] = base_url() . 'index.php/acercamientopersuasivo/sube_documento';
-                $this->data['rta_siguiente'] = 189; /* Requerimiento Acercamiento Persuasivo Aprobado y Firmado */
-                $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
+                $this->data['post'] = $this->input->post();
+                $respuesta = $this->data['post']['cod_respuesta'];
+                $proceso = $this->data['post']['cod_proceso'];
+                $cod_persuasivo = $this->data['post']['cod_cobro'];
+                $this->data['url_generar_pdf'] = base_url() . 'index.php/acercamientopersuasivo/pdf';
+                $this->data['cabecera'] = $this->acercamientopersuasivo_model->cabecera($respuesta, $proceso);
                 $ruta = $this->data['post']['ruta'];
                 if ($ruta):
                     $this->data['documento'] = $this->leer_fichero_completo($ruta);
+                  //  $this->data['documento'] = $this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
+
                 else:
-                    $this->data['documento'] =$this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
+                    $this->data['documento'] = $this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
+
                 endif;
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->load->view('acercamientopersuasivo/adjuntar_documento', $this->data);
-                break;
+                switch ($respuesta):
+                    case 184:/* Generar Documento de Acercamiento */
+                    case 187:/* Corregir Documento de Acercamiento */
+                        $this->data['url'] = 'acercamientopersuasivo/guardar';
+                        $this->data['rta_siguiente'] = 186;
+                        $ruta = $this->data['post']['ruta'];
+                        if ($respuesta == 187):/* Consulta el contenido del documento que se debe corregir */
+                            $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
+                        endif;
+                        if ($ruta):
+                            $this->data['documento'] = $this->leer_fichero_completo($ruta);
 
-            case 190:
-                $this->data['url'] = base_url('index.php/acercamientopersuasivo/correccion_documento');
-                $this->data['causales'] = $this->acercamientopersuasivo_model->causalesdevolucion();
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->data['proceso'] = $this->acercamientopersuasivo_model->consulta_procesos(COD_REGIONAL, ID_USUARIO, $proceso);
-                $time = time();
-                $fecha_envio = $this->data['proceso'][0]['FECHA_ENVIO'];
-                $fecha_actual = date("d-m-Y");
-                $datetime1 = date_create($fecha_envio);
-                $datetime2 = date_create($fecha_actual);
-                $interval = date_diff($datetime1, $datetime2);
-                $this->data['dias'] = $interval->format('%a');
-                $this->load->view('acercamientopersuasivo/documento_enviado', $this->data);
-                break;
-            case 191://Requerimiento Enviado
-                $this->data['url'] = base_url('index.php/acercamientopersuasivo/guarda_notificacion_recibida');
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->load->view('acercamientopersuasivo/requerimiento_recibido', $this->data);
-                
-                
-                break;
-            case 197://Concurrencia deudor
+                        else:
+                            $this->data['documento'] = $this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
+                        endif;
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->load->view('acercamientopersuasivo/genera_documento', $this->data);
+                        break;
+                    case 186:
+                        $this->data['url'] = 'acercamientopersuasivo/guardar';
+                        $this->data['cod_aprobacion'] = 188;
+                        $this->data['cod_devolucion'] = 187;
+                        $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->load->view('acercamientopersuasivo/revisar_documento', $this->data);
+                        break;
+                    case 188:
+                        $this->data['url'] = 'acercamientopersuasivo/guardar';
+                        $this->data['cod_aprobacion'] = 1091;
+                        $this->data['cod_devolucion'] = 187;
+                        $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->load->view('acercamientopersuasivo/revisar_documento', $this->data);
+                        break;
+                    case 1091: /* Documento Aprobado */
+                        $this->data['url'] = base_url() . 'index.php/acercamientopersuasivo/sube_documento';
+                        $this->data['rta_siguiente'] = 189; /* Requerimiento Acercamiento Persuasivo Aprobado y Firmado */
+                        $this->data['traza'] = $this->acercamientopersuasivo_model->observaciones($cod_persuasivo, DOCUMENTO_REQUERIMIENTO);
+                        $ruta = $this->data['post']['ruta'];
+                        if ($ruta):
+                            $this->data['documento'] = $this->leer_fichero_completo($ruta);
+                        else:
+                            $this->data['documento'] = $this->leer_plantilla(PLANTILLA_CARTA_COACTIVO);
+                        endif;
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->load->view('acercamientopersuasivo/adjuntar_documento', $this->data);
+                        break;
 
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->data['url1'] = base_url('index.php/acercamientopersuasivo/acuerdo');
-                $this->data['url2'] = base_url('index.php/acercamientopersuasivo/guarda_no_aceptarobligaciones');
-                $this->data['url3'] = base_url('index.php/acercamientopersuasivo/guarda_aceptarobligaciones');
-                // $this->template->load($this->template_file, 'acercamientopersuasivo/concurrencia_deudor', $this->data);
-                $this->load->view('acercamientopersuasivo/concurrencia_deudor', $this->data);
-                break;
-            case 199:/* Verificación de pagos */
-                $this->load->view('acercamientopersuasivo/cabecera', $this->data);
-                $this->load->view('acercamientopersuasivo/verificacion_pago', $this->data);
-        endswitch;
+                    case 190:
+                        $this->data['url'] = base_url('index.php/acercamientopersuasivo/correccion_documento');
+                        $this->data['causales'] = $this->acercamientopersuasivo_model->causalesdevolucion();
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->data['proceso'] = $this->acercamientopersuasivo_model->consulta_procesos(COD_REGIONAL, ID_USUARIO, $proceso);
+                        $time = time();
+                        $fecha_envio = $this->data['proceso'][0]['FECHA_ENVIO'];
+                        $fecha_actual = date("d-m-Y");
+                        $datetime1 = date_create($fecha_envio);
+                        $datetime2 = date_create($fecha_actual);
+                        $interval = date_diff($datetime1, $datetime2);
+                        $this->data['dias'] = $interval->format('%a');
+                        $this->load->view('acercamientopersuasivo/documento_enviado', $this->data);
+                        break;
+                    case 191://Requerimiento Enviado
+                        $this->data['url'] = base_url('index.php/acercamientopersuasivo/guarda_notificacion_recibida');
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->load->view('acercamientopersuasivo/requerimiento_recibido', $this->data);
+
+
+                        break;
+                    case 197://Concurrencia deudor
+
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->data['url1'] = base_url('index.php/acercamientopersuasivo/acuerdo');
+                        $this->data['url2'] = base_url('index.php/acercamientopersuasivo/guarda_no_aceptarobligaciones');
+                        $this->data['url3'] = base_url('index.php/acercamientopersuasivo/guarda_aceptarobligaciones');
+                        // $this->template->load($this->template_file, 'acercamientopersuasivo/concurrencia_deudor', $this->data);
+                        $this->load->view('acercamientopersuasivo/concurrencia_deudor', $this->data);
+                        break;
+                    case 199:/* Verificación de pagos */
+                        $this->load->view('acercamientopersuasivo/cabecera', $this->data);
+                        $this->load->view('acercamientopersuasivo/verificacion_pago', $this->data);
+                endswitch;
             }
-        else {
+            else {
                 $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta Ã¡rea.</div>');
                 redirect(base_url() . 'index.php/inicio');
             }
@@ -328,8 +332,6 @@ class Acercamientopersuasivo extends MY_Controller {
             redirect(base_url() . 'index.php/auth/login');
         }
     }
-    
-   
 
     function guarda_no_aceptarobligaciones() {// Cuando  el deudor no acepta obligaciones se envia a Medidas Cautelares y Mandamiento de Pago
         $post = $this->input->post();
@@ -358,9 +360,14 @@ class Acercamientopersuasivo extends MY_Controller {
         $post['cod_cobro'] = $detalle['cod_cobro'];
         $post['cod_proceso'] = $detalle['cod_proceso'];
         $cabecera = unserialize($this->input->post('cabecera'));
+        // echo "<pre>"; print_r($cabecera); echo "</pre>"; die();
         $post['nit'] = $cabecera['IDENTIFICACION'];
         $post['cod_regional'] = $cabecera['COD_REGIONAL'];
         $post['cod_concepto'] = $cabecera['COD_CPTO_FISCALIZACION'];
+//        print_r($post);
+//        die();
+        //  @$consulta2 = $this->acercamientopersuasivo_model->consulta_datosdeuda($this->datos['cod_fiscalizacion']);
+        //  print_r(@$consulta2);die();
         $accion = $post['tipopago'];
         switch ($accion) :
             case '1'://Pago Total (Se debio haber generado la liquidación, y el proceso cambia a Pendiente de Pago)  
@@ -383,7 +390,7 @@ class Acercamientopersuasivo extends MY_Controller {
                 $post['tipo_gestion'] = 106;
                 $post['tipo_respuesta'] = 201;
                 $post['obligacion_aceptada'] = 'S';
-                $titulos = $this->acercamientopersuasivo_model->titulos_coactivo( $post['cod_proceso']);
+                $titulos = $this->acercamientopersuasivo_model->titulos_coactivo($post['cod_proceso']);
                 $titulos_f = array();
                 $a = 0;
                 foreach ($titulos as $titulo):
@@ -392,7 +399,7 @@ class Acercamientopersuasivo extends MY_Controller {
                         $a++;
                     endforeach;
                 endforeach;
-            
+                //echo "<pre>"; print_r($titulos_facilidad);
                 break;
             case '4'://No Pago (remite a medidas cautelares y mandamiento de pago)
                 $post['estado_proceso'] = 21; //estado pendiente de pago
@@ -404,7 +411,7 @@ class Acercamientopersuasivo extends MY_Controller {
         endswitch;
 
         $this->datos['idgestion'] = $this->traza($post);
-        $resultado = $this->acercamientopersuasivo_model->aceptar_obligaciones($post,$titulos_facilidad);
+        $resultado = $this->acercamientopersuasivo_model->aceptar_obligaciones($post, $titulos_facilidad);
         if ($resultado) :
             $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>Se ha actualizado la información.</div>');
         else :
@@ -447,10 +454,12 @@ class Acercamientopersuasivo extends MY_Controller {
                         $post['reorganizacion_empresarial'] = 'S';
                         $post['tipo_gestion'] = 104;
                         $post['tipo_respuesta'] = 193;
+                        $post['comentarios']='Se encuentra en Procesos Concursales';
                     } else if ($post['respuesta2'] == 2) {//No esta en reorganizacion cambia a acepta obligaciones
                         $post['reorganizacion_empresarial'] = 'N';
                         $post['tipo_gestion'] = 105;
                         $post['tipo_respuesta'] = 197;
+                        $post['comentarios']='Acepta Obligaciones';
                     }
 //                    $this->datos['idgestioncobro'] = trazar($this->datos['tipo_gestion'], $this->datos['tipo_respuesta'], $this->datos['cod_fiscalizacion'], $this->datos['nit_empresa'], $cambiarGestionActual = 'S', $cod_gestion_anterior = -1, $comentarios = 'traza');
                     $post['idgestion'] = $this->traza($post);
@@ -640,6 +649,7 @@ class Acercamientopersuasivo extends MY_Controller {
 
         $resultado = $this->acercamientopersuasivo_model->correccion_documento($post);
         if ($resultado) {
+            echo "hola";
             $this->session->set_flashdata('message', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Se ha guardado el texto del documento</div>');
         }
         //actualizamos la ruta 
@@ -671,15 +681,20 @@ class Acercamientopersuasivo extends MY_Controller {
         $archivo = $this->data['post']['nombre_archivo']; // el nombre de tu archivo
         $ruta = RUTA_DES . $this->data['post']['cod_cobro'] . "/" . $archivo . ".txt"; //ruta donde guardaremos el archivo
         $this->data['post']['ruta'] = $ruta;
+
         switch ($respuesta):
             case 184:/* Generado */
-                $mensaje = 'Requerimiento de acercamiento generado exitosamente';
             case 187:/* Corregido */
-                $mensaje = 'Se ha corregido el requerimiento';
+                if ($respuesta == 184):
+                    $mensaje = 'Requerimiento de acercamiento generado exitosamente';
+                else:
+                    $mensaje = 'Se ha corregido el requerimiento';
+                endif;
                 $genera_fichero = $this->generar_fichero($ruta, $this->data['post']['descripcion'], $this->data['post']);
                 $this->data['post']['tipo_gestion'] = 102;
                 $this->data['post']['tipo_respuesta'] = $rta_siguiente;
-                $post['idgestion'] = $this->traza($post);
+                $this->data['post']['comentarios']=$mensaje;
+                $post['idgestion'] = $this->traza($this->data['post']);
                 $resultado = $this->acercamientopersuasivo_model->guarda_requerimieto($this->data['post']);
                 if ($resultado) {
                     $this->session->set_flashdata('message', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="info">&times;</button>' . $mensaje . '</div>');
@@ -732,7 +747,7 @@ class Acercamientopersuasivo extends MY_Controller {
                 $this->datos['tipo_gestion'] = 107;
                 $this->datos['tipo_respuesta'] = MEDIDAS_CAUTELARES_MANDAMIENTO_PAGO;
                 $this->datos['fecha_recibida'] = '';
-                $post['idgestion'] = $this->traza($post);
+                $post['idgestion'] = $this->traza($this->datos);
                 $resultado = $this->acercamientopersuasivo_model->guarda_respuesta_notificacion($this->datos);
                 if ($resultado) {
                     echo '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Se ha realizado la actualización de la respuesta</div>';
@@ -758,7 +773,7 @@ class Acercamientopersuasivo extends MY_Controller {
                         $this->datos['tipo_respuesta'] = 197;
                         $this->datos['estado_proceso'] = 15;
                     }
-                    $this->datos['idgestion'] = $this->traza($post);
+                    $this->datos['idgestion'] = $this->traza($this->datos);
                     $resultado = $this->acercamientopersuasivo_model->guarda_respuesta_notificacion($this->datos);
                     if ($resultado) {
                         $this->session->set_flashdata('message', '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Se ha realizado la actualización de la respuesta</div>');
@@ -842,7 +857,8 @@ class Acercamientopersuasivo extends MY_Controller {
         $codrecepcion = $post['cod_proceso'];
         $comentarios = $post['comentarios'];
         $usuariosAdicionales = '';
-        $traza = trazarProcesoJuridico($tipogestion, $tiporespuesta, $codtitulo, $codjuridico, $codcarteranomisional, $coddevolucion, $codrecepcion, $comentarios, $usuariosAdicionales);
+        $traza = trazarProcesoJuridico( $tiporespuesta,$tipogestion, $codtitulo, $codjuridico, $codcarteranomisional, $coddevolucion, $codrecepcion, $comentarios, $usuariosAdicionales);
+     //   print_r($traza); die();
         return $traza;
     }
 

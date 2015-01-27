@@ -29,6 +29,7 @@ class Checklist extends MY_Controller {
         $conceptos = array();
         $concepto = $this->input->post('concepto');
         $descripcion = $this->input->post('descripcion');
+        $descripcion_old=  $this->input->post('descripcion_old');
         $cpts = $this->checklist_model->getconceptos()->result_array();
         foreach ($cpts as $value) {
             $conceptos[$value['COD_CONCEPTO']] = $value['NOMBRE_CONCEPTO'];
@@ -37,12 +38,13 @@ class Checklist extends MY_Controller {
         $this->data['conceptos'] = $conceptos;
         $this->data['concepto'] = $concepto;
         $this->data['descripcion'] = $descripcion;
+        $this->data['descripcion_old']=$descripcion_old;
         $this->template->load($this->template_file, 'checklist/edit', $this->data);
     }
 
     function guardar() {
         $guardar = $this->checklist_model->guardar(
-                $this->input->post('concepto'), $this->input->post('descripcion'), $this->input->post('texto'), $this->input->post('orden'), $this->input->post('activo')
+                $this->input->post('concepto'), $this->input->post('descripcion'), $this->input->post('texto'), $this->input->post('orden'), $this->input->post('activo'), $this->input->post('descripcion_old')
         );
         $this->listar();
     }

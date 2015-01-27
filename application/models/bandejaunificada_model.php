@@ -47,7 +47,7 @@ class Bandejaunificada_model Extends MY_Controller {
     }
 
  function titulos_coactivo($cod_coactivo) {
-        $this->db->select('VW.NUM_LIQUIDACION');
+        $this->db->select('VW.NO_EXPEDIENTE');
         $this->db->from('VW_PROCESOS_COACTIVOS VW');
         $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_RESPUESTA=VW.COD_RESPUESTA');
         $this->db->where('VW.COD_PROCESO_COACTIVO', $cod_coactivo);
@@ -115,274 +115,9 @@ class Bandejaunificada_model Extends MY_Controller {
         return $regional[0];
     }
 
-    function Procesos($regional, $usuario, $cod_coactivo, $titulo) {
-//        echo $regional."1<br>";
-//        echo $usuario."2<br>";
-//        echo $cod_coactivo."3<br>";
-//        echo $titulo."4<br>";die();
-        /*         * Para listar los procesos que se encuentran en Recepción de titulos se consulta la vista VW_RECEPCIONTITULOS la cual permite consultar los datos básicos
-         * $subQuery1 Para listar los procesos coactivos se consulta la vista VW_PROCESOS_COACTIVOS la cual permite consultar los datos básicos
-         * @param integer $regional
-         * @param integer $idusuario
-         * @param integer $cod_coactivo
-         * @param integer $titulo
-         * @return array $resultado
-         */
-
-        $cod_respuesta = '( 170 )';
-
-        if (!empty($titulo)):
-            $where_titulo = 'AND ( RT.COD_RECEPCIONTITULO = ' . $titulo . ')';
-        else:
-            $titulo = '';
-        endif;
-
-        $secretario = FALSE;
-        $coordinador = FALSE;
-        if ($usuario == ID_SECRETARIO || $usuario == ID_COORDINADOR):
-            $abogado = FALSE;
-        else://El usuario es abogado
-            $abogado = TRUE;
-        endif;
-
-        if ($abogado == TRUE):
-            // $abogado_titulos = ' AND RT.COD_ABOGADO=' . $usuario;
-            // $abogado_procesos = ' WHERE  PR.ABOGADO=' . $usuario;
-            $abogado_titulos = '';
-            $where_abogado = '';
-
-        else:
-            $abogado_titulos = '';
-            $where_abogado = '';
-        endif;
-        $where_coactivo = '';
-        if (!empty($cod_coactivo)):
-            if ($where_abogado != ''):
-                $where_coactivo = 'AND ( PR.COD_PROCESO= ' . $cod_coactivo . ')';
-            else:
-                $where_coactivo = 'WHERE ( PR.COD_PROCESO = ' . $cod_coactivo . ')';
-            endif;
-        endif;
-        $where_proceso = $where_abogado . " " . $where_coactivo;
-        //echo "<br>","------". $where_proceso;die();
-        $regional = ' AND (REG.COD_REGIONAL=' . $regional . ')';
-        // $regional = ' ';
-        $this->db->select("RC.COD_RECEPCIONTITULO AS COD_PROCESO,
-                           VW.IDENTIFICACION AS IDENTIFICACION,
-                           VW.EJECUTADO AS NOMBRE, 
-                           VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,
-                           VW.COD_REGIONAL AS COD_REGIONAL,
-                           US.NOMBRES,
-                           US.APELLIDOS,
-                           RC.COD_FISCALIZACION_EMPRESA || '' || RC.COD_CARTERA_NOMISIONAL AS PROCESOPJ,
-                           RC.COD_ABOGADO AS ABOGADO,
-                           VW.ULTIMA_ACTUACION,
-                           TO_CHAR(VW.NO_EXPEDIENTE) AS NUMEROS_EXPEDIENTES,
-                           TO_CHAR(VW.SALDO_DEUDA) AS SALDOS_DEUDAS ,
-                           TO_CHAR(VW.SALDO_CAPITAL) AS SALDOS_CAPITAL,
-                           TO_CHAR(VW.SALDO_INTERES) AS SALDOS_INTERESES,
-                           TO_CHAR(VW.FECHA_COACTIVO) AS FECHAS_RECEPCION,
-                           TO_CHAR(VW.CONCEPTO) AS CONCEPTOS_UNIDOS,
-                           TO_CHAR(RG.NOMBRE_GESTION) AS RESPUESTAS_UNIDAS, 
-                           TO_CHAR(RC.COD_FISCALIZACION_EMPRESA) || '' || TO_CHAR(RC.COD_CARTERA_NOMISIONAL) AS FISCALIZACIONES,
-                           TO_CHAR(RG.COD_RESPUESTA) AS CODIGOS_RESPUESTAS,
-                           
-                           ");
-        $this->db->from('RECEPCIONTITULOS RC');
-        $this->db->join('VW_RECEPCIONTITULOS VW', 'VW.NO_EXPEDIENTE=RC.COD_RECEPCIONTITULO', 'inner');
-        $this->db->join('RESPUESTAGESTION RG', 'RG.COD_RESPUESTA=RC.COD_TIPORESPUESTA', 'inner');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=RC.COD_ABOGADO', 'left');
-//        $where = 'RC.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123)  '
-//                . '';
-//        $this->db->where($where);
-        $query1 = $this->db->get('');
-        $subQuery1 = $this->db->last_query();
-        // echo $subQuery1;
-        $query1 = $query1->result_array();
-
-        /* AcercamientoPersuasivo */
-        $this->db->select('CP.COD_COBRO_PERSUASIVO AS PROCESO,'
-                . 'TO_CHAR(CP.COD_TIPO_RESPUESTA) AS COD_RESPUESTA,'
-                . 'VW.RESPUESTA AS RESPUESTA,'
-                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,'
-                . 'PC.ABOGADO AS ABOGADO, '
-                . 'PC.COD_PROCESOPJ AS PROCESOPJ,'
-                . 'VW.EJECUTADO AS NOMBRE,'
-                . 'PC.IDENTIFICACION AS IDENTIFICACION, '
-                . 'US.NOMBRES, US.APELLIDOS, '
-                . 'VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL, '
-                . 'VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,'
-                . 'VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,'
-                . 'VW.COD_EXPEDIENTE_JURIDICA, VW.ULTIMA_ACTUACION');
-
-        $this->db->from('COBROPERSUASIVO CP');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=CP.COD_PROCESO_COACTIVO');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = CP.COD_TIPO_RESPUESTA ';
-        $this->db->where($where);
-        $query2 = $this->db->get('');
-        $subQuery2 = $this->db->last_query();
-        $query2 = $query2->result_array();
-        //MEDIDAS CAUTELARES
-
-        $this->db->select("MC.COD_MEDIDACAUTELAR AS PROCESO,MP.COD_TIPOGESTION || '*?*' || MC.COD_RESPUESTAGESTION AS COD_RESPUESTA, RG.NOMBRE_GESTION  "
-                . "|| '*?*' || VW.RESPUESTA AS RESPUESTA, PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,"
-                . "VW.EJECUTADO AS NOMBRE,PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,"
-                . " VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,VW.SALDO_CAPITAL,VW.SALDO_INTERES,"
-                . "VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION");
-        $this->db->from('MC_MEDIDASCAUTELARES MC');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=MC.COD_PROCESO_COACTIVO');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $this->db->join('MC_MEDIDASPRELACION MP', 'MP.COD_MEDIDACAUTELAR=MC.COD_MEDIDACAUTELAR ', 'LEFT');
-        $this->db->join('RESPUESTAGESTION RG', 'RG.COD_RESPUESTA= MP.COD_TIPOGESTION OR RG.COD_RESPUESTA=MC.COD_RESPUESTAGESTION');
-        $where = 'VW.COD_RESPUESTA = MC.COD_RESPUESTAGESTION OR  VW.COD_RESPUESTA=MP.COD_TIPOGESTION ';
-        $this->db->where($where);
-        $query3 = $this->db->get('');
-        $subQuery3 = $this->db->last_query();
+    function Procesos($cod_regional, $usuario, $cod_coactivo, $titulo) {
         
-         //Mc_Avaluo
-        $this->db->select('MA.COD_AVALUO AS PROCESO,TO_CHAR(MA.COD_TIPORESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
-                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
-                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
-                . ' VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
-                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA, VW.ULTIMA_ACTUACION');
-        $this->db->from('MC_AVALUO MA');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=MA.COD_PROCESO_COACTIVO');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = MA.COD_TIPORESPUESTA ' ;
-        $this->db->where($where);
-        $query4 = $this->db->get('');
-        $subQuery4 = $this->db->last_query();
-        $query4 = $query4->result_array();
-
-        //Mandamiento
-
-        $this->db->select('MP.COD_MANDAMIENTOPAGO AS PROCESO,TO_CHAR(MP.ESTADO) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
-                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
-                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
-                . ' VW.COD_REGIONAL AS COD_REGIONAL, VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
-                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
-        $this->db->from('MANDAMIENTOPAGO MP');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=MP.COD_PROCESO_COACTIVO');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = MP.ESTADO';
-        $this->db->where($where);
-        $query5 = $this->db->get('');
-        $query5 = $query5->result_array();
-        $subQuery5 = $this->db->last_query();
-        $subQuery5;    
-        
-         /* Terminación de proceso */
-        $this->db->select('AJ.NUM_AUTOGENERADO AS PROCESO, TO_CHAR(GC.COD_TIPO_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
-                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
-                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
-                . ' VW.COD_REGIONAL AS COD_REGIONAL, VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,'
-                . 'VW.SALDO_DEUDA,VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION'); /* AJ.AUTOSJURIDICOS AS PROCESO,GC.COD_TIPO_RESPUES */
-        $this->db->from('AUTOSJURIDICOS AJ');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=AJ.COD_PROCESO_COACTIVO');
-        $this->db->join('TRAZAPROCJUDICIAL GC', 'GC.COD_TRAZAPROCJUDICIAL=AJ.COD_GESTIONCOBRO');
-        $this->db->join('RESPUESTAGESTION RES', 'RES.COD_RESPUESTA=GC.COD_TIPO_RESPUESTA');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = GC.COD_TIPO_RESPUESTA';
-        $this->db->where('AJ.COD_TIPO_AUTO', 1);
-        $this->db->where('AJ.COD_TIPO_PROCESO', 1);
-        $this->db->where($where);
-        $query6 = $this->db->get('');
-        $subQuery6 = $this->db->last_query();
-        //   echo $subQuery6;
-        $query6 = $query6->result_array();
-        
-         /* procesos coactivos */
-        $this->db->select('PC.COD_PROCESO_COACTIVO AS PROCESO,TO_CHAR(PC.COD_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
-                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
-                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
-                . ' VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
-                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
-        $this->db->from('PROCESOS_COACTIVOS PC');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = PC.COD_RESPUESTA';
-        $this->db->where($where);
-        $query7 = $this->db->get('');
-        $query7 = $query7->result_array();
-        $subQuery7 = $this->db->last_query();
-        
-        //TRASLADO DE PROCESO JUDICIAL
-
-        $this->db->select('TJ.COD_TRASLADO AS PROCESO,TO_CHAR(TJ.COD_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
-                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
-                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
-                . ' VW.COD_REGIONAL AS COD_REGIONAL, VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
-                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
-        $this->db->from('TRASLADO_JUDICIAL TJ');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=TJ.COD_PROCESO_COACTIVO');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = TJ.COD_RESPUESTA';
-        $this->db->where($where);
-        $query8 = $this->db->get('');
-        $query8 = $query8->result_array();
-        $subQuery8 = $this->db->last_query();
-        $subQuery8;
-
-        //RESOLUCION_PRESCRIPCION
-        $this->db->select('RP.COD_PRESCRIPCION AS PROCESO,TO_CHAR(RP.COD_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
-                . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
-                . 'PC.IDENTIFICACION AS IDENTIFICACION, US.NOMBRES, US.APELLIDOS, VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,'
-                . ' VW.COD_REGIONAL AS COD_REGIONAL,VW.CONCEPTO,VW.FECHA_COACTIVO AS FECHA_RECEPCION,VW.SALDO_DEUDA,'
-                . 'VW.SALDO_CAPITAL,VW.SALDO_INTERES,VW.NO_EXPEDIENTE,VW.COD_EXPEDIENTE_JURIDICA,VW.ULTIMA_ACTUACION');
-        $this->db->from('RESOLUCION_PRESCRIPCION RP');
-        $this->db->join('PROCESOS_COACTIVOS PC', 'PC.COD_PROCESO_COACTIVO=RP.COD_PROCESO_COACTIVO', 'inner');
-        $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=RP.COD_PROCESO_COACTIVO', 'inner');
-        $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO', 'inner');
-        $where = 'VW.COD_RESPUESTA = RP.COD_RESPUESTA' ;
-        $this->db->where($where);
-        $query9 = $this->db->get('');
-        $query9 = $query9->result_array();
-        $subQuery9 = $this->db->last_query();
-        //   $querys= "($subQuery2)";
-//        $querys = "($subQuery2   UNION $subQuery3  UNION $subQuery4 UNION $subQuery5 UNION $subQuery6 UNION $subQuery7 UNION $subQuery8  UNION $subQuery9 UNION  $subQuery10 UNION $subQuery12 UNION $subQuery11  UNION $subQuery13 UNION $subQuery14)";
-        $querys = "($subQuery2   UNION $subQuery3   UNION $subQuery4  )";
-
-//echo $querys; die();
-
-$where_proceso='';
-
-        $qry_final = "SELECT PR.COD_PROCESO,PR.IDENTIFICACION,PR.NOMBRE,PR.NOMBRE_REGIONAL,PR.COD_REGIONAL,PR.NOMBRES,PR.APELLIDOS,
-                    PR.PROCESOPJ,PR.ABOGADO, PR.ULTIMA_ACTUACION,
-                    LISTAGG (PR.NO_EXPEDIENTE,'?*') WITHIN GROUP (ORDER BY PR.NO_EXPEDIENTE) \"NUMEROS EXPEDIENTES\",
-                    LISTAGG (PR.SALDO_DEUDA,'?*') WITHIN GROUP (ORDER BY PR.SALDO_DEUDA) \"SALDOS DEUDAS\",
-                    LISTAGG (PR.SALDO_CAPITAL,'?*') WITHIN GROUP (ORDER BY PR.SALDO_CAPITAL) \"SALDOS CAPITAL\",
-                    LISTAGG (PR.SALDO_INTERES,'?*') WITHIN GROUP (ORDER BY PR.SALDO_INTERES) \"SALDOS INTERESES\",
-                    LISTAGG (PR.FECHA_RECEPCION,'?*') WITHIN GROUP (ORDER BY PR.FECHA_RECEPCION) \"FECHAS_RECEPCION\",
-                    LISTAGG (PR.CONCEPTO,'?*') WITHIN GROUP (ORDER BY PR.CONCEPTO) \"CONCEPTOS UNIDOS\",
-                    LISTAGG (PR.RESPUESTA,'*?*') WITHIN GROUP (ORDER BY PR.COD_RESPUESTA) \"RESPUESTAS_UNIDAS\",
-                    LISTAGG (PR.COD_EXPEDIENTE_JURIDICA,'?*') WITHIN GROUP (ORDER BY PR.COD_EXPEDIENTE_JURIDICA) \"FISCALIZACIONES\",
-                    LISTAGG (PR.COD_RESPUESTA,'*?*') WITHIN GROUP (ORDER BY PR.COD_RESPUESTA) \"CODIGOS_RESPUESTAS\"
-                     
-                    FROM " . $querys . " PR " . $where_proceso . " 
-                    GROUP BY PR.COD_PROCESO,PR.IDENTIFICACION,PR.NOMBRE,PR.NOMBRE_REGIONAL,PR.COD_REGIONAL,
-                    PR.NOMBRES,PR.APELLIDOS,PR.PROCESOPJ,PR.ABOGADO,  ULTIMA_ACTUACION";
-       // echo   $qry_final;
-        echo "<br>";
-        
-         $qrys_final= "($subQuery1   UNION $qry_final  ) ORDER BY ULTIMA_ACUTACION ASC";
-         echo  $qrys_final;
-          echo "<br>";
-        $querys = $this->db->query($qrys_final);
-
-        $resultado = $querys->result_array();
-        return $resultado;
-    }
-
-    function procesos_coactivos($cod_regional, $usuario, $cod_coactivo, $titulo) {
-
-        /* Acercamiento Persuasivo $subQuery2 */
+           /* Acercamiento Persuasivo $subQuery2 */
         /* Medidas Cautelares investigacion  $subQuery3 */
         /* Medidas Cautelares Avaluo $subQuery4 */
         /* Mandamoento Pago $subQuery5 */
@@ -493,7 +228,8 @@ $where_proceso='';
         $this->db->where($where);
         $query6 = $this->db->get('');
         $subQuery6 = $this->db->last_query();
-        //   echo $subQuery6;
+        echo "<br>";
+        echo $subQuery6;echo "<br>";
         $query6 = $query6->result_array();
 
         $cod_respuesta = '( 170 )';
@@ -571,7 +307,7 @@ $where_proceso='';
              AND (E.COD_REGIONAL=REG.COD_REGIONAL) 
              AND (VR.SALDO_DEUDA > 0)
              " . $titulo . "
-             AND (RT.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178))
+             AND (RT.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178,1367))
                 " . $regional . "
                     " . $abogado_titulos . "
                         AND (RT.COD_RECEPCIONTITULO=VR.NO_EXPEDIENTE)
@@ -605,7 +341,7 @@ $where_proceso='';
             (E.COD_REGIONAL=REG.COD_REGIONAL) 
             AND (VR.SALDO_DEUDA > 0)
              " . $titulo . "
-             AND (RT.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178))
+             AND (RT.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178,1367))
                 " . $regional . "
                       " . $abogado_titulos . " 
              UNION( 
@@ -643,7 +379,7 @@ $where_proceso='';
              AND  (E.COD_REGIONAL=REG.COD_REGIONAL) 
                AND (VR.SALDO_DEUDA > 0)
              " . $titulo . "
-                   AND (RT.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178))
+                   AND (RT.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178,1367))
                     " . $regional . "
                           " . $abogado_titulos . "  
             ) ) "
@@ -663,7 +399,7 @@ $where_proceso='';
         $this->db->from('PROCESOS_COACTIVOS PC');
         $this->db->join('VW_PROCESOS_COACTIVOS VW', 'VW.COD_PROCESO_COACTIVO=PC.COD_PROCESO_COACTIVO');
         $this->db->join('USUARIOS US', 'US.IDUSUARIO=PC.ABOGADO');
-        $where = 'VW.COD_RESPUESTA = PC.COD_RESPUESTA AND PC.COD_RESPUESTA NOT IN (1123,1114)  AND VW.SALDO_DEUDA!=0 AND PC.AUTO_CIERRE IS NULL' . $regional;
+        $where = 'VW.COD_RESPUESTA = PC.COD_RESPUESTA AND PC.COD_RESPUESTA NOT IN (1123,1114,1175)  AND VW.SALDO_DEUDA!=0 AND PC.AUTO_CIERRE IS NULL' . $regional;
         $this->db->where($where);
         $query7 = $this->db->get('');
         $query7 = $query7->result_array();
@@ -717,7 +453,7 @@ $where_proceso='';
         $query10 = $this->db->get('');
         $subQuery10 = $this->db->last_query();
         $query10 = $query10->result_array();
-        // echo $subQuery10 ; die();
+        echo $subQuery10;
         //RESOLUCION_PRESCRIPCION
         $this->db->select('RP.COD_PRESCRIPCION AS PROCESO,TO_CHAR(RP.COD_RESPUESTA) AS COD_RESPUESTA,VW.RESPUESTA AS RESPUESTA,'
                 . 'PC.COD_PROCESO_COACTIVO AS COD_PROCESO,PC.ABOGADO AS ABOGADO, PC.COD_PROCESOPJ AS PROCESOPJ,VW.EJECUTADO AS NOMBRE,'
@@ -802,7 +538,6 @@ $where_proceso='';
         $subQuery14 = $this->db->last_query();
 
         $querys = "($subQuery2   UNION $subQuery3  UNION $subQuery4 UNION $subQuery5 UNION $subQuery6 UNION $subQuery7 UNION $subQuery8  UNION $subQuery9 UNION  $subQuery10 UNION $subQuery12 UNION $subQuery11  UNION $subQuery13 UNION $subQuery14)";
-//echo $querys; die();
         //$querys = "($subQuery3)";
         ////$querys = "($subQuery2  )";
         // $querys = "($subQuery10)";
@@ -822,7 +557,7 @@ $where_proceso='';
         FROM " . $querys . " PR " . $where_proceso . " 
         GROUP BY PR.COD_PROCESO,PR.IDENTIFICACION,PR.NOMBRE,PR.NOMBRE_REGIONAL,PR.COD_REGIONAL,
         PR.NOMBRES,PR.APELLIDOS,PR.PROCESOPJ,PR.ABOGADO";
-        //echo "<br>";
+     //   echo "<br>";
         //echo $qry_final;
 //        $qry_final2="SELECT MAX(FECHA),COD_PROCESO, IDENTIFICACION,NOMBRE,NOMBRE_REGIONAL,COD_REGIONAL,NOMBRES,APELLIDOS, "
 //                . "PROCESOPJ,ABOGADO,NUMEROS EXPEDIENTES,SALDOS DEUDAS,SALDOS CAPITAL"
@@ -843,6 +578,150 @@ $where_proceso='';
         endif;
 
         return $resultado_final;
+
+       
+    }
+
+    function procesos_coactivos($regional, $usuario, $cod_coactivo, $titulo) {
+ /*         * Para listar los procesos que se encuentran en Recepción de titulos se consulta la vista VW_RECEPCIONTITULOS la cual permite consultar los datos básicos
+         * $subQuery1. Para listar los procesos coactivos se consulta la vista VW_PROCESOS_COACTIVOS la cual permite consultar los datos básicos
+         * @param integer $regional
+         * @param integer $idusuario
+         * @param integer $cod_coactivo
+         * @param integer $titulo
+         * @return array $resultado
+         */
+
+        $cod_respuesta = '( 170 )';
+
+        if (!empty($titulo)):
+            $where_titulo = 'AND ( RT.COD_RECEPCIONTITULO = ' . $titulo . ')';
+        else:
+            $titulo = '';
+        endif;
+
+        $secretario = FALSE;
+        $coordinador = FALSE;
+        if ($usuario == ID_SECRETARIO || $usuario == ID_COORDINADOR):
+            $abogado = FALSE;
+        else://El usuario es abogado
+            $abogado = TRUE;
+        endif;
+
+        if ($abogado == TRUE):
+            // $abogado_titulos = ' AND RT.COD_ABOGADO=' . $usuario;
+            // $abogado_procesos = ' WHERE  PR.ABOGADO=' . $usuario;
+            $abogado_titulos = '';
+            $where_abogado = '';
+
+        else:
+            $abogado_titulos = '';
+            $where_abogado = '';
+        endif;
+        $where_coactivo = '';
+        if (!empty($cod_coactivo)):
+            if ($where_abogado != ''):
+                $where_coactivo = 'AND ( PR.COD_PROCESO= ' . $cod_coactivo . ')';
+            else:
+                $where_coactivo = 'WHERE ( PR.COD_PROCESO = ' . $cod_coactivo . ')';
+            endif;
+        endif;
+        $where_proceso = $where_abogado . " " . $where_coactivo;
+        //echo "<br>","------". $where_proceso;die();
+        $regional = ' AND (REG.COD_REGIONAL=' . $regional . ')';
+        // $regional = ' ';
+        $this->db->select("RC.COD_RECEPCIONTITULO AS COD_PROCESO,
+                           VW.IDENTIFICACION AS IDENTIFICACION,
+                           VW.EJECUTADO AS NOMBRE, 
+                           VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL,
+                           VW.COD_REGIONAL AS COD_REGIONAL,
+                           US.NOMBRES,
+                           US.APELLIDOS,
+                           RC.COD_FISCALIZACION_EMPRESA || '' || RC.COD_CARTERA_NOMISIONAL AS PROCESOPJ,
+                           RC.COD_ABOGADO AS ABOGADO,
+                           VW.ULTIMA_ACTUACION,
+                           TO_CHAR(VW.COD_CPTO_FISCALIZACION) AS CPTO,
+                           TO_CHAR(VW.NO_EXPEDIENTE) AS NUMEROS_EXPEDIENTES,
+                           TO_CHAR(VW.SALDO_DEUDA) AS SALDOS_DEUDAS ,
+                           TO_CHAR(VW.SALDO_CAPITAL) AS SALDOS_CAPITAL,
+                           TO_CHAR(VW.SALDO_INTERES) AS SALDOS_INTERESES,
+                           TO_CHAR(VW.FECHA_COACTIVO) AS FECHAS_RECEPCION,
+                           TO_CHAR(VW.CONCEPTO) AS CONCEPTOS_UNIDOS,
+                           TO_CHAR(RG.NOMBRE_GESTION) AS RESPUESTAS_UNIDAS, 
+                           TO_CHAR(RC.COD_FISCALIZACION_EMPRESA) || '' || TO_CHAR(RC.COD_CARTERA_NOMISIONAL) AS FISCALIZACIONES,
+                           TO_CHAR(RG.COD_RESPUESTA) AS CODIGOS_RESPUESTAS
+                           
+                           ");
+        $this->db->from('RECEPCIONTITULOS RC');
+        $this->db->join('VW_RECEPCIONTITULOS VW', 'VW.NO_EXPEDIENTE=RC.COD_RECEPCIONTITULO', 'inner');
+        $this->db->join('RESPUESTAGESTION RG', 'RG.COD_RESPUESTA=RC.COD_TIPORESPUESTA', 'inner');
+        $this->db->join('USUARIOS US', 'US.IDUSUARIO=RC.COD_ABOGADO', 'left');
+        $where = 'RC.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178,1367) ';
+        $this->db->where($where);
+        $query1 = $this->db->get('');
+        $subQuery1 = $this->db->last_query();
+         // $resultado = $this->db->get();
+        $resultado = $query1->result_array();
+        
+        
+        /*Consulto todos los procesos coactivos*/
+        
+        $no_int='(1114,1472,1124,1367,1175,1123)';
+        $qry_vista="  SELECT 
+    DISTINCT 
+      VW1.PROCESO, 
+      VW1.COD_RESPUESTA, 
+      RG.NOMBRE_GESTION AS RESPUESTA, 
+      VW1.COD_PROCESO_COACTIVO, 
+      VW.ABOGADO AS ABOGADO, 
+      VW.COD_PROCESOPJ AS PROCESOPJ, 
+      VW.EJECUTADO AS NOMBRE, 
+      VW.IDENTIFICACION AS IDENTIFICACION, 
+      US.NOMBRES, 
+      US.APELLIDOS, 
+      VW.NOMBRE_REGIONAL AS NOMBRE_REGIONAL, 
+      VW.COD_REGIONAL AS COD_REGIONAL, 
+      VW.CONCEPTO, VW.FECHA_COACTIVO AS FECHA_RECEPCION, 
+      VW.SALDO_DEUDA, 
+      VW.SALDO_CAPITAL, 
+      VW.SALDO_INTERES, 
+      VW.NO_EXPEDIENTE, 
+      VW.COD_EXPEDIENTE_JURIDICA, 
+      VW.ULTIMA_ACTUACION,
+      TO_CHAR(VW.COD_CPTO_FISCALIZACION) AS CPTO
+      
+  FROM VW_BANDEJA_01 VW1 
+        INNER JOIN VW_PROCESOS_COACTIVOS_0002 VW ON VW.COD_PROCESO_COACTIVO=VW1.COD_PROCESO_COACTIVO 
+        INNER JOIN USUARIOS US ON US.IDUSUARIO=VW.ABOGADO 
+        INNER JOIN RESPUESTAGESTION RG ON RG.COD_RESPUESTA = VW1.COD_TIPO_RESPUESTA";
+
+        
+        $qry_procesos = "SELECT PR.COD_PROCESO_COACTIVO AS COD_PROCESO,PR.IDENTIFICACION,PR.NOMBRE,PR.NOMBRE_REGIONAL,PR.COD_REGIONAL,PR.NOMBRES,PR.APELLIDOS,
+                    PR.PROCESOPJ,PR.ABOGADO,PR.ULTIMA_ACTUACION,PR.CPTO,
+                    LISTAGG (PR.NO_EXPEDIENTE,'?*') WITHIN GROUP (ORDER BY PR.NO_EXPEDIENTE) \"NUMEROS EXPEDIENTES\",
+                    LISTAGG (PR.SALDO_DEUDA,'?*') WITHIN GROUP (ORDER BY PR.SALDO_DEUDA) \"SALDOS DEUDAS\",
+                    LISTAGG (PR.SALDO_CAPITAL,'?*') WITHIN GROUP (ORDER BY PR.SALDO_CAPITAL) \"SALDOS CAPITAL\",
+                    LISTAGG (PR.SALDO_INTERES,'?*') WITHIN GROUP (ORDER BY PR.SALDO_INTERES) \"SALDOS INTERESES\",
+                    LISTAGG (PR.FECHA_RECEPCION,'?*') WITHIN GROUP (ORDER BY PR.FECHA_RECEPCION) \"FECHAS_RECEPCION\",
+                    LISTAGG (PR.CONCEPTO,'?*') WITHIN GROUP (ORDER BY PR.CONCEPTO) \"CONCEPTOS UNIDOS\",
+                    LISTAGG (PR.RESPUESTA,'*?*') WITHIN GROUP (ORDER BY PR.COD_RESPUESTA) \"RESPUESTAS_UNIDAS\",
+                    LISTAGG (PR.COD_EXPEDIENTE_JURIDICA,'?*') WITHIN GROUP (ORDER BY PR.COD_EXPEDIENTE_JURIDICA) \"FISCALIZACIONES\",
+                    LISTAGG (PR.COD_RESPUESTA,'*?*') WITHIN GROUP (ORDER BY PR.COD_RESPUESTA) \"CODIGOS_RESPUESTAS\"
+                    FROM (" . $qry_vista . " AND  VW1.COD_TIPO_RESPUESTA NOT IN ".$no_int." ) PR " . $where_proceso .  " 
+                    GROUP BY PR.COD_PROCESO_COACTIVO,PR.IDENTIFICACION,PR.NOMBRE,PR.NOMBRE_REGIONAL,PR.COD_REGIONAL,
+                    PR.NOMBRES,PR.APELLIDOS,PR.PROCESOPJ,PR.ABOGADO, PR.ULTIMA_ACTUACION,PR.CPTO";
+        
+
+        $qry_final="(  $subQuery1 UNION $qry_procesos ) ORDER BY ULTIMA_ACTUACION DESC NULLS LAST";
+        $querys = $this->db->query($qry_final);
+        $resultado = $querys->result_array;
+      //  echo  $qry_final;
+//        echo  $subQuery1; 
+////       echo "<pre>";
+//        var_dump($resultado);echo "</pre>";
+//        die();
+       return $resultado;
+     
     }
 
     function cabecera($respuesta, $proceso) {
@@ -986,12 +865,13 @@ $where_proceso='';
         $this->db->join('RECEPCIONTITULOS RT', 'RT.NUM_AUTOGENERADO=AJ.NUM_AUTOGENERADO', 'inner');
         $this->db->where('AJ.COD_PROCESO_COACTIVO', $datos['COD_PROCESO']);
         $this->db->where('RT.COD_RECEPCIONTITULO', $datos['TITULO']);
-        $this->db->where('RT.CERRADO', 1);
-        $resultado = $this->db->get();
-        if ($resultado->num_rows() > 0):
+        $this->db->where('RT.CERRADO', 0);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0):
             $resultado = $resultado->result_array();
             $resultado = $resultado[0];
         endif;
+        print_r($resultado);
         return $resultado;
     }
 
@@ -1005,6 +885,17 @@ $where_proceso='';
         else:
             return FALSE;
         endif;
+    }
+    function regional($regional){
+        $this->db->select('REG.CEDULA_COORDINADOR, REG.CEDULA_SECRETARIO, USUARIO_COORDINADOR.NOMBREUSUARIO NOMBRE_COORDINADOR, USUARIO_SECRETARIO.NOMBREUSUARIO NOMBRE_SECRETARIO');
+        $this->db->from('REGIONAL REG');
+        $this->db->join('USUARIOS USUARIO_COORDINADOR', 'USUARIO_COORDINADOR.IDUSUARIO =REG.CEDULA_COORDINADOR', 'inner');
+        $this->db->join('USUARIOS USUARIO_SECRETARIO', 'USUARIO_SECRETARIO.IDUSUARIO =REG.CEDULA_SECRETARIO', 'inner');
+        $this->db->where('REG.COD_REGIONAL',$regional,FALSE);
+        $resultado=$this->db->get();
+        $resultado=$resultado->result_array();
+        return $resultado[0];
+        
     }
     
     
