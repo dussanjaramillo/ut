@@ -153,7 +153,10 @@ class Verificarpagos extends MY_Controller {
             endif;
         else :
             if ($this->ion_auth->logged_in()) :
-                if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('verificarpagos/crearAutosCierre')) :
+              //  echo 1; die();
+           
+                if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('bandejaunificada/index') || $this->ion_auth->in_menu('verificarpagos/crearAutosCierre') ) :
+                     //   echo 2; die();
                     if (empty($titulos)) :
                         return false;
                     else :

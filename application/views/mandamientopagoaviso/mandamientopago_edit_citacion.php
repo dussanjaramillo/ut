@@ -24,7 +24,7 @@
 <?php
 $data = array();
 $data = $result;
-echo $estado = $data->COD_ESTADO;
+ echo $estado = $data->COD_ESTADO;
 $attributes = array('id' => 'citacionFrm', 'name' => 'citacionFrm', 'class' => 'form-inline', 'method' => 'POST', 'enctype' => 'multipart/form-data',);
 echo form_open_multipart(current_url(), $attributes);
 echo "<center>" . $titulo . "</center>";
@@ -92,7 +92,7 @@ echo "<center>" . $titulo . "</center>";
         <tr id="selectAsigna" style="display:block">
             <td>
                 <p>
-                <div id="revised" style="display:block" align='center'>
+                <div id="revised" style="display:block" align='left'>
                     <?php
                     if ($data->COD_ESTADO == 2) {
                         $checked1 = TRUE;
@@ -112,9 +112,16 @@ echo "<center>" . $titulo . "</center>";
                         'name' => 'revisado',
                         'id' => 'revisado',
                         'checked' => FALSE,
-                        'style' => 'margin:10px'
+                        'style' => 'margin:10px;'
                     );
-                    echo form_radio($datarevisado, "APROBADO", $checked1) . "&nbsp;&nbsp;APROBADO<br>";
+                    if($estado==1):
+                         
+                          echo form_radio($datarevisado, "APROBADO", $checked1) . "&nbsp;PRE-APROBADO<br>";
+                          
+                    else:
+                          echo form_radio($datarevisado, "APROBADO", $checked1) . "&nbsp;&nbsp;APROBADO<br>";
+                    endif;
+                   
                     echo form_radio($datarevisado, "DEVOLVER", $checked2) . "&nbsp;&nbsp;DEVOLVER<br><br><br>";
 
                     echo form_error('revisado', '<div>', '</div>');
@@ -372,6 +379,8 @@ echo form_button($datacancel);
             </td>
         </tr>
     </table>
+    <input type="hidden" name="tipo_documento" id="tipo_documento" value="3" >
+    <input type="hidden" name="titulo_doc" id="titulo_doc" >
 <?php echo form_close(); ?>
 
 </div>

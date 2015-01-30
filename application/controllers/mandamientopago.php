@@ -6634,12 +6634,11 @@ class Mandamientopago extends MY_Controller {
      */
     function pdf() {
         if ($this->ion_auth->logged_in()) {
+            $post = $this->input->post();
             $this->load->library('form_validation');
             $this->load->library("tcpdf/tcpdf");
             $html = $this->input->post('mandamiento');
             $html = str_replace("'", "\"", $html);
-            $post = $this->input->post();
-            $html = $post['infor_pdf'];
             $nombre_pdf = '';
             $titulo = $this->input->post('titulo_doc');
             $tipo = $this->input->post('tipo_documento');

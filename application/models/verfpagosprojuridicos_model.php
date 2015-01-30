@@ -39,10 +39,10 @@ class Verfpagosprojuridicos_model extends CI_Model {
         return $this->idgrupo = $this->idgrupo[0]->ID;
     }
 
-    function listAutos($total = false) {
+    function listAutos($total = false,$proceso=false) {
         $array = array();
         if ($total == false) :
-            $this->db->select('AUTOSJURIDICOS.NUM_AUTOGENERADO, AUTOSJURIDICOS.COD_TIPO_PROCESO, USUARIO_CREADOR.IDUSUARIO ID_CREADOR, 
+            $this->db->select('AUTOSJURIDICOS.COD_PROCESO_COACTIVO,AUTOSJURIDICOS.NUM_AUTOGENERADO, AUTOSJURIDICOS.COD_TIPO_PROCESO, USUARIO_CREADOR.IDUSUARIO ID_CREADOR, 
 												 USUARIO_CREADOR.NOMBREUSUARIO NOMBRE_CREADOR, USUARIO_ASIGNADO.IDUSUARIO ID_ASIGNADO, 
 												 USUARIO_ASIGNADO.NOMBREUSUARIO NOMBRE_ASIGNADO, AUTOSJURIDICOS.FECHA_CREACION_AUTO, TIPOGESTION.TIPOGESTION, 
 												 RESPUESTAGESTION.NOMBRE_GESTION, PROCESOS_COACTIVOS.ABOGADO AS COD_ABOGADO, PROCESOS_COACTIVOS.IDENTIFICACION AS NIT_EMPRESA,
@@ -54,7 +54,7 @@ class Verfpagosprojuridicos_model extends CI_Model {
         $this->db->join('PROCESOS_COACTIVOS', 'AUTOSJURIDICOS.COD_PROCESO_COACTIVO = PROCESOS_COACTIVOS.COD_PROCESO_COACTIVO', 'inner');
         $this->db->join('USUARIOS USUARIO_CREADOR', 'USUARIO_CREADOR.IDUSUARIO = AUTOSJURIDICOS.CREADO_POR', 'inner');
         $this->db->join('USUARIOS USUARIO_ASIGNADO', 'USUARIO_ASIGNADO.IDUSUARIO = AUTOSJURIDICOS.ASIGNADO_A', 'inner');
-        $gestion = "TRAZAPROCJUDICIAL.COD_TRAZAPROCJUDICIAL = AUTOSJURIDICOS.COD_GESTIONCOBRO AND TRAZAPROCJUDICIAL.COD_TIPO_RESPUESTA != '1138'";
+        $gestion = "TRAZAPROCJUDICIAL.COD_TRAZAPROCJUDICIAL = AUTOSJURIDICOS.COD_GESTIONCOBRO";
         $this->db->join('TRAZAPROCJUDICIAL', $gestion);
         $this->db->join('RESPUESTAGESTION', 'RESPUESTAGESTION.COD_RESPUESTA=TRAZAPROCJUDICIAL.COD_TIPO_RESPUESTA');
         $this->db->join('TIPOGESTION', 'TIPOGESTION.COD_GESTION = RESPUESTAGESTION.COD_TIPOGESTION', 'inner');
@@ -62,37 +62,43 @@ class Verfpagosprojuridicos_model extends CI_Model {
                 . ' AND VW_PROCESOS_COACTIVOS.COD_RESPUESTA =PROCESOS_COACTIVOS.COD_RESPUESTA', 'inner');
         $this->db->where('AUTOSJURIDICOS.COD_TIPO_PROCESO', 1);
         $this->db->where('AUTOSJURIDICOS.COD_TIPO_AUTO', 1);
-
-        if ($this->session->userdata['id_secretario'] == $this->idusuario) :
-            $this->db->where('AUTOSJURIDICOS.ASIGNADO_A', $this->idusuario);
-        elseif ($this->session->userdata['id_coordinador'] == $this->idusuario) :
-            $this->db->where('AUTOSJURIDICOS.ASIGNADO_A', $this->idusuario);
-        else :
-            $this->db->where('PROCESOS_COACTIVOS.ABOGADO', $this->idusuario);
+        if(!empty($proceso)):
+         $this->db->where('AUTOSJURIDICOS.COD_PROCESO_COACTIVO',$proceso);  
         endif;
+        
+
+//        if ($this->session->userdata['id_secretario'] == $this->idusuario) :
+//            $this->db->where('AUTOSJURIDICOS.ASIGNADO_A', $this->idusuario);
+//        elseif ($this->session->userdata['id_coordinador'] == $this->idusuario) :
+//            $this->db->where('AUTOSJURIDICOS.ASIGNADO_A', $this->idusuario);
+//        else :
+//            $this->db->where('PROCESOS_COACTIVOS.ABOGADO', $this->idusuario);
+//        endif;
 
         if (trim($this->sSearch) != '') {
-            $this->db->where('(UPPER(PROCESOS_COACTIVOS.COD_PROCESOPJ)	LIKE \'%' . mb_strtoupper($this->sSearch) . '%\' OR 
-												 UPPER(USUARIO_CREADOR.NOMBREUSUARIO)			LIKE \'%' . mb_strtoupper($this->sSearch) . '%\' OR 
-												 UPPER(USUARIO_ASIGNADO.NOMBREUSUARIO)		LIKE \'%' . mb_strtoupper($this->sSearch) . '%\' OR 
-												 UPPER(AUTOSJURIDICOS.NUM_AUTOGENERADO)		LIKE \'%' . mb_strtoupper($this->sSearch) . '%\')', NULL, FALSE);
+         //   $this->db->where('(UPPER(PROCESOS_COACTIVOS.COD_PROCESOPJ)	LIKE \'%' . mb_strtoupper($this->sSearch) . '%\' OR 
+	 //											 UPPER(USUARIO_CREADOR.NOMBREUSUARIO)			LIKE \'%' . mb_strtoupper($this->sSearch) . '%\' OR 
+	//											 UPPER(USUARIO_ASIGNADO.NOMBREUSUARIO)		LIKE \'%' . mb_strtoupper($this->sSearch) . '%\' OR 
+	//											 UPPER(AUTOSJURIDICOS.NUM_AUTOGENERADO)		LIKE \'%' . mb_strtoupper($this->sSearch) . '%\')', NULL, FALSE);
         }
         if ($total == false) :
             $this->db->limit($this->limit_numrows, $this->iDisplayStart);
         endif;
         $query = $this->db->get();
-//        echo $this->db->last_query();
+      // echo $this->db->last_query();die();
 //        exit();
         $numero = 0;
-        if ($query->num_rows() > 0) {
-            $array = $query->result();
-            if ($total == true)
-                $numero = $array[0]->NUMERO;
-        }
-        if ($total == true)
-            return $numero;
-        else
-            return $array;
+//        if ($query->num_rows() > 0) {
+//            $array = $query->result();
+//            if ($total == true)
+//                $numero = $array[0]->NUMERO;
+//        }
+//        if ($total == true)
+//            return $numero;
+//        else
+//            return $array;
+         $resultado = $query->result_array();
+         return $resultado;
     }
 
     function retrievetAuto($num_autogenerado) {
@@ -116,14 +122,14 @@ class Verfpagosprojuridicos_model extends CI_Model {
         $this->db->join('USUARIOS USUARIO_ABOGADO', 'USUARIO_ABOGADO.IDUSUARIO = PROCESOS_COACTIVOS.ABOGADO', 'inner');
         $this->db->join('USUARIOS USUARIO_CREADOR', 'USUARIO_CREADOR.IDUSUARIO = AUTOSJURIDICOS.CREADO_POR', 'inner');
         $this->db->join('USUARIOS USUARIO_ASIGNADO', 'USUARIO_ASIGNADO.IDUSUARIO = AUTOSJURIDICOS.ASIGNADO_A', 'inner');
-        $gestion = "TRAZAPROCJUDICIAL.COD_TRAZAPROCJUDICIAL = AUTOSJURIDICOS.COD_GESTIONCOBRO AND TRAZAPROCJUDICIAL.COD_TIPO_RESPUESTA != '1138'";
+        $gestion = "TRAZAPROCJUDICIAL.COD_TRAZAPROCJUDICIAL = AUTOSJURIDICOS.COD_GESTIONCOBRO ";
         $this->db->join('TRAZAPROCJUDICIAL', $gestion, 'inner');
         $this->db->join('TIPOGESTION', 'TIPOGESTION.COD_GESTION = TRAZAPROCJUDICIAL.COD_TIPOGESTION', 'inner');
         $this->db->join('RESPUESTAGESTION', 'RESPUESTAGESTION.COD_RESPUESTA = TRAZAPROCJUDICIAL.COD_TIPO_RESPUESTA', 'inner');
         $this->db->join('VW_PROCESOS_COACTIVOS', 'AUTOSJURIDICOS.COD_PROCESO_COACTIVO = VW_PROCESOS_COACTIVOS.COD_PROCESO_COACTIVO '
                 . 'AND VW_PROCESOS_COACTIVOS.COD_RESPUESTA=PROCESOS_COACTIVOS.COD_RESPUESTA');
         $this->db->where('AUTOSJURIDICOS.NUM_AUTOGENERADO', $num_autogenerado);
-        $this->db->where('AUTOSJURIDICOS.ASIGNADO_A', $this->idusuario);
+       // $this->db->where('AUTOSJURIDICOS.ASIGNADO_A', $this->idusuario);
 //1033700504	1033700504
         $query = $this->db->get(); //echo $this->db->last_query();die();
 
@@ -233,6 +239,31 @@ class Verfpagosprojuridicos_model extends CI_Model {
         $resultado=$this->db->get('');
         $resultado=$resultado->result_array();
         return $resultado[0];
+        
+    }
+    function levantarMedidas($post)
+    {
+        $this->db->set('COD_GESTIONCOBRO',$post['cod_gestioncobro']);
+        $this->db->set('NOMBRE_DOC_GENERADO',FALSE);
+        $this->db->where('COD_PROCESO_COACTIVO',$post['cod_proceso']);
+        $this->db->update('AUTOSJURIDICOS');
+        
+    }
+      function medidasCautelares($post)
+    {
+        $this->db->set('COD_GESTIONCOBRO',$post['cod_gestioncobro']);
+        $this->db->where('COD_PROCESO_COACTIVO',$post['cod_proceso']);
+        $this->db->update('AUTOSJURIDICOS');
+        
+    }
+    
+    
+    function cerrarProceso($post)
+    {
+        $this->db->set('AUTO_CIERRE',1);
+        $this->db->where('COD_PROCESO_COACTIVO',$post['cod_proceso']);
+        $this->db->update('PROCESOS_COACTIVOS');
+        return TRUE;
         
     }
 

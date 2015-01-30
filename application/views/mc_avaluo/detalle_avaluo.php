@@ -11,9 +11,8 @@ if (isset($custom_error))
     correspondiente a cada bien, una vez registrado el detalle, ingrese el número de radicado, la fecha de radicado y el documento soporte del avalúo.
 
 </div>
-<div id="mensaje_registro">
-
-</div>
+<div id="mensaje_registro" class="alert-success"></div>
+<br>
 <h4>Registro Avalúo</h4>
 <table id="tabla1">
     <thead>
@@ -36,7 +35,7 @@ if (isset($custom_error))
             foreach ($consulta as $data):
                 ?>
                 <tr>
-                    <td><?= $data['COD_PROCESOPJ'] ?></td>
+                    <td><?=$data['COD_PROCESOPJ'] ?></td>
                     <td><?= $data['NOMBRE_REGIONAL'] ?></td>
                     <td><?= $data['COD_MEDIDACAUTELAR'] ?></td>
                     <td><?= $data['IDENTIFICACION'] ?></td>
@@ -62,11 +61,12 @@ echo form_open_multipart($ruta_guarda_avaluo, $attributes);
     <tr><td><span>Comentarios</span></td>
         <td><textarea id="observaciones" name="observaciones" style="width: 90%;"></textarea>  </td></tr>
     <tr><td>
-            <span>Número de Radicado</span><span class="requerid">*</span></td>
-        <td><input type="text" name="numero_radicado" id="numero_radicado" class="requerid" onkeypress="return prueba(event), return soloNumeros(event)" ></input></td></tr>
+            <span>Número de Radicado</span><span class="requerid" style="color:red">*</span></td>
+        <td>
+            <input type="text" name="numero_radicado" id="numero_radicado" class="requerid" ></td></tr>
     <tr><td>
-            <span>Fecha de Radicado</span><span class="requerid">*</span></td>
-        <td><input type="text"  name="fecha_radicado" id="fecha_radicado" onkeypress="return prueba(event)" class="requerid"  ></input></td></tr>
+            <span>Fecha de Radicado</span><span class="requerid" style="color:red">*</span></td>
+        <td><input type="text"  name="fecha_radicado" id="fecha_radicado" onkeypress="return prueba(event)" class="requerid"  ></td></tr>
     <tr id="adjunta_doc"><td><span>Adjuntar Documento</span></td>
         <td>
             <?php
@@ -88,7 +88,7 @@ echo form_open_multipart($ruta_guarda_avaluo, $attributes);
                 <input id="ruta" type="hidden" value="" name="ruta">
             </div></td>
     </tr>
-    <tr><td  colspan="2" style="text-align: center">  <input type="submit" id="guardar" class='btn btn-success' value="Guardar" ></input></td></tr>
+    <tr><td  colspan="2" style="text-align: center">  <input type="submit" id="guardar" class='btn btn-success' value="Guardar" ></td></tr>
 </table>
 <?php echo form_hidden('detalle', serialize($post)); ?>
 <?php echo form_close(); ?>
@@ -170,13 +170,30 @@ echo form_open_multipart($ruta_guarda_avaluo, $attributes);
                 jQuery("#imagen").val("");
                 mierror = '<div  class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Comprueba la extensión de los archivos a subir.\nSólo se pueden subir archivos con extensiones: ' + extensiones_permitidas.join() + '</div>';
                 $("#mensaje_alerta").css('display', 'block');
-                document.getElementById("mensaje_alerta").innerHTML = mierror;
+                document.getElementById("").innerHTML = mierror;
                 $("#mensaje_alerta").fadeOut(15000);
                 return false;
             }
             //si estoy aqui es que no se ha podido submitir
             else {
-                return true;
+                      // Controla el tamaño del archivo a cargar          
+                var file = $("#imagen")[0].files[0];
+                var fileSize = file.size;
+                var resultado = 0;
+                if(fileSize > 5242880) {
+                    $('#imagen').val('');
+                    resultado = (fileSize/1024)/1024;
+                    var resultado1 = Math.round(resultado*100)/100 ; 
+                    mierror = "";
+                    mierror = '<div  class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'El archivo (' + archivo + ') a superado el limite de tamaño para adjuntos de 5Mb. Tamaño archivo de: ' + resultado1 + ' Mb </div>';
+
+                    $("#respuesta").css('display', 'block');
+                    document.getElementById("mensaje_alerta").innerHTML = mierror;
+                    $("#mensaje_alerta").fadeOut(15000);
+                    return false;
+                } else {
+                   return true;
+                }
             }
         } else {
             mierror = '<div  class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Debe seleccionar un documento</div>';
@@ -233,7 +250,7 @@ echo form_open_multipart($ruta_guarda_avaluo, $attributes);
         dateFormat: "yy/mm/dd",
         changeMonth: true,
         maxDate: "0",
-        changeYear: true,
+        changeYear: true
     });
     function f_detalle(id, cod_avaluo, tipo_inmueble) {
          $(".ajax_load,.preload").css('display','block');
@@ -263,8 +280,8 @@ echo form_open_multipart($ruta_guarda_avaluo, $attributes);
                 "sNext": "Siguiente",
                 "sPrevious": "Anterior"
             },
-            "fnInfoCallback": null,
-        },
+            "fnInfoCallback": null
+        }
     });
 </script>
 <style>

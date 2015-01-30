@@ -343,8 +343,9 @@ echo form_open_multipart("mc_avaluo/gestion_notificacion", $attributes);
                 $("#cargColilla").show();
                 $("#radicOnbase").show();
                 $("#Devol").show();
-                $("#onbase").attr('readonly', true);
-                $("#fechanotificacion").attr('readonly', true);
+                $("#radicOnbase").hide();
+//                $("#onbase").attr('readonly', true);
+//                $("#fechanotificacion").attr('readonly', true);
                 $("#tr_notificacion_efectiva").show();
 
                 $('#file').change(function() {
@@ -607,10 +608,10 @@ echo form_open_multipart("mc_avaluo/gestion_notificacion", $attributes);
                     success: function(data) {
                         $('.conn').html(data);
                         jQuery(".preload, .load").hide();
-//                    $('#resultado').dialog('close');
-//                    $('#resultado *').remove();
-//
-                        //     location.reload();
+                    $('#resultado').dialog('close');
+                   // $('#resultado *').remove();
+
+                    location.reload();
 
                     },
                     //si ha ocurrido un error

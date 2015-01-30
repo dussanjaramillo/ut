@@ -5,7 +5,9 @@ Al desbloquear debe permitir gestionar si el deudor objeto o no.
     <div class="preload" id="preload" ></div><img  id="load" class="load" src="<?php echo base_url('img/27.gif'); ?>" width="128" height="128" />
 </div>
 
-<?php echo $post['texto']; ?><p><br>
+<?php
+
+echo $post['texto']; ?><p><br>
     Fecha Inicial: <?php echo $post['comienza']; ?><br>
     Fecha Limite: <?php echo $post['vence']; ?><br><p>
 

@@ -166,7 +166,7 @@ if (isset($custom_error))
                     dateFormat: "dd/mm/yy",
                     changeMonth: true,
                     maxDate: "0",
-                    changeYear: true,
+                    changeYear: true
                 });
             });
 

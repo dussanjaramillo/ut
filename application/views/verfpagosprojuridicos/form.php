@@ -7,7 +7,7 @@
 <div class="center-form-xlarge">
 	<?php echo $custom_error; ?>
   <div class="text-center">
-    <h2>Auto de cierre y Terminación del Proceso<?php //echo $action_label ?></h2>
+    <h2> Cierre y Terminación del Proceso<?php //echo $action_label ?></h2>
   </div>
   <div id="total_form">
     <div id="error"></div>
@@ -16,23 +16,23 @@
         <div class="controls controls-row">
           <div class="span4">
             <?php
-						if($secretario == false and $subir_archivo == false) :
-							echo form_label('Plantilla', 'CODPLANTILLA');
-							$select = array();
-							$select[''] = 'Seleccione';
-							foreach($plantillas as $row) :
-								$select[$row->CODPLANTILLA] = $row->NOMBRE_PLANTILLA;
-							endforeach;
-							echo form_dropdown('CODPLANTILLA', $select, '', 'id="cargo" onchange="getPlantilla(this.value,' . 
-																 $auto->COD_PROCESO_COACTIVO . ')" class="chosen span3" placeholder="seleccione..." ');
-						endif;
+//						if($secretario == false and $subir_archivo == false) :
+//							echo form_label('Plantilla', 'CODPLANTILLA');
+//							$select = array();
+//							$select[''] = 'Seleccione';
+//							foreach($plantillas as $row) :
+//								$select[$row->CODPLANTILLA] = $row->NOMBRE_PLANTILLA;
+//							endforeach;
+//							echo form_dropdown('CODPLANTILLA', $select, '', 'id="cargo" onchange="getPlantilla(this.value,' . 
+//																 $auto->COD_PROCESO_COACTIVO . ')" class="chosen span3" placeholder="seleccione..." ');
+//						endif;
             ?>
           </div>
         </div>
       </div>
       <div id="display_form">
         <?php 
-				echo form_open(base_url() . 'index.php/verfpagosprojuridicos/save', 
+				echo form_open(base_url() . 'index.php/verfpagosprojuridicos/save2', 
 											'method="post" id="form_projuridicos" onsubmit="return validar()" enctype="multipart/form-data"');
 				echo form_hidden('COD_PROCESO_COACTIVO'    , $auto->COD_PROCESO_COACTIVO);
 				echo form_hidden('NUM_AUTOGENERADO'     , $auto->NUM_AUTOGENERADO);
@@ -124,7 +124,7 @@
           </div>
           <div class="span7">
             <?php
-						if($subir_archivo == false) :
+						
 							$data = array('name'			=> 'documento',
 														'id'				=> 'documento',
 														'value'			=> $documento,
@@ -133,10 +133,7 @@
 														'cols'			=> '70'
 										);
 							echo form_textarea($data);
-						else :
-							echo form_hidden('documento', $documento);
-							echo '<div class="uneditable-input span7" style="height:auto"'.html_entity_decode($documento)."</div>";
-						endif;
+						
 						?>
           </div>
         </div>
@@ -153,8 +150,8 @@
 													'height'		=> '150px',
 													'cols'			=> '70'
 										);
-						if($subir_archivo == true) : $data["readonly"] = "readonly"; endif;
-						echo form_textarea($data);
+//						if($subir_archivo == true) : $data["disabled"] = "disabled"; endif;
+//						echo form_textarea($data);
 						?>
           </div>
         </div>
@@ -162,14 +159,24 @@
           <div class="span4">
             <?php
                                                     if($secretario == TRUE) :
-							echo form_label('¿Pre-Aprueba el Auto de Terminación y Cierre?', 'DEVOLVER_A');
+							
+                                                       if( $cod_respuesta==1135 || $cod_respuesta==382):
+                                                            echo form_label('¿Aprueba el Auto?', 'DEVOLVER_A');
+                                                        else:
+                                                           echo form_label('¿Pre-Aprueba el Auto ?', 'DEVOLVER_A');
+                                                        endif;
 							$data = array('name'	=> 'DEVOLVER_A',
 													'id'			=> 'DEVOLVER_A',
 													'value'		=> "S",
 													'class'		=> 'pull-left'
 										);
 							echo form_radio($data);
-							echo form_label('&nbsp;PRE-APROBADO&nbsp;', 'DEVOLVER_A', array('class' => "pull-left"));
+                                                        if( $cod_respuesta==1135 || $cod_respuesta==382):
+                                                            echo form_label('&nbsp;APROBADO&nbsp;', 'DEVOLVER_A', array('class' => "pull-left"));
+                                                        else:
+                                                            echo form_label('&nbsp;PRE-APROBADO&nbsp;', 'DEVOLVER_A', array('class' => "pull-left"));
+                                                        endif;
+							
 							$data = array('name'	=> 'DEVOLVER_A',
 													'id'			=> 'DEVOLVER_A',
 													'value'		=> "N",
@@ -264,6 +271,7 @@
       </div>
     </div>
   </div>
+    <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="<?php echo $cod_respuesta?>">
        <?php echo form_close(); ?>
 </div><div id="respuesta"></div>
 <form id="form_pdf" name="form_pdf" target = "_blank"  method="post" action="<?php echo base_url('index.php/verfpagosprojuridicos/pdf') ?>">
@@ -350,7 +358,7 @@ function closeDiv(id) {
 
 function save() {
 	tinyMCE.triggerSave();//asigna el contenido
-	var url = "<?php echo base_url()?>index.php/verfpagosprojuridicos/save"; // El script a dónde se realizará la petición.
+	var url = "<?php echo base_url()?>index.php/verfpagosprojuridicos/save2"; // El script a dónde se realizará la petición.
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -375,11 +383,11 @@ function validar() {
 		$(".ajax_load").toggle();
 			return false;
 		}
-		if($.trim($('#COMENTARIOS').val()) == '') {
-			alert('El campo "Comentario" se encuentra vacio');
-			$(".ajax_load").toggle();
-			return false;
-    }
+//		if($.trim($('#COMENTARIOS').val()) == '') {
+//			alert('El campo "Comentario" se encuentra vacio');
+//			$(".ajax_load").toggle();
+//			return false;
+   // }
 }
 
 function getPlantilla(id_plantilla, id_fiscalizacion) {

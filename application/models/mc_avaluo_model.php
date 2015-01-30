@@ -51,7 +51,8 @@ class Mc_avaluo_model extends CI_Model {
             $this->db->set("TIPO_DOCUMENTO", $post['tipo_doc']);
             $this->db->insert("MC_TRAZABILIDAD");
         }
-        if ($post['generar_oficio']==TRUE  ):
+        //  echo   "hola ".       $post['cod_siguiente'];die();
+        if ($post['generar_oficio'] == TRUE && $post['cod_siguiente'] != 1417):
             $documento = $this->oficios_generados($post);
         endif;
 
@@ -248,11 +249,12 @@ class Mc_avaluo_model extends CI_Model {
                 . " WHERE TB.COD_TIPOBIEN=MA.COD_TIPO_INMUEBLE"
                 . " AND MA.COD_TIPORESPUESTA=VW.COD_RESPUESTA"
                 . " AND PC.COD_PROCESO_COACTIVO=" . $post['id']
+                . " AND MA.COD_PROCESO_COACTIVO=" . $post['id']
                 . " AND VW.COD_PROCESO_COACTIVO=" . $post['id'];
 
         $resultado = $this->db->query($query);
         $resultado = $resultado->result_array();
-        //    echo $this->db->last_query();die();
+        //  echo $this->db->last_query();die();
         return $resultado;
     }
 
@@ -285,7 +287,6 @@ class Mc_avaluo_model extends CI_Model {
         switch ($post['cod_tipo_bien']):
 
             case 1://mueble
-
                 if (!empty($post['costo_mueble']))
                     $this->db->set("VALOR_TOTAL_AVALUO", ceil($post['costo_mueble']));
                 if (!empty($post['elaboro']))
@@ -323,18 +324,22 @@ class Mc_avaluo_model extends CI_Model {
 
                 if (empty($propiedad) || $propiedad == 0):
                     $this->db->insert("MC_PROPIEDADESAVALUADAS");
-                    //  echo $this->db->last_query();die();
+                    //    echo $this->db->last_query();die();
                     $query = $this->db->query("SELECT  MC_Propiedade_cod_propieda_SEQ.CURRVAL FROM dual");
                     $row = $query->row_array();
                     $id = $row['CURRVAL'];
+                    //   echo "hola";echo $id;
                     $this->db->set("COD_AVALUO", $post['cod_avaluo']);
                     $this->db->set("COD_PROPIEDAD", $id);
                     $this->db->set("COD_PROCESO_COACTIVO", $post['id'], false);
                     $this->db->insert("MC_AVALUOPROPIEDADES");
-                // echo $this->db->last_query();
+
                 else:
+                    $this->db->where("COD_PROPIEDAD", $propiedad['COD_PROPIEDAD']);
                     $this->db->update("MC_PROPIEDADESAVALUADAS");
-                    $this->db->where("COD_PROPIEDAD", $propiedad['COD_AVALUOPROPIEDADES']);
+
+
+                //    echo $this->db->last_query();die();
                 endif;
 
                 break;
@@ -397,8 +402,9 @@ class Mc_avaluo_model extends CI_Model {
                     $this->db->set("COD_PROCESO_COACTIVO", $post['id']);
                     $this->db->insert("MC_AVALUOPROPIEDADES");
                 else:
+                    $this->db->where("COD_PROPIEDAD", $propiedad['COD_PROPIEDAD']);
                     $this->db->update("MC_PROPIEDADESAVALUADAS");
-                    $this->db->where("COD_PROPIEDAD", $propiedad['COD_AVALUOPROPIEDADES']);
+
                 endif;
                 break;
             case 3://VEHICULO
@@ -449,8 +455,9 @@ class Mc_avaluo_model extends CI_Model {
                     $this->db->set("COD_PROCESO_COACTIVO", $post['id']);
                     $this->db->insert("MC_AVALUOPROPIEDADES");
                 else:
+
+                    $this->db->where("COD_PROPIEDAD", $propiedad['COD_PROPIEDAD']);
                     $this->db->update("MC_PROPIEDADESAVALUADAS");
-                    $this->db->where("COD_PROPIEDAD", $propiedad['COD_AVALUOPROPIEDADES']);
                 endif;
                 break;
 
@@ -485,7 +492,7 @@ class Mc_avaluo_model extends CI_Model {
             //
             //
             $d = $this->db->last_query();
-            // echo $d; die();
+
             $resultado = $resultado->result_array();
             $resultado1 = $resultado[0];
         endif;
@@ -755,7 +762,7 @@ class Mc_avaluo_model extends CI_Model {
         $this->db->where('COD_PROCESO_COACTIVO', $post['post']['cod_proceso'], FALSE);
         $this->db->update('MC_AVALUO');
         $d = $this->db->last_query();
-      
+
         return TRUE;
     }
 
@@ -836,7 +843,7 @@ class Mc_avaluo_model extends CI_Model {
     }
 
     function oficios_generados($post) {
-     
+
         $this->db->set("COD_PROCESO_COACTIVO", $post['id']);
         $this->db->set("FECHA_CREACION", FECHA, false);
         $this->db->set("NOMBRE_OFICIO", $post['titulo']);
@@ -858,7 +865,7 @@ class Mc_avaluo_model extends CI_Model {
                 $this->db->set("TIPO_DOCUMENTO", $post['tipo_doc']);
                 $this->db->set("RUTA_DOCUMENTO_GEN", $post['ruta']);
                 $this->db->insert("MC_OFICIOS_GENERADOS");
-           
+
                 if (!empty($post['observaciones'])) {
                     $this->db->set("COD_PROCESO_COACTIVO", $post['id']);
                     $this->db->set("FECHA_MODIFICACION", FECHA, FALSE);
@@ -976,11 +983,10 @@ class Mc_avaluo_model extends CI_Model {
 
     function propiedad($cod_avaluo) {
         $propiedad = 0;
-        $this->db->select("COD_AVALUOPROPIEDADES");
+        $this->db->select("COD_PROPIEDAD");
         $this->db->from("MC_AVALUOPROPIEDADES");
         $this->db->where("COD_AVALUO", $cod_avaluo);
         $resultado = $this->db->get();
-
         if ($resultado->num_rows() > 0):
             $propiedad = $resultado->result_array();
             $propiedad = $propiedad[0];
@@ -1018,6 +1024,14 @@ class Mc_avaluo_model extends CI_Model {
         } else {
             return FALSE;
         }
+    }
+
+    function bloqueos($post) {
+//      
+        $this->db->set('COD_TIPORESPUESTA', $post['cod_siguiente']);
+        $this->db->where('COD_PROCESO_COACTIVO',$post['id']);
+        $this->db->update('MC_AVALUO');
+        return true;
     }
 
 }

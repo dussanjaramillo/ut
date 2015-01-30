@@ -131,6 +131,9 @@ if( ! defined('BASEPATH') ) exit('No direct script access allowed'); ?>
             </td>
         </tr>        
         </table>
+        
+        <input type="hidden" name="tipo_documento" id="tipo_documento" value="3" >
+        <input type="hidden" name="titulo_doc" id="titulo_doc" >
         <?php echo form_close(); ?>
         <div id="ajax_load" class="ajax_load" style="display: none">
             <div class="preload" id="preload" >

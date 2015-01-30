@@ -583,6 +583,7 @@ class Bandejaunificada_model Extends MY_Controller {
     }
 
     function procesos_coactivos($regional, $usuario, $cod_coactivo, $titulo) {
+       // echo $regional;
  /*         * Para listar los procesos que se encuentran en Recepción de titulos se consulta la vista VW_RECEPCIONTITULOS la cual permite consultar los datos básicos
          * $subQuery1. Para listar los procesos coactivos se consulta la vista VW_PROCESOS_COACTIVOS la cual permite consultar los datos básicos
          * @param integer $regional
@@ -609,26 +610,32 @@ class Bandejaunificada_model Extends MY_Controller {
         endif;
 
         if ($abogado == TRUE):
-            // $abogado_titulos = ' AND RT.COD_ABOGADO=' . $usuario;
-            // $abogado_procesos = ' WHERE  PR.ABOGADO=' . $usuario;
-            $abogado_titulos = '';
-            $where_abogado = '';
+             $abogado_titulos = ' AND RC.COD_ABOGADO=' . $usuario;
+             $abogado_procesos = ' WHERE  PR.ABOGADO=' . $usuario;
+//            $abogado_titulos = '';
+//            $where_abogado = '';
 
         else:
             $abogado_titulos = '';
-            $where_abogado = '';
+           $abogado_procesos = '';
         endif;
         $where_coactivo = '';
         if (!empty($cod_coactivo)):
-            if ($where_abogado != ''):
-                $where_coactivo = 'AND ( PR.COD_PROCESO= ' . $cod_coactivo . ')';
+            if ($abogado_procesos != ''):
+                $where_coactivo = ' AND ( PR.COD_PROCESO= ' . $cod_coactivo . ')';
             else:
-                $where_coactivo = 'WHERE ( PR.COD_PROCESO = ' . $cod_coactivo . ')';
+                $where_coactivo = ' WHERE ( PR.COD_PROCESO = ' . $cod_coactivo . ')';
             endif;
         endif;
-        $where_proceso = $where_abogado . " " . $where_coactivo;
+        $where_proceso = $abogado_procesos . " " . $where_coactivo;
         //echo "<br>","------". $where_proceso;die();
-        $regional = ' AND (REG.COD_REGIONAL=' . $regional . ')';
+       
+        $regional = ' AND VW.COD_REGIONAL =' . $regional  ;
+        //echo $regional
+        if ($this->ion_auth->is_admin()):
+            $regional = '';
+        endif;
+       //echo $regional;
         // $regional = ' ';
         $this->db->select("RC.COD_RECEPCIONTITULO AS COD_PROCESO,
                            VW.IDENTIFICACION AS IDENTIFICACION,
@@ -656,7 +663,7 @@ class Bandejaunificada_model Extends MY_Controller {
         $this->db->join('VW_RECEPCIONTITULOS VW', 'VW.NO_EXPEDIENTE=RC.COD_RECEPCIONTITULO', 'inner');
         $this->db->join('RESPUESTAGESTION RG', 'RG.COD_RESPUESTA=RC.COD_TIPORESPUESTA', 'inner');
         $this->db->join('USUARIOS US', 'US.IDUSUARIO=RC.COD_ABOGADO', 'left');
-        $where = 'RC.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178,1367) ';
+        $where = 'RC.COD_TIPORESPUESTA NOT IN (1325,623,1114,1123,178,1367) '. $regional. $abogado_titulos;
         $this->db->where($where);
         $query1 = $this->db->get('');
         $subQuery1 = $this->db->last_query();
@@ -707,7 +714,7 @@ class Bandejaunificada_model Extends MY_Controller {
                     LISTAGG (PR.RESPUESTA,'*?*') WITHIN GROUP (ORDER BY PR.COD_RESPUESTA) \"RESPUESTAS_UNIDAS\",
                     LISTAGG (PR.COD_EXPEDIENTE_JURIDICA,'?*') WITHIN GROUP (ORDER BY PR.COD_EXPEDIENTE_JURIDICA) \"FISCALIZACIONES\",
                     LISTAGG (PR.COD_RESPUESTA,'*?*') WITHIN GROUP (ORDER BY PR.COD_RESPUESTA) \"CODIGOS_RESPUESTAS\"
-                    FROM (" . $qry_vista . " AND  VW1.COD_TIPO_RESPUESTA NOT IN ".$no_int." ) PR " . $where_proceso .  " 
+                    FROM (" . $qry_vista . " AND  VW1.COD_TIPO_RESPUESTA NOT IN ".$no_int.$regional." ) PR " . $where_proceso .  " 
                     GROUP BY PR.COD_PROCESO_COACTIVO,PR.IDENTIFICACION,PR.NOMBRE,PR.NOMBRE_REGIONAL,PR.COD_REGIONAL,
                     PR.NOMBRES,PR.APELLIDOS,PR.PROCESOPJ,PR.ABOGADO, PR.ULTIMA_ACTUACION,PR.CPTO";
         

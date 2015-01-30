@@ -166,7 +166,7 @@
                         break;
                     case NOT_PERSONAL_ENVIADA:
                         ?>
-                        <input class="push" type="radio" name="gestion" onclick="fvistas('<?php echo $data['MEDIDA_CAUTELAR'] ?>', '<?php echo $data['COD_PROCESO'] ?>', '<?php echo $data['COD_TIPORESPUESTA'] ?>', '0', '<?php echo NOTIFICACION_PERSONAL ?>', '0', '0', '0', '<?php echo $data['AVALUOS'] ?>')"  />
+                        <input class="push" type="radio" name="gestion" onclick="fvistas('<?php echo $data['MEDIDA_CAUTELAR'] ?>', '<?php echo $data['COD_PROCESO'] ?>', '<?php echo $data['COD_TIPORESPUESTA'] ?>', <?php echo DOC_NOTIFICACION_PERSONAL ?>, '<?php echo NOTIFICACION_PERSONAL ?>', '0', '0', '0', '<?php echo $data['AVALUOS'] ?>')"  />
 
                         <?php
                         break;

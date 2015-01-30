@@ -9,7 +9,7 @@ if (isset($message)) {
 if (isset($custom_error))
     echo $custom_error;
 ?><br><br>
-<h4 style="text-align: center">Registro Avaluo Mueble</h4>
+<h4 style="text-align: center">Registro Avalúo Mueble</h4>
 <h4>Información Obtenida del Avalúo.</h4>
 <div id="ajax_load" class="ajax_load" style="display: none">
     <div class="preload" id="preload" ></div><img  id="load" class="load" src="<?php echo base_url('img/27.gif'); ?>" width="128" height="128" />
@@ -24,55 +24,55 @@ if (isset($custom_error))
             <tr>
                 <td  style="text-align:left;margin-top:20px;">Descripción del mueble</td> 
                 <td  style="text-align:left;margin-top:20px;">
-                    <textarea  style="width:500px;height: 100px" name="descripcion_mueble" id="descripcion_mueble"></textarea></td> 
+                    <textarea  style="width:500px;height: 100px" name="descripcion_mueble" id="descripcion_mueble"><?php echo $this->data['@$detalle']['DESCRIPCION_MUEBLE'];?></textarea></td> 
             </tr>
             <tr>
                 <td  style="text-align:left;margin-top:20px;">Valor Avalúo del Bien</td> 
                 <td  style="text-align:left;margin-top:20px;">
-                    <input type="text" name="costo_mueble" id="costo_mueble" onkeypress="return soloNumeros(event)" value="">
+                    <input type="text" name="costo_mueble" id="costo_mueble" onkeypress="return soloNumeros(event)" value="<?php echo $this->data['@$detalle']['COSTO_TOTAL'];?>">
                 </td> 
             </tr>
             <tr>
                 <td  style="text-align:left;margin-top:20px;">Observaciones</td> 
                 <td  style="text-align:left;margin-top:20px;">
                     <textarea  style="width:500px;height: 100px" name="observaciones" id="observaciones">
-                      
+                      <?php echo $this->data['@$detalle']['OBSERVACIONES'];?>
                     </textarea>
                 </td> 
             </tr>
             <tr>
                 <td  style="text-align:left;" ><br>Elaboro:</td>
                 <td>      
-                    <input type="text"  class="span4" name="elaboro" id="elaboro" value="" >
+                    <input type="text"  class="span4" name="elaboro" id="elaboro" value="<?php echo $consulta[0]['ELABORO']; ?>" >
                 </td>
             </tr>
             <tr>
                 <td style="text-align:left;"><br>Identificación del Avaluador</td>
                 <td> 
-                    <input type="text"  class="span4" name="cod_avaluador" id="cod_avaluador" value="" onkeypress="return soloNumeros(event)">
+                    <input type="text"  class="span4" name="cod_avaluador" id="cod_avaluador" value="<?php echo $consulta[0]['COD_AVALUADOR'];?>" onkeypress="return soloNumeros(event)" >
                 </td>
             </tr>
             <tr>
                 <td style="text-align:left;"><br>Profesión</td>
                 <td>
-                    <input type="text"   class="span4" name="profesion" id="profesion" value=""></td>
+                    <input type="text"   class="span4" name="profesion" id="profesion" value="<?php echo $consulta[0]['PROFESION']; ?>"></td>
             </tr>
             <tr>
                 <td  style="text-align:left;" ><br>Licencia N°:</td>
                 <td>   
-                    <input type="text"  class="span4" name="num_licencia" id="num_licencia" value="" >
+                    <input type="text"  class="span4" name="num_licencia" id="num_licencia" value="<?php echo $consulta[0]['LICENCIA_NRO']; ?>" >
                 </td>
             </tr>
             <tr>
                 <td style="text-align:left;" ><br>Dirección</td>
                 <td>    
-                    <input type="text"  class="span4"  name="direccion_avaluador" id="direccion_avaluador" value="">
+                    <input type="text"  class="span4"  name="direccion_avaluador" id="direccion_avaluador" value="<?php echo $consulta[0]['DIRECCION'];?>">
                 </td>
             </tr>
             <tr>
                 <td  style="text-align:left;" ><br>Fecha:</td>
                 <td>    
-                    <input type="text"   class="span4" name="fecha" id="fecha" onkeypress="return prueba(event)" class="requerid" value=""   >
+                    <input type="text"   class="span4" name="fecha" id="fecha" onkeypress="return prueba(event)" class="requerid" value="<?php echo $consulta[0]['FECHA_AVALUO'];?>"   >
                 </td>
             </tr>
             <tr>
@@ -88,11 +88,12 @@ if (isset($custom_error))
 
 <script>
     $(document).ready(function() {
+        $(".ajax_load,.preload").css('display','none');
         $("#fecha").datepicker({
             dateFormat: "yy/mm/dd",
             changeMonth: true,
             maxDate: "0",
-            changeYear: true,
+            changeYear: true
         });
         $('#resultado').dialog({
             autoOpen: true,
@@ -149,14 +150,6 @@ if (isset($custom_error))
             $("#div_mensaje").fadeOut(3000);
             return false;
         }
-
-
-        {
-            mierror = '<div   class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Debe ingresar la fecha del avaluo' + ' </div>';
-            document.getElementById("div_mensaje").innerHTML = mierror;
-            $("#div_mensaje").fadeIn("slow");
-            return false;
-        }
         else {
             f_enviar();
             
@@ -166,9 +159,8 @@ if (isset($custom_error))
     function f_enviar()
     {
         var formData = new FormData($("#myform2")[0]);
-        //$("#revision").remove();
-        $(".ajax_load").show();
-
+        $(".ajax_load,.preload").css('display','block');
+       
         $.ajax({
             url: '<?php echo base_url('index.php/mc_avaluo/guardar_registro_avaluo') ?>',
             type: 'POST',
@@ -178,8 +170,9 @@ if (isset($custom_error))
             processData: false,
             //una vez finalizado correctamente
             success: function(data) {
-                $("#div_mensaje").html(data);
-                $(".ajax_load").hide();
+                $("#mensaje_registro").html(data);
+               // alert(data);
+                $(".ajax_load,.preload").css('display','none');
                 $('#resultado').dialog('close');
                 $('#resultado *').remove();
 
@@ -223,7 +216,6 @@ if (isset($custom_error))
 
     #titulo{
         font-family: Geneva, Arial, Helvetica, sans-serif; 
-        // font-size: 18px;
         background-color: #5BB75B;
         width:auto;
         text-align:center;

@@ -32,11 +32,22 @@
 
         var gestion = "<?php echo $post['gestion']; ?>";
         var fecha = "<?php echo $post['fecha']; ?>";
-
+        var id = "<?php echo $post['cod_coactivo'] ?>";
+        var avaluos = "<?php echo $post['avaluos'] ?>";
+        var respuesta = "<?php echo $post['respuesta'] ?>";
+       
+       // alert(respuesta);
+        if (respuesta == 1417 || respuesta == 1426 || respuesta == 1420) {
+            var url = "<?= base_url("index.php/mc_avaluo/objecion") ?>";
+        }
+        else if (respuesta == 402)
+        {
+            var url = "<?= base_url("index.php/mc_avaluo/RegistrarReciboHonorarios") ?>";
+        }
        
         $('#resultado *').remove();
-        var url = "<?php echo base_url("index.php/mc_avaluo/vistas"); ?>";
-        $.post(url, { gestion: gestion, fecha: fecha})
+        var url = "<?php echo base_url("index.php/mc_avaluo/bloqueos"); ?>";
+        $.post(url, { gestion: gestion, fecha: fecha,id:id,avaluos:avaluos,respuesta:respuesta})
                 .done(function(msg) {
                     alert('Datos Guardados Con Exito');
                     window.location.reload();

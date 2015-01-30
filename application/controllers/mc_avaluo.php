@@ -9,8 +9,8 @@ class Mc_avaluo extends MY_Controller {
         $this->load->model('codegen_model', '', TRUE);
         $this->load->model('mc_avaluo_model');
         $this->load->file(APPPATH . "controllers/expedientes.php", TRUE);
-
-
+        $this->load->library('form_validation', 'tcpdf/tcpdf.php');
+        $this->load->library('tcpdf/tcpdf.php', 'libupload');
         $this->data['style_sheets'] = array(
             'css/jquery.dataTables_themeroller.css' => 'screen',
             'css/validationEngine.jquery.css' => 'screen',
@@ -340,7 +340,7 @@ class Mc_avaluo extends MY_Controller {
         if ($this->ion_auth->logged_in()):
 
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('bandejaunificada/index')):
-                if ($this->input->post('cod_proceso')):
+//                if ($this->input->post('cod_proceso')):
                     $post = $this->input->post();
                     $respuesta = $post['respuesta'];
                     $proceso = $post['cod_proceso'];
@@ -352,9 +352,7 @@ class Mc_avaluo extends MY_Controller {
                     $this->data['info_user'] = $this->data['user']->NOMBRES . ' ' . $this->data['user']->APELLIDOS;
                     $this->data['consulta'] = $this->mc_avaluo_model->consulta_mcavaluo(FALSE, FALSE, FALSE, $proceso);
                     $this->data['traza'] = $this->mc_avaluo_model->historico($post); //Consula el historial de observaciones
-                    //   $this->data['id_plantilla'] = ($post['id_plantilla'] ? $post['id_plantilla']:'');
                     $this->data['consulta_doc'] = $this->mc_avaluo_model->documento_mc($post['tipo_doc'], $proceso);
-
                     $this->data['post'] = $post;
                     if (!empty($this->data['consulta_doc'])):
                         $this->data['documento'] = '';
@@ -431,6 +429,7 @@ class Mc_avaluo extends MY_Controller {
                         case AUTO_DECLARA_FIRMEZA_AVALUO_R:
                         case AUTO_DICTAMEN_TRASLADO_APROBADO_RECHAZADO:
                         case NOTIFICACION_PERSONAL_DEVUELTA:
+                        case AVALUO_RECIBO_PAGO_NO_RECIBIDO:
                         case AUTO_NOMBRA_PERITO_APROBADOFIRMADO:
                             $this->load->view('mc_avaluo/auto', $this->data);
                             break;
@@ -482,9 +481,9 @@ class Mc_avaluo extends MY_Controller {
                             break;
 
                     endswitch;
-                else:
-                    redirect(site_url() . '/bandejaunificada/index');
-                endif;
+//                else:
+//                    redirect(site_url() . '/bandejaunificada/index');
+//                endif;
             else:
                 $this->session->set_flashdata('message', '<div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>No tiene permisos para acceder a esta área.</div>');
                 redirect(site_url() . '/inicio');
@@ -701,7 +700,27 @@ class Mc_avaluo extends MY_Controller {
         }
         rmdir($carpeta); //Elimino la carpeta de la prueba
     }
-
+ function bloqueos()
+ {
+    
+     $post=$this->input->post();
+     switch($post['respuesta']):
+         case 1426: //Ejecutado recibio notificación pero no se presento se envia al generar el auto que declara firmeza del avaluo
+         case 1420:
+         case 1417:
+             $post['cod_siguiente']=DEUDOR_NO_OBJETO; 
+              $resultado=  $this->mc_avaluo_model->bloqueos($post);
+              $idgestioncobro = $this->Traza($post['id'], DEUDOR_NO_OBJETO);
+         break;
+     case 402:
+              $post['cod_siguiente']=404; 
+              $resultado=  $this->mc_avaluo_model->bloqueos($post);
+              $idgestioncobro = $this->Traza($post['id'], 404);
+         break;
+         break;
+     endswitch;
+     
+ }
     function deleteFile() {
         $this->datos = $this->input->post();
         $dir = $this->datos['ruta'];
@@ -927,7 +946,6 @@ class Mc_avaluo extends MY_Controller {
         endif;
 
         $resultado = $this->mc_avaluo_model->update_mc_avaluo($post);
-
         switch ($post['respuesta']) {//el codigo de respuesta actual del proceso
             case DOC_NOTIFICACION_PERSONAL://Cuando adjunta la notificación
                 $ruta_mensaje = 'index.php/mc_avaluo/secretario';
@@ -1032,9 +1050,13 @@ class Mc_avaluo extends MY_Controller {
         try {
             if ($this->ion_auth->logged_in()):
                 if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('bandejaunificada/procesos')):
+                      if (!file_exists($ruta_fichero)) {
+                        $this->crea_ruta($ruta_fichero);
+                    }
                     $config['upload_path'] = $ruta_fichero;
                     $config['allowed_types'] = 'pdf|gif|jpg|png|jpeg';
                     $config['max_size'] = '20480';
+                  
                     $this->load->library('upload', $config);
                     if (!$this->upload->do_upload()) :
                         return $error = array('error' => $this->upload->display_errors());
@@ -1263,13 +1285,11 @@ class Mc_avaluo extends MY_Controller {
         $this->data['tipos_propiedades'] = $this->mc_avaluo_model->get_tipopropiedad();
         $this->data['post']['cod_tipo_bien'] = $this->data['ruta_cancelar'] = base_url() . 'index.php/mc_avaluo/abogado';
         $this->data['post'] = $post;
-        @$detalle = $this->mc_avaluo_model->detalle_propiedad($post['cod_avaluo']);
-        //  $this->data['@$detalle'] = @$detalle;
-//        echo "<pre>";
-//        print_r(    $this->data['@$detalle']);
-//        echo "</pre>";die
+        $detalle = $this->mc_avaluo_model->detalle_propiedad($post['cod_avaluo']);
+        $this->data['@$detalle'] = $detalle;
+
         if ($post['tipo_inmueble'] == 1) {//mueble
-            $this->load->view('mc_avaluo/registro_mueble', $this->data);
+            $this->load->view('mc_avaluo/registro_mueble', $this->data, @$detalle);
         } elseif ($post['tipo_inmueble'] == 2) {//inmueble
             $this->load->view('mc_avaluo/registro_inmueble', $this->data, @$detalle);
         } elseif ($post['tipo_inmueble'] == 3) {//vehiculo
@@ -1280,27 +1300,16 @@ class Mc_avaluo extends MY_Controller {
 
     function pdf($print = true) {
 
-        $html = utf8_encode(base64_decode($this->input->post('descripcion_pdf')));
-        $name = $this->input->post('nombre');
-        $this->load->library("tcpdf/tcpdf");
-        ob_clean();
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->setPrintFooter(false);
-
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        if ($print) {
-            $js = '
-                print();
-                ';
-
-            $pdf->IncludeJS($js);
-        }
-
-        $pdf->AddPage();
-        $pdf->writeHTML($html, true, false, true, false, '');
-        $pdf->Output($name, 'I');
+        $post = $this->input->post();
+        $html = $post['descripcion_pdf'];
+        $html = utf8_encode(base64_decode($html));
+        $nombre_pdf = $post['nombre_archivo'];
+        $titulo = $this->input->post('titulo_doc');
+        $tipo = $this->input->post('tipo_documento');
+        $data[0] =$tipo;
+        $data[1] =  $titulo;
+        createPdfTemplateOuput($nombre_pdf, $html, false, $data);
+        exit();
     }
 
     function guardar_registro_avaluo() {
@@ -1425,6 +1434,17 @@ class Mc_avaluo extends MY_Controller {
         } catch (Exception $e) {
             $this->data['message'] = '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>Ha ocurrido un problema de ejecución: ' . $e->getMessage() . '</div>';
         }
+    }
+
+    function crea_ruta($ruta) {
+        // echo $ruta;
+        if (!file_exists($ruta)) :
+            if (!file_exists(RUTA_INI)):
+                mkdir(RUTA_INI, 0777, true);
+            endif;
+            mkdir($ruta, 0777, true);
+        endif;
+        return $ruta;
     }
 
 }

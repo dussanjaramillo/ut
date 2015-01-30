@@ -36,13 +36,12 @@ class Bandejaunificada Extends MY_Controller {
             define("ID_REGIONAL", $this->data['user']->COD_REGIONAL);
         }
         $this->load->file(APPPATH . "controllers/verificarpagos.php", true);
-
         $sesion = $this->session->userdata;
-        
         define("ID_SECRETARIO", $sesion['id_secretario']);
         define("NOMBRE_SECRETARIO", $sesion['secretario']);
         define("ID_COORDINADOR", $sesion['id_coordinador']);
         define("NOMBRE_COORDINADOR", $sesion['coordinador']);
+        define("NOMBRE_USUARIO", $this->data['user']->NOMBRES . " " . $this->data['user']->APELLIDOS);
         $this->data['ruta_traza'] = base_url() . 'index.php/consultarprocesos/actualizatrazajuridico';
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['ruta_resolucion_prescripcion'] = base_url() . 'index.php/resolucionprescripcion/Listado_titulos';
@@ -98,51 +97,82 @@ class Bandejaunificada Extends MY_Controller {
         if ($this->ion_auth->logged_in()) {
             if ($this->ion_auth->is_admin() || $this->ion_auth->in_menu('bandejaunificada/procesos')) {
                 $post = $this->input->post();
-                echo "<pre>";print_r($post); echo "</pre>";
+                // echo "<pre>";print_r($post); echo "</pre>";
                 $cod_regional = $post['regional'];
                 $respuesta = $post['cod_respuesta'];
                 $cod_coactivo = $post['cod_proceso'];
                 $cod_abogado = $post['cod_abogado'];
-                $post['recepcion_id']=$post['cod_proceso'];
-                $regional=$this->bandejaunificada_model->regional($cod_regional);
+                $post['recepcion_id'] = $post['cod_proceso'];
+                $regional = $this->bandejaunificada_model->regional($cod_regional);
                 if ($respuesta):
                     $this->data['responsable'] = $this->bandejaunificada_model->consulta_responsable($respuesta);
                     $cargo = $this->data['responsable'][0]['IDCARGO'];
+
+                    switch ($respuesta):
+                        case 1332:
+                        case 383:
+                        case 384:
+                            $cargo = 8;
+                            break;
+                        case 381:
+                            $cargo = 7;
+                            break;
+                        case 382:
+                            $cargo = 9;
+                            break;
+                    endswitch;
+
                     $url = base_url() . 'index.php/' . $this->data['responsable'][0]['URLGESTION'];
-                    $responsable=$this->bandejaunificada_model->consulta_responsable($cod_regional); 
+                    $responsable = $this->bandejaunificada_model->consulta_responsable($cod_regional);
                     switch ($cargo):
                         case '7'://SECRETARIO
                             echo "<li>" . strtoupper($regional['NOMBRE_SECRETARIO']) . "(Secretario)" . "</li>";
-                           if (ID_SECRETARIO == ID_USUARIO):
-                            $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
+                            if (ID_SECRETARIO == ID_USUARIO):
+                                switch ($respuesta):
+
+                                    case 381 :
+                                        $html_mcexistentes = ' <form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/verfpagosprojuridicos/auto' . '">
+                                                            <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
+                                                            <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
+                                                            <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
+                                                            
+                                                            </form>';
+                                        echo $html_mcexistentes;
+                                        break;
+                                    default:
+                                        $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                         <input type="hidden" name="cod_titulo" id="cod_titulo" value="' . $cod_coactivo . '">
                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                         <input type="hidden" name="cod_coactivo_prescripcion" id="cod_coactivo_prescripcion" value="' . $cod_coactivo . '">
                                         <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
                                         </form>';
-                            echo $html;
-                           endif;
+                                        echo $html;
+                                        break;
+                                endswitch;
+
+
+                            endif;
                             break;
                         case '8'://ABOGADO
                             if ($cod_abogado):
                                 $datos = $this->bandejaunificada_model->abogado($cod_abogado);
                                 echo "<li>" . strtoupper($datos['NOMBRES'] . " " . $datos['APELLIDOS']) . "(Abogado)" . "</li>";
-                           if ($cod_abogado == ID_USUARIO):
-                                switch ($respuesta):
-                                    case 193:
-                                        $html_0 = '<form name="form" id="form" method="post" target="_top" action="' . $url . '">
+                                if ($cod_abogado == ID_USUARIO):
+                                    switch ($respuesta):
+                                        case 193:
+                                            $html_0 = '<form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                                        <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                        <input type="hidden" name="cod_coactivo_traslado" id="cod_coactivo_traslado" value="' . $cod_coactivo . '">
                                                        <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                                                <input type="hidden" name="cod_coactivo_prescripcion" id="cod_coactivo_prescripcion" value="' . $cod_coactivo . '">
                                                        <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
                                                        </form>';
-                                        echo $html_0;
-                                        break;
-                                    case 173:
-                                    case 886:
-                                        $html_1 = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
+                                            echo $html_0;
+                                            break;
+                                        case 173:
+                                        case 886:
+                                            $html_1 = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                                         <input type="hidden" name="nit" id="nit" value="' . $post['nit'] . '">
@@ -152,42 +182,55 @@ class Bandejaunificada Extends MY_Controller {
                                                         <input type="hidden" name="concepto" id="concepto" value="' . $post['concepto'] . '">
                                                         <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
                                                         </form>';
-                                        echo $html_1; 
-                                        break;
-                                    case 204:
-                                        //verifico si el proceso fue gestionado en cada uno de los procesos
-                                        $mandamiento = $this->bandejaunificada_model->mandamiento($cod_coactivo);
-                                        $medidas = $this->bandejaunificada_model->medidas($cod_coactivo);
-                                        $acercamiento = $this->bandejaunificada_model->acercamiento($cod_coactivo);
-                                        if ($mandamiento):
-                                            $html_mc = '<form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/mandamientopago/nits' . '">
+                                            echo $html_1;
+                                            break;
+                                        case 204:
+                                            //verifico si el proceso fue gestionado en cada uno de los procesos
+                                            $mandamiento = $this->bandejaunificada_model->mandamiento($cod_coactivo);
+                                            $medidas = $this->bandejaunificada_model->medidas($cod_coactivo);
+                                            $acercamiento = $this->bandejaunificada_model->acercamiento($cod_coactivo);
+                                            if ($mandamiento):
+                                                $html_mc = '<form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/mandamientopago/nits' . '">
                                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                                         <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Mandamiento">
                                                         </form>';
-                                            echo $html_mc;
-                                        endif;
-                                        if ($medidas):
-                                            $html_mp = '<form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/mcinvestigacion/abogado' . '">
+                                                echo $html_mc;
+                                            endif;
+                                            if ($medidas):
+                                                $html_mp = '<form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/mcinvestigacion/abogado' . '">
                                                          <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                              
                                                          <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                                         <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Mc_Investigacion">
                                                         </form>';
-                                            echo $html_mp;
-                                        endif;
-                                        break;
-                                    case 184:
-                                        $html_acercamiento = ' <form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/acercamientopersuasivo/abogado' . '">
+                                                echo $html_mp;
+                                            endif;
+                                            break;
+                                        case 184:
+                                            $html_acercamiento = ' <form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/acercamientopersuasivo/abogado' . '">
                                                             <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                                             <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                                             <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Acercamiento">
                                                             
                                                             </form>';
-                                        echo $html_acercamiento;
-                                        break;
-                                    default:
-                                        $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
+                                            echo $html_acercamiento;
+                                            break;
+
+                                        case 1332://Medidas Cautelares Existentes
+                                        case 381:
+                                        case 383:
+                                        case 384:    
+                                            $html_mcexistentes = ' <form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/verfpagosprojuridicos/auto' . '">
+                                                            <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
+                                                            <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
+                                                            <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
+                                                            
+                                                            </form>';
+                                            echo $html_mcexistentes;
+                                            break;
+                                        default:
+                                            $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                         <input type="hidden" name="cod_titulo" id="cod_titulo" value="' . $cod_coactivo . '">
                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
@@ -195,23 +238,37 @@ class Bandejaunificada Extends MY_Controller {
                                         <input type="hidden" name="cod_coactivo_traslado" id="cod_coactivo_traslado" value="' . $cod_coactivo . '">
                                         <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
                                         </form>';
-                                        echo $html;
-                                        break;
-                                endswitch;
-                            endif;
+                                            echo $html;
+                                            break;
+                                    endswitch;
+                                endif;
                             endif;
                             break;
                         case '9'://COORDINADOR
                             echo "<li>" . strtoupper($regional['NOMBRE_COORDINADOR']) . "(Funcionario Ejecutor)" . "</li>";
-                           if (ID_COORDINADOR == ID_USUARIO):
-                            $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
+                            if (ID_COORDINADOR == ID_USUARIO):
+                                switch ($respuesta):
+                                    case 382:
+                                        $html_mcexistentes = ' <form name="form" id="form" method="post" target="_top" action="' . base_url() . 'index.php/verfpagosprojuridicos/auto' . '">
+                                                            <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
+                                                            <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
+                                                            <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
+                                                            
+                                                            </form>';
+                                        echo $html_mcexistentes;
+                                        break;
+                                    default:
+
+                                        $html = ' <form name="form" id="form" method="post" target="_top" action="' . $url . '">
                                         <input type="hidden" name="cod_coactivo" id="cod_coactivo" value="' . $cod_coactivo . '">
                                          <input type="hidden" name="cod_titulo" id="cod_titulo" value="' . $cod_coactivo . '">    
                                         <input type="hidden" name="cod_respuesta" id="cod_respuesta" value="' . $respuesta . '">
                                         <input type="submit" class="btn btn-info" name="Gestionar" id="Gestionar"  value="Gestionar">
                                         </form>';
-                            echo $html;
-                           endif;
+                                        echo $html;
+                                        break;
+                                endswitch;
+                            endif;
                             break;
                         default :
                             if ($cod_abogado):
@@ -292,17 +349,17 @@ class Bandejaunificada Extends MY_Controller {
                 $titulos = $this->bandejaunificada_model->titulos_coactivo($cod_coactivo);
                 $titulos_terminacion = array();
                 $a = 0;
-               // print_r( $titulos);
+                // print_r( $titulos);
                 foreach ($titulos as $titulo):
-                 //   print_r( $titulo);
+                    //   print_r( $titulo);
                     foreach ($titulo as $dato):
                         /* Verificar si un titulo ya tiene un auto de cierre creado */
-                  //  print_r($dato);
+                        //  print_r($dato);
                         $datos = array('TITULO' => $dato, 'COD_PROCESO' => $cod_coactivo);
                         $existe = $this->bandejaunificada_model->AutoTerminacionTitulo($datos);
                         // print_r($existe);
-                       // echo "<br>";
-                        if (empty($existe) || $existe==FALSE):
+                        // echo "<br>";
+                        if (empty($existe) || $existe == FALSE):
                             $titulos_terminacion[$a] = $dato;
                             $a++;
                         endif;
@@ -310,7 +367,7 @@ class Bandejaunificada Extends MY_Controller {
                 endforeach;
                 //print_r($titulos_terminacion); die();
                 if (count($titulos_terminacion) > 0):
-                        
+
                     $this->verificarpagos = new verificarpagos();
                     $resultado = $this->verificarpagos->crearAutosCierre($cod_coactivo, $titulos_terminacion);
                     if ($resultado):

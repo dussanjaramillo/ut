@@ -60,8 +60,8 @@ echo form_open_multipart("mc_avaluo/guardar_documento_adjunto", $attributes);
         <center style=" padding: 15px 50px 0px 15px; ">
             <input type="button" name="pdf" id="pdf" value="Generar PDF" class="btn btn-info"> </input>
             <input type="submit" id="enviar" class='btn btn-success' value="Enviar" ></input>
-            <input type="button" id="ver_observaciones" value="Comentarios" class='btn btn-info'>
-            <input id="cancelar" class="btn btn-warning" type="submit" value=" Cancelar" name="cancelar">
+            <input type="button" id="ver_observaciones" value="Comentarios" class='btn btn-info'>						
+               <button id="cancelar"  class="btn btn-warning"  onclick="f_cancelar()">Cancelar</button>  
         </center>
         </td></tr>
         <tr>
@@ -101,9 +101,17 @@ echo form_open_multipart("mc_avaluo/guardar_documento_adjunto", $attributes);
 </form>
 <div id="resultado"></div>
 <script>
+    
+    function f_cancelar()
+        {
+            $("#ajax_load").css('display', 'block');
+            $("#load").css('display', 'block');
+            $("#preload").css('display', 'block');
+            location.reload();
+        }
     function soloNumeros(e)
     {
-        alert('asdf');
+       
         var keynum = window.event ? window.event.keyCode : e.which;
         if ((keynum == 8) || (keynum == 46))
             return true;
@@ -233,7 +241,6 @@ echo form_open_multipart("mc_avaluo/guardar_documento_adjunto", $attributes);
     })
     function comprobarextension() {
         if ($("#imagen").val() != "") {
-             alert('hola');
             var archivo = $("#imagen").val();
             var extensiones_permitidas = new Array(".gif", ".jpg", ".png", ".pdf", ".jpeg");
             var mierror = "";

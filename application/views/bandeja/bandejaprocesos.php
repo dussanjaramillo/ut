@@ -6,6 +6,11 @@ if (isset($message)) {
 if (isset($custom_error))
     echo $custom_error;
 ?>
+<div>
+    <h4 align="left">
+    <i class="fa fa-male ">  <?php echo "  " .NOMBRE_USUARIO; ?></i>
+</h4>
+</div>
 <h2><center>Bandeja Unificada</center></h2>
 <span><h3 style=" text-align: center;">Procesos Cobro Coactivo</h3></span>
 <table id="tabla1">

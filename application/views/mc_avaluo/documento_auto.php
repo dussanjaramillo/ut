@@ -56,6 +56,8 @@
 <form id="form" name="form" target = "_blank"  method="post" action="<?php echo base_url('index.php/mc_avaluo/pdf') ?>">
     <textarea id="descripcion_pdf" name="descripcion_pdf" style="width: 100%;height: 300px; display:none"></textarea>  
     <input type="hidden" name="nombre_archivo" id="nombre_archivo">
+     <input type="hidden" name="tipo_documento" id="tipo_documento" value="3" >
+     <input type="hidden" name="titulo_doc" id="titulo_doc" >
 </form>
 <div class="preload"></div><img class="load" src="<?php echo base_url('img/27.gif'); ?>" width="128" height="128" />
 <script>

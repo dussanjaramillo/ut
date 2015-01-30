@@ -3,42 +3,42 @@
 <div class="Gestion" style="background: #f0f0f0;  width: 95%; margin: auto; overflow: hidden">
     <table width="100%" border="0" id="tabla_inicial"  >
         <tr>
-            <td class="td1"> <br>   N° Proceso Coactivo</td>
-            <td class="color">    <br>                                       
-                <?php echo $consulta[0]['COD_PROCESOPJ'] ?>   
-            </td>
+        <td class="td1"> <br>   N° Proceso Coactivo</td>
+        <td class="color">    <br>                                       
+            <?php echo $consulta[0]['COD_PROCESOPJ'] ?>   
+        </td>
         </tr>
         <tr>
-            <td class="td1"> <br>  N° de Medida Cautelar</td>
-            <td>   <br>   
-                <input type="text" readonly="readonly" name="cod_medidacautelar" id="cod_medidacautelar" value="<?php echo $consulta[0]['MEDIDA_CAUTELAR'] ?>" >                             
-            </td>
-            <td class="td1"> <br>   Fecha de Medida Cautelar</td>
-            <td>   <br> 
-                <input type="text" readonly="readonly" name="fecha_medidacautelar" id="fecha_medidacautelar" value="<?php echo $consulta[0]['FECHA_MEDIDAS'] ?>" >                             
-            </td>
+        <td class="td1"> <br>  N° de Medida Cautelar</td>
+        <td>   <br>   
+            <input type="text" readonly="readonly" name="cod_medidacautelar" id="cod_medidacautelar" value="<?php echo $consulta[0]['MEDIDA_CAUTELAR'] ?>" >                             
+        </td>
+        <td class="td1"> <br>   Fecha de Medida Cautelar</td>
+        <td>   <br> 
+            <input type="text" readonly="readonly" name="fecha_medidacautelar" id="fecha_medidacautelar" value="<?php echo $consulta[0]['FECHA_MEDIDAS'] ?>" >                             
+        </td>
         </tr>
         <tr>
-            <td class="td1"> <br>   Identificación Ejecutado</td>
-            <td>             <br>  
-                <input  type="text" id="nitempresa" name="nitempresa" readonly="readonly" value="<?php echo $consulta[0]['IDENTIFICACION'] ?>">
+        <td class="td1"> <br>   Identificación Ejecutado</td>
+        <td>             <br>  
+            <input  type="text" id="nitempresa" name="nitempresa" readonly="readonly" value="<?php echo $consulta[0]['IDENTIFICACION'] ?>">
 
-            </td>
-            <td class="td1"> <br>Ejecutado</td>
-            <td>             <br>  
-                <input  type="text" id="nombre_empresa" name="nombre_empresa" readonly="readonly" value=" <?php echo $consulta[0]['EJECUTADO'] ?> ">   
-            </td>
+        </td>
+        <td class="td1"> <br>Ejecutado</td>
+        <td>             <br>  
+            <input  type="text" id="nombre_empresa" name="nombre_empresa" readonly="readonly" value=" <?php echo $consulta[0]['EJECUTADO'] ?> ">   
+        </td>
         </tr>
         <tr>
-            <td class="td1"> <br>Teléfono</td>
-            <td>             <br>  
-                <input  type="text" id="nitempresa" name="nitempresa" readonly="readonly" value="<?php echo $consulta[0]['TELEFONO'] ?>">
+        <td class="td1"> <br>Teléfono</td>
+        <td>             <br>  
+            <input  type="text" id="nitempresa" name="nitempresa" readonly="readonly" value="<?php echo $consulta[0]['TELEFONO'] ?>">
 
-            </td>
-            <td class="td1"> <br>Dirección</td>
-            <td>             <br>  
-                <input  type="text" id="nombre_empresa" name="nombre_empresa" readonly="readonly" value=" <?php echo $consulta[0]['DIRECCION'] ?> ">   
-            </td>
+        </td>
+        <td class="td1"> <br>Dirección</td>
+        <td>             <br>  
+            <input  type="text" id="nombre_empresa" name="nombre_empresa" readonly="readonly" value=" <?php echo $consulta[0]['DIRECCION'] ?> ">   
+        </td>
         </tr>
     </table>
 </div>
@@ -46,61 +46,63 @@
 <div id="texto" style="display: block">
     <table width="100%">
         <tr>
-            <td>
-                <textarea id="informacion" style="width: 100%;height: 400px"><?php echo $documento; ?></textarea>
-            </td>
+        <td>
+            <textarea id="informacion" style="width: 100%;height: 400px"><?php echo $documento; ?></textarea>
+        </td>
         </tr>
         <tr>
-            <td>
-                <div id="observa" style="border-radius: 15px;display: block;text-align:center; "><br>
-                    <font style=" padding: 15px 50px 0px 15px;  color:#238276; width:100%; text-align:center; ">Comentarios</font><br>
-                    <div style=" padding: 25px 50px 0px 25px;">
-                        <textarea id="observaciones" name="obser"style="width: 90%;"></textarea>
-                    </div>
+        <td>
+            <div id="observa" style="border-radius: 15px;display: block;text-align:center; "><br>
+                <font style=" padding: 15px 50px 0px 15px;  color:#238276; width:100%; text-align:center; ">Comentarios</font><br>
+                <div style=" padding: 25px 50px 0px 25px;">
+                    <textarea id="observaciones" name="obser"style="width: 90%;"></textarea>
                 </div>
-            </td>
+            </div>
+        </td>
         </tr>
         <tr><td><div id="mensaje_alerta"></div></td></tr>
         <tr>
-            <td align="center">
-                <button id="pdf" onclick="genera_pdf()" class='btn btn-info'>PDF</button>
-                <!--                <button id="enviar" class='btn btn-success'>Guardar</button>-->
-                <input type="button" name="enviar" id="enviar" value="Guardar" class='btn btn-success'onclick="f_enviar()">
-                <button id="ver_observaciones" class='btn btn-info'>Comentarios</button>  
-                <button id="cancelar"  class="btn btn-warning"  onclick="f_cancelar()">Cancelar</button>  
+        <td align="center">
+        <button id="pdf" onclick="genera_pdf()" class='btn btn-info'>PDF</button>
+        <!--                <button id="enviar" class='btn btn-success'>Guardar</button>-->
+        <input type="button" name="enviar" id="enviar" value="Guardar" class='btn btn-success'onclick="f_enviar()">
+        <button id="ver_observaciones" class='btn btn-info'>Comentarios</button>  
+        <button id="cancelar"  class="btn btn-warning"  onclick="f_cancelar()">Cancelar</button>  
 
-            </td>
+        </td>
         </tr>
         <tr>
-            <td>
-                <div id="Observaciones_anteriores"  style="display: none;" >
-                    <br><br>
-                    <table style="width:100%; float:justify; text-align:justify; ">
-                        <tr><td  style="background: #f0f0f0; text-align:center; padding: 15px 50px 15px 15px; " >
-                                <font style="color:#238276;"> Comentarios</font>
-                                <div id="close" style="width:auto;float:right; text-align:right;">
-                                    <a href="#" id="ocultar_observaciones"><font  style="color:#238276;">cerrar</font></a> 
-                                </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><br>
-                                <div class="alert-success" style="border-color: black; border: 1px solid grey;padding: 15px 50px 0">
-                                    <?php echo $traza; ?> 
-                                </div>
-                                <br>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
+        <td>
+            <div id="Observaciones_anteriores"  style="display: none;" >
+                <br><br>
+                <table style="width:100%; float:justify; text-align:justify; ">
+                    <tr><td  style="background: #f0f0f0; text-align:center; padding: 15px 50px 15px 15px; " >
+                        <font style="color:#238276;"> Comentarios</font>
+                        <div id="close" style="width:auto;float:right; text-align:right;">
+                            <a href="#" id="ocultar_observaciones"><font  style="color:#238276;">cerrar</font></a> 
+                        </div>
+                        </div>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><br>
+                        <div class="alert-success" style="border-color: black; border: 1px solid grey;padding: 15px 50px 0">
+                            <?php echo $traza; ?> 
+                        </div>
+                        <br>
+                    </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
         </tr>
     </table>
     <br>
     <form id="form" name="form" target = "_blank"  method="post" action="<?php echo base_url('index.php/mc_avaluo/pdf') ?>">
         <textarea id="descripcion_pdf" name="descripcion_pdf" style="width: 100%;height: 300px; display:none"></textarea>  
         <input type="hidden" name="nombre_archivo" id="nombre_archivo">
+        <input type="hidden" name="tipo_documento" id="tipo_documento" value="3" >
+        <input type="hidden" name="titulo_doc" id="titulo_doc" >
     </form>
     <script>
         function f_cancelar()
@@ -117,8 +119,8 @@
             plugins: [
                 "advlist autolink lists link  charmap print preview hr anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars code fullscreen",
-                        //"insertdatetime media nonbreaking save table contextmenu directionality",
-                        //"emoticons template paste textcolor moxiemanager"
+                //"insertdatetime media nonbreaking save table contextmenu directionality",
+                //"emoticons template paste textcolor moxiemanager"
             ],
             toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             toolbar2: "print preview media | forecolor backcolor emoticons",
@@ -143,9 +145,9 @@
         {
             var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
             var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
-                    ac = 0,
-                    enc = '',
-                    tmp_arr = [];
+            ac = 0,
+            enc = '',
+            tmp_arr = [];
             if (!data)
             {
                 return data;
@@ -222,8 +224,8 @@
                     $("#mensaje").html(data);
                     jQuery(".preload, .load").hide();
 //                    $('#resultado').dialog("close");
-//                    $('#resultado *').remove();
-                   // location.reload();
+                    $('#resultado *').remove();
+                    location.reload();
                 })
             }
         }
