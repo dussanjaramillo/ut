@@ -176,8 +176,8 @@ if (isset($custom_error))
                             endif;
                         }
                         ?>
-                        <select name="estados" id="estados"  onchange="f_enviar('<?php echo $data['CPTO'] ?>', '<?php echo $data['PROCESOPJ'] ?>', '<?php echo $data['IDENTIFICACION'] ?>',this.value, '<?php echo $m; ?>', '<?php echo $data['COD_REGIONAL'] ?> ', '<?php echo $cod_abogado ?>', '<?php echo $data['COD_PROCESO'] ?>');" >
-                            <option value="0">Seleccione el Estado</option>
+                        <select name="estados" id="estados"  onchange="f_enviar('<?php echo $conceptos_deuda[0] ?>', '<?php echo $data['PROCESOPJ'] ?>', '<?php echo $data['IDENTIFICACION'] ?>',this.value, '<?php echo $m; ?>', '<?php echo $data['COD_REGIONAL'] ?> ', '<?php echo $cod_abogado ?>', '<?php echo $data['COD_PROCESO'] ?>');" >
+                            <option value="0">Seleccione el Estado</option> 
                             <?php
                             for ($i = 0; $i < count($nombre); $i++):
                                 if ($estado[$i]):

@@ -19,7 +19,7 @@
             <td align="center">
                 <table><tr>
                         <td><button id="pdf" onclick="generar_pdf()" class='btn btn-info'> PDF</button></td>
-                        <td><button id="enviar" class='btn btn-success' onclick="f_enviar(<?php echo $cod_aprobacion; ?>)"><?php if (ID_USUARIO == ID_SECRETARIO): echo "Pre-Aprobar"; else:"Aprobar";endif;?></button></td>
+                        <td><button id="enviar" class='btn btn-success' onclick="f_enviar(<?php echo $cod_aprobacion; ?>)"><?php if (ID_USUARIO == ID_SECRETARIO): echo "Pre-Aprobar"; else: echo "Aprobar";endif;?></button></td>
                         <td><button id="atras" class='btn btn-success' onclick="f_enviar(<?php echo $cod_devolucion; ?>)">Devolver</button></td>
                         <td><button id="ver_observaciones" class='btn btn-info'>Comentarios</button></td>
                         <td>  

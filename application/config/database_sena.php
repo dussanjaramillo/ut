@@ -45,7 +45,7 @@ mysql, mysqli, postgre, odbc, mssql, sqlite, oci8
 | the active record class
 */
 
-/*$active_group = 'default';
+$active_group = 'default';
 $active_record = TRUE;
 //$dbhost = "PSNMVBOGCARBD";
 $dbhost = "172.25.59.238";
@@ -54,17 +54,7 @@ $dbname = "CARTERA"; //name of database
 $dbuser = "SENA";//"SENA"; //db user with all priviliges
 $dbpassword = "S3N42013"; // password of user
 $dbConnString = "(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = ". $dbhost .")(PORT = ". $dbport ."))
-  )(CONNECT_DATA = (SERVER = DEDICATED)(SID = ". $dbname .")))";    // connection string for this we must create TNS entry for Oracle*/
-  
-$active_group = 'default';
-$active_record = TRUE;
-$dbhost = "190.85.28.74";    //host 10.0.16.1turrisystem6
-$dbport= "1521";          //port default 
-$dbname = "turriorcl";        //name of database
-$dbuser = "SENA";      //db user with all priviliges
-$dbpassword = "s3n42015";    // password of user
-$dbConnString = "(DESCRIPTION =(ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = ". $dbhost .")(PORT = ". $dbport ."))
-  )(CONNECT_DATA = (SERVER = DEDICATED)(SID = turriorcl)))";    // connection string for this we must create TNS entry for Oracle
+  )(CONNECT_DATA = (SERVER = DEDICATED)(SID = ". $dbname .")))";    // connection string for this we must create TNS entry for Oracle
 
 /*$dbConnString='XE =
 (DESCRIPTION =
@@ -83,10 +73,10 @@ $db['default']['password'] = $dbpassword;
 $db['default']['database'] = $dbname;
 $db['default']['dbdriver'] = 'oci8';
 $db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = TRUE;
+$db['default']['pconnect'] = FALSE;
 $db['default']['db_debug'] = FALSE;
-$db['default']['cache_on'] = TRUE;
-$db['default']['cachedir'] = '';
+$db['default']['cache_on'] = false;
+$db['default']['cachedir'] = 'application/cache';
 $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';

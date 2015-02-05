@@ -1,4 +1,5 @@
 <div id="mensaje"></div>
+<div id="mensaje"></div>
 <div class="Gestion" style="background: #f0f0f0;  width: 95%; margin: auto; overflow: hidden">
 </div>
 <br><br>
@@ -144,7 +145,7 @@
             document.getElementById("nombre_archivo").value = nombre_archivo;
             var url = "<?php echo base_url('index.php/requerimientoacercamiento/pdf') ?>";
             var informacion = tinymce.get('informacion').getContent();
-            alert(informacion);
+        
             if (informacion == '' || informacion == false)
             {
                 mierror = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>' + 'Debe ingresar la informaciÃ³n del Requerimiento de Acercamiento en el Texto Enriquecido' + '</div>';

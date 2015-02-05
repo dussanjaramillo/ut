@@ -40,13 +40,13 @@ if (isset($custom_error))
                 <input type="hidden" name="nit_empresa" id="nit_empresa" value="<?php echo $cabecera['IDENTIFICACION'] ?>">
                 <input type="hidden" name="nombre" id="nombre" value="">
                 <input type="hidden" name="button" id="button" value="" />
-                <textarea name="informacion" id="informacion" style="width:auto; height: 300px" readonly="readonly" disabled="disabled" >
-                    <?php echo $documento ?>
+                <textarea name="informacion" id="informacion" style="width:auto; height: 300px" >
+                    <?php echo "dd" ?>
                 </textarea>
         </div>
         <div id="div_botones" style="text-align:center; margin-top: 20px;display: block">               
 
-            <button id="pdf"  class='btn btn-info' onclick="generar_pdf();" >PDF</button>
+             <input type="button" name="pdf"  id="pdf"  class='btn btn-info' value="PDF" onclick="generar_pdf();" >
             <input type="button" name="continuar" id="continuar" value="Continuar" class='btn btn-success' onclick="f_continuar();">
             <button id="ver_observaciones" class='btn btn-info'>Comentarios </button>  
             <input id="cancelar" class="btn btn-warning" type="submit" value=" Cancelar" name="cancelar">
@@ -78,9 +78,10 @@ if (isset($custom_error))
 </div>
 </form>
 
-<form id="form1" name="form1" target = "_blank"  method="post" action="<?php echo base_url($url_generar_pdf) ?>">
+ <form id="form1" name="form1" target = "_blank"  method="post" action="<?php echo base_url('index.php/acercamientopersuasivo/pdf') ?>">
     <textarea id="descripcion_pdf" name="descripcion_pdf" style="width: 100%;height: 300px; display:none"></textarea>  
-    <input type="hidden" name="nombre_archivo" id="nombre_archivo">
+    <input type="hidden" name="nombre_archivo" id="nombre_archivo" value="RequerimientoAcercamiento">
+    
 </form>
 <div id="ajax_load" class="ajax_load" style="display: none">
     <div class="preload" id="preload" ></div><img  id="load" class="load" src="<?php echo base_url('img/27.gif'); ?>" width="128" height="128" />
@@ -110,7 +111,7 @@ if (isset($custom_error))
             language: 'es',
             selector: "textarea#informacion",
             theme: "modern",
-            readonly:1,
+            readonly:0,
             plugins: [
                 "advlist autolink lists link image charmap print preview hr anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars code fullscreen",
@@ -174,8 +175,10 @@ function base64_encode(data)
                 $("#respuesta").fadeOut(3000);
                 return false;
             }
+          
             document.getElementById("descripcion_pdf").value = base64_encode(informacion);
             var info= document.getElementById("descripcion_pdf").value;
+           
             $("#form1").submit();
         }
     function f_continuar()

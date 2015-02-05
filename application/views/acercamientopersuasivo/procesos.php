@@ -40,7 +40,7 @@ if (isset($custom_error))
                 <td><?php echo $data['CONCEPTO'] ?></td>
                 <td>
                     <?php
-                    if (ID_USUARIO == ID_SECRETARIO):
+//                    if (ID_USUARIO == ID_SECRETARIO):
                     switch ($data['COD_TIPO_RESPUESTA']):
                         case 186 :/* Requerimiento Acercamiento Persuasivo Generado. El secretario puede pre-aprobar o devolver el documento generado */
                             ?>
@@ -49,8 +49,8 @@ if (isset($custom_error))
                             break;
                      
                     endswitch;
-                    endif;
-                    if (ID_USUARIO == ID_COORDINADOR):
+//                    endif;
+//                    if (ID_USUARIO == ID_COORDINADOR):
                     switch ($data['COD_TIPO_RESPUESTA']):
                         case 188 :/* Requerimiento Acercamiento Persuasivo Pre-aprobado. El coordinador debe aprobar o devolver el documento generado */
                             ?>
@@ -58,8 +58,8 @@ if (isset($custom_error))
                             <?php
                             break;
                     endswitch;
-                     endif;
-                      if (ID_USUARIO == $data['ABOGADO']):
+//                     endif;
+//                      if (ID_USUARIO == $data['ABOGADO']):
                     switch ($data['COD_TIPO_RESPUESTA']):
                         case 184 :/* Titulo No proximo a prescribir, proceso para generar el requerimiento de acercamiento */
                         case 187 :/* Requerimiento Acercamiento Persuasivo Devuelto, el abogado lo debe corregir */
@@ -85,7 +85,7 @@ if (isset($custom_error))
                             <?php
                             break;
                     endswitch;
-                    endif;
+//                    endif;
                     ?>
                 </td>
             </tr>
